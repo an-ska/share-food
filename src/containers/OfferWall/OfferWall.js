@@ -7,7 +7,6 @@ function OfferWall() {
     const offers = getOffers();
 
     //TODO: add key prop
-    //TODO: pass props as object
     return offers.map(offer => <Offer
         title={offer.title}
         description={offer.description}
