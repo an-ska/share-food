@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './OfferWall.css';
 import Offer from '../../components/Offer/Offer';
 import { getOffers } from '../../services/OffersService';
 
 function OfferWall() {
-    const offers = getOffers();
+    const [offers, setOffers] = useState([]);
+
+    useEffect(() => {
+        setOffers(getOffers())
+    }, []);
 
     //TODO: add key prop
     return offers.map(offer => <Offer

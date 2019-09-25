@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Offer from './Offer';
-import Adapter from 'enzyme-adapter-react-16.1';
+import Adapter from 'enzyme-adapter-react-16';
 import { shallow, configure } from 'enzyme';
 
 configure({ adapter: new Adapter() });

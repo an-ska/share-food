@@ -1,1 +1,1 @@
-export const getOffers = () => { };
+export const getOffers = () => { return [] };

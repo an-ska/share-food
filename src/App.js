@@ -1,11 +1,12 @@
 import React from 'react';
 import './App.css';
+import OfferWall from './containers/OfferWall/OfferWall';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>Foo</p>
+        <OfferWall />
       </header>
     </div>
   );

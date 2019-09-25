@@ -1,8 +1,8 @@
 import React from 'react';
 import Offer from '../../components/Offer/Offer';
 import OfferWall from './OfferWall';
-import Adapter from 'enzyme-adapter-react-16.1';
-import { shallow, configure } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+import { mount, configure } from 'enzyme';
 import { getOffers } from '../../services/OffersService';
 
 jest.mock('../../services/OffersService');
@@ -28,7 +28,7 @@ it('renders as many offers as provided', () => {
         }
     ]);
 
-    const wrapper = shallow(<OfferWall />);
+    const wrapper = mount(<OfferWall />);
     const offerComponent = wrapper.find(Offer);
 
     expect(offerComponent).toHaveLength(2);
@@ -46,7 +46,7 @@ it('passes provided offer data to Offer component', () => {
         }
     ]);
     
-    const wrapper = shallow(<OfferWall />);
+    const wrapper = mount(<OfferWall />);
     const offerComponent = wrapper.find(Offer);
 
     expect(offerComponent.props().title).toBe("spaghetti");
