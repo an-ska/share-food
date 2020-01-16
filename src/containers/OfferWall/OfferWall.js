@@ -7,11 +7,15 @@ function OfferWall() {
     const [offers, setOffers] = useState([]);
 
     useEffect(() => {
-        setOffers(getOffers())
+        const fetchData = async () => {
+            setOffers(await getOffers())
+        }
+        fetchData();
     }, []);
 
-    //TODO: add key prop
+    //TODO: key is not unique. Change it.
     return offers.map(offer => <Offer
+        key={offer.title}
         title={offer.title}
         description={offer.description}
         soldPortions={offer.soldPortions}
