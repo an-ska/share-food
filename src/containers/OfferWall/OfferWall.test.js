@@ -4,11 +4,23 @@ import OfferWall from './OfferWall';
 import Adapter from 'enzyme-adapter-react-16';
 import { mount, configure } from 'enzyme';
 import { getOffers } from '../../services/OffersService';
+import { act } from 'react-dom/test-utils';
 
 jest.mock('../../services/OffersService');
 configure({ adapter: new Adapter() });
 
-it('renders as many offers as provided', () => {
+const wait = (amount = 0) => {
+    return new Promise(resolve => setTimeout(resolve, amount));
+}
+
+const updateWrapper = async (wrapper, amount = 0) => {
+    await act(async () => {
+        await wait(amount);
+        wrapper.update();
+    });
+}
+
+it('renders as many offers as provided', async () => {
     getOffers.mockReturnValueOnce([
         {
             title: "spaghetti",
@@ -29,12 +41,14 @@ it('renders as many offers as provided', () => {
     ]);
 
     const wrapper = mount(<OfferWall />);
+    await updateWrapper(wrapper);
+
     const offerComponent = wrapper.find(Offer);
 
     expect(offerComponent).toHaveLength(2);
 });
 
-it('passes provided offer data to Offer component', () => {
+it('passes provided offer data to Offer component', async () => {
     getOffers.mockReturnValueOnce([
         {
             title: "spaghetti",
@@ -45,8 +59,10 @@ it('passes provided offer data to Offer component', () => {
             authorName: "Kuba",
         }
     ]);
-    
+
     const wrapper = mount(<OfferWall />);
+    await updateWrapper(wrapper);
+
     const offerComponent = wrapper.find(Offer);
 
     expect(offerComponent.props().title).toBe("spaghetti");
@@ -54,5 +70,5 @@ it('passes provided offer data to Offer component', () => {
     expect(offerComponent.props().soldPortions).toBe(1);
     expect(offerComponent.props().availablePortions).toBe(3);
     expect(offerComponent.props().portionPrice).toBe(9);
-    expect(offerComponent.props().authorName).toBe("Kuba");    
+    expect(offerComponent.props().authorName).toBe("Kuba");
 });
