@@ -1,7 +1,7 @@
-import * as firebase from 'firebase'
+import { database } from '../firebase'
 
 export const getOffers = async () => {
-    const rootRef = firebase.database().ref().child('offers');
+    const rootRef = database.ref().child('offers');
 
     let offers = [];
     await rootRef.once('value').then(function(snapshot) {
