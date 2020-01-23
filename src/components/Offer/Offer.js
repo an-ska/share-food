@@ -1,5 +1,7 @@
 import React from 'react';
 import './Offer.css';
+import Button from '../Button/Button'
+import { removeOffer } from '../../services/OffersService'
 
 const Offer = ({
     id,
@@ -19,6 +21,7 @@ const Offer = ({
                     <span className="offer-portion__label">portions available</span>
                     <p className="offer-portion__price">{portionPrice} PLN/portion</p>
                     <p className="offer-authorName">offered by {authorName}</p>
+                    <Button handleClick={ () => removeOffer(id) }>REMOVE OFFER</Button>
                 </div>
             </div>
         </div>

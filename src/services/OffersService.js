@@ -1,10 +1,12 @@
 import { database } from '../firebase'
 
+const rootReference = database.ref('offers')
+
 export const getOffers = async () => {
-    const rootRef = database.ref().child('offers');
+
     let offers = [];
 
-    await rootRef.once('value').then(snapshot => {
+    await rootReference.once('value').then(snapshot => {
         snapshot.forEach(child => {
             const offer = {
                 ...child.val(),
@@ -15,4 +17,21 @@ export const getOffers = async () => {
     });
 
     return offers;
+}
+
+export const addOffer = () => {
+    const offer = {
+        authorName: "Basia",
+        availablePortions: 10,
+        description: "pizza",
+        portionPrice: 8,
+        soldPortions: 2,
+        title: "Vegetarian pizza"
+    }
+
+    rootReference.push(offer)
+}
+
+export const removeOffer = (id) => {
+    return rootReference.child(id).remove()
 }
