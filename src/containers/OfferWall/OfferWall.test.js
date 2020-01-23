@@ -23,6 +23,7 @@ const updateWrapper = async (wrapper, amount = 0) => {
 it('renders as many offers as provided', async () => {
     getOffers.mockReturnValueOnce([
         {
+            id: "-Lz7RvUjUW4iVuIyWUNS",
             title: "spaghetti",
             description: "pasta with tomato sauce",
             soldPortions: 1,
@@ -31,6 +32,7 @@ it('renders as many offers as provided', async () => {
             authorName: "Kuba",
         },
         {
+            id: "-Lz7TDn7itWKSgLMvG24",
             title: "lasagne",
             description: "flat pasta with meat",
             soldPortions: 2,
@@ -51,6 +53,7 @@ it('renders as many offers as provided', async () => {
 it('passes provided offer data to Offer component', async () => {
     getOffers.mockReturnValueOnce([
         {
+            id: "-Lz7RvUjUW4iVuIyWUNS",
             title: "spaghetti",
             description: "pasta with tomato sauce",
             soldPortions: 1,
@@ -65,6 +68,7 @@ it('passes provided offer data to Offer component', async () => {
 
     const offerComponent = wrapper.find(Offer);
 
+    expect(offerComponent.props().id).toBe("-Lz7RvUjUW4iVuIyWUNS");
     expect(offerComponent.props().title).toBe("spaghetti");
     expect(offerComponent.props().description).toBe("pasta with tomato sauce");
     expect(offerComponent.props().soldPortions).toBe(1);

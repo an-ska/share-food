@@ -13,9 +13,9 @@ function OfferWall() {
         fetchData();
     }, []);
 
-    //TODO: key is not unique. Change it.
     return offers.map(offer => <Offer
-        key={offer.title}
+        key={offer.id}
+        id={offer.id}
         title={offer.title}
         description={offer.description}
         soldPortions={offer.soldPortions}
