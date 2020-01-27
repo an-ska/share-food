@@ -3,15 +3,23 @@ import './OfferWall.css'
 import Offer from '../../components/Offer/Offer'
 import Button from '../../components/Button/Button'
 import Loader from '../../components/Loader/Loader'
+import Message from '../../components/Message/Message'
 import { getOffers, addOffer } from '../../services/OffersService'
 
 function OfferWall() {
     const [offers, setOffers] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [isError, setIsError] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
-            setOffers(await getOffers())
+            try {
+                const results = await getOffers()
+
+                setOffers(results)
+            } catch(error) {
+                setIsError(!isError)
+            }
             setIsLoading(!isLoading)
         }
         fetchData();
@@ -19,6 +27,7 @@ function OfferWall() {
 
     return (
         <Fragment>
+            { isError && <Message>Something went wrong...</Message>}
             { isLoading ? <Loader>LOADING LOADING LOADING...</Loader> :
                 <Fragment>
                     {

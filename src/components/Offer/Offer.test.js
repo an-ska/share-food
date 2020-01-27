@@ -58,7 +58,7 @@ it('renders portions available text', () => {
     const wrapper = shallow(<Offer />);
     const portionLabel = wrapper.find('.offer-portion__label');
 
-    expect(portionLabel.text()).toBe('portions available');
+    expect(portionLabel.text()).toBe(' portions available');
 });
 
 describe('portion price rendering', () => {
