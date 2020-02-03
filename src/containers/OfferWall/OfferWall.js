@@ -5,6 +5,9 @@ import Button from '../../components/Button/Button'
 import Loader from '../../components/Loader/Loader'
 import Message from '../../components/Message/Message'
 import { getOffers, addOffer } from '../../services/OffersService'
+import { database } from '../../firebase'
+
+const rootReference = database.ref('offers')
 
 function OfferWall() {
     const [offers, setOffers] = useState([]);
@@ -14,9 +17,21 @@ function OfferWall() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const results = await getOffers()
-
-                setOffers(results)
+                //TODO: can we extract this? Can we make our own event like on() in the service and
+                //react on it here? What should it return? Maybe it should only notify, and we can getOffers again
+                //once it raises changes in the db. Or it could return updated offers too? Don't know.
+                await rootReference.on('value', snapshot => {
+                    let offers = [];
+                    snapshot.forEach(child => {
+                    const offer = {
+                      ...child.val(),
+                      id: child.key
+                    }
+                    offers.push(offer);
+                  });
+            
+                  setOffers(offers);
+                });
             } catch(error) {
                 setIsError(!isError)
             }
@@ -42,6 +57,7 @@ function OfferWall() {
                         authorName={offer.authorName}/>)
                     }
                     <Button handleClick={addOffer}>ADD OFFER</Button>
+                    <Button handleClick={() => setOffers([])}>clean</Button>
                 </Fragment>
             }
         </Fragment>
