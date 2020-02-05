@@ -3,7 +3,6 @@ import { database } from '../firebase'
 const rootReference = database.ref('offers')
 
 export const getOffers = async (setOffers) => {
-
     await rootReference.on('value', snapshot => {
         let offers = [];
         snapshot.forEach(child => {

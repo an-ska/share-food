@@ -21,7 +21,7 @@ const updateWrapper = async (wrapper, amount = 0) => {
 }
 
 it('renders as many offers as provided', async () => {
-    getOffers.mockReturnValueOnce([
+    getOffers.mockImplementation((setOffers) => setOffers([
         {
             id: "-Lz7RvUjUW4iVuIyWUNS",
             title: "spaghetti",
@@ -40,7 +40,7 @@ it('renders as many offers as provided', async () => {
             portionPrice: 12,
             authorName: "Ania",
         }
-    ]);
+    ]));
 
     const wrapper = mount(<OfferWall />);
     await updateWrapper(wrapper);
@@ -51,7 +51,7 @@ it('renders as many offers as provided', async () => {
 });
 
 it('passes provided offer data to Offer component', async () => {
-    getOffers.mockReturnValueOnce([
+    getOffers.mockImplementation((setOffers) => setOffers([
         {
             id: "-Lz7RvUjUW4iVuIyWUNS",
             title: "spaghetti",
@@ -61,7 +61,7 @@ it('passes provided offer data to Offer component', async () => {
             portionPrice: 9,
             authorName: "Kuba",
         }
-    ]);
+    ]));
 
     const wrapper = mount(<OfferWall />);
     await updateWrapper(wrapper);
