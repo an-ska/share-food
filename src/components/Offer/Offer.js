@@ -21,8 +21,8 @@ const Offer = ({
                     <span className="offer-portion__label"> portions available</span>
                     <p className="offer-portion__price">{portionPrice} PLN/portion</p>
                     <p className="offer-authorName">offered by {authorName}</p>
-                    <Button handleClick={ () => removeOffer(id) }>REMOVE OFFER</Button>
                 </div>
+                <Button className="offer-remove-button" handleClick={ () => removeOffer(id) }>REMOVE OFFER</Button>
             </div>
         </div>
     );

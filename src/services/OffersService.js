@@ -26,9 +26,12 @@ export const addOffer = () => {
         title: "Vegetarian pizza"
     }
 
+
+    //TODO:use promise to handle errors and show confirmation of adding
     rootReference.push(offer)
 }
 
 export const removeOffer = (id) => {
+    //TODO:use promise to handle errors and show confirmation of removal
     return rootReference.child(id).remove()
 }
