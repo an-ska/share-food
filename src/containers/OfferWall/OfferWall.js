@@ -12,13 +12,16 @@ function OfferWall() {
     const [isError, setIsError] = useState(false);
 
     useEffect(() => {
+        setIsLoading(true);
+        setIsError(false);
+
         const fetchData = async () => {
             try {
-                getOffers(setOffers)
+                await getOffers(setOffers)
             } catch (error) {
-                setIsError(!isError)
+                setIsError(true)
             }
-            setIsLoading(!isLoading)
+            setIsLoading(false)
         }
         fetchData();
     }, []);
