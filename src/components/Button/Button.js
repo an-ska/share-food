@@ -1,17 +1,17 @@
-import React from 'react'
-import './Button.css'
+import React from "react";
+import PropTypes from "prop-types";
+import "./Button.css";
 
-const Button = ({
-    type = 'button',
-    handleClick,
-    children
-}) => (
-    <button
-        type={type}
-        onClick={handleClick}
-    >
-        { children }
+const Button = ({ type = "button", handleClick, children }) => (
+    <button type={type} onClick={handleClick}>
+        {children}
     </button>
-)
+);
 
-export default Button
+Button.propTypes = {
+    type: PropTypes.string.isRequired,
+    handleClick: PropTypes.string.isRequired,
+    children: PropTypes.string.isRequired,
+};
+
+export default Button;
