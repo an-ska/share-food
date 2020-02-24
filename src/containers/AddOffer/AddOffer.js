@@ -1,0 +1,113 @@
+import React, { useState } from "react";
+import "./AddOffer.css";
+import FormField from "../../components/FormField/FormField";
+import Button from "../../components/Button/Button";
+import { addOffer } from "../../services/OffersService";
+
+const AddOffer = () => {
+    const [offerData, setOfferData] = useState({
+        addOfferForm: {
+            title: {
+                tag: "input",
+                fieldConfig: {
+                    type: "text",
+                    placeholder: "Title..."
+                },
+                value: ""
+            },
+            description: {
+                tag: "textarea",
+                fieldConfig: {
+                    type: "text",
+                    placeholder: "Description..."
+                },
+                value: ""
+            },
+            availablePortions: {
+                tag: "input",
+                fieldConfig: {
+                    type: "number",
+                    placeholder: "Available portions..."
+                },
+                value: ""
+            },
+            soldPortions: {
+                tag: "input",
+                fieldConfig: {
+                    type: "number",
+                    placeholder: "Sold portions..."
+                },
+                value: "0"
+            },
+            portionPrice: {
+                tag: "input",
+                fieldConfig: {
+                    type: "number",
+                    placeholder: "Price per portion..."
+                },
+                value: ""
+            },
+            authorName: {
+                tag: "input",
+                fieldConfig: {
+                    type: "text",
+                    placeholder: "Your name..."
+                },
+                value: ""
+            }
+        }
+    });
+
+    const formFields = [];
+
+    for (let key in offerData.addOfferForm) {
+        formFields.push({
+            id: key,
+            config: offerData.addOfferForm[key]
+        });
+    }
+
+    const handleChange = (event, inputId) => {
+        const updatedAddOfferForm = {
+            ...offerData.addOfferForm
+        };
+
+        const updatedField = {
+            ...updatedAddOfferForm[inputId]
+        };
+
+        updatedField.value = event.target.value;
+        updatedAddOfferForm[inputId] = updatedField;
+
+        setOfferData({ addOfferForm: updatedAddOfferForm });
+    };
+
+    const handleSubmit = event => {
+        event.preventDefault();
+
+        const formData = {};
+
+        for (let fieldId in offerData.addOfferForm) {
+            formData[fieldId] = offerData.addOfferForm[fieldId].value;
+        }
+
+        addOffer(formData);
+    };
+
+    return (
+        <form onSubmit={event => handleSubmit(event)}>
+            {formFields.map(field => (
+                <FormField
+                    key={field.id}
+                    tag={field.config.tag}
+                    config={field.config.fieldConfig}
+                    value={field.value}
+                    handleChange={event => handleChange(event, field.id)}
+                />
+            ))}
+            <Button type="submit">add offer</Button>
+        </form>
+    );
+};
+
+export default AddOffer;

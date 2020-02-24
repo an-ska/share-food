@@ -39,9 +39,9 @@ Offer.propTypes = {
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    soldPortions: PropTypes.number.isRequired,
-    availablePortions: PropTypes.number.isRequired,
-    portionPrice: PropTypes.number.isRequired,
+    soldPortions: PropTypes.string.isRequired,
+    availablePortions: PropTypes.string.isRequired,
+    portionPrice: PropTypes.string.isRequired,
     authorName: PropTypes.string.isRequired
 };
 
