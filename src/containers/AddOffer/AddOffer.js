@@ -18,7 +18,7 @@ const AddOffer = () => {
             description: {
                 tag: "textarea",
                 fieldConfig: {
-                    type: "text",
+                    type: null,
                     placeholder: "Description..."
                 },
                 value: ""
@@ -67,17 +67,17 @@ const AddOffer = () => {
         });
     }
 
-    const handleChange = (event, inputId) => {
+    const handleChange = (event, fieldId) => {
         const updatedAddOfferForm = {
             ...offerData.addOfferForm
         };
 
         const updatedField = {
-            ...updatedAddOfferForm[inputId]
+            ...updatedAddOfferForm[fieldId]
         };
 
         updatedField.value = event.target.value;
-        updatedAddOfferForm[inputId] = updatedField;
+        updatedAddOfferForm[fieldId] = updatedField;
 
         setOfferData({ addOfferForm: updatedAddOfferForm });
     };

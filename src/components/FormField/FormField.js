@@ -15,7 +15,7 @@ const FormField = props => {
         break;
     case "textarea":
         formField = (
-            <textarea {...config} value={value} onChange={handleChange} />
+            <textarea {...config} onChange={handleChange} />
         );
         break;
     default:
@@ -30,7 +30,7 @@ const FormField = props => {
 FormField.propTypes = {
     tag: PropTypes.string.isRequired,
     config: PropTypes.object.isRequired,
-    value: PropTypes.string.isRequired,
+    value: PropTypes.string,
     handleChange: PropTypes.func.isRequired
 }
 
