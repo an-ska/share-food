@@ -9,8 +9,8 @@ const Button = ({ type = "button", handleClick, children }) => (
 );
 
 Button.propTypes = {
-    type: PropTypes.string.isRequired,
-    handleClick: PropTypes.string.isRequired,
+    type: PropTypes.string,
+    handleClick: PropTypes.func,
     children: PropTypes.string.isRequired,
 };
 
