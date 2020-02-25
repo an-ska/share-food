@@ -1,7 +1,7 @@
 import firebase from "firebase/app";
 import "firebase/database";
 
-const config = {
+export const config = {
     apiKey: "AIzaSyBbXO1GPr0c8iTFlQ31xCTVbnnhRzYKYg4",
     authDomain: "sharefood-f4865.firebaseapp.com",
     databaseURL: "https://sharefood-f4865.firebaseio.com",
