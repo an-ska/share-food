@@ -1,11 +1,10 @@
 import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import thunk from "redux-thunk";
-import authentication from "./reducers/authentication";
+import auth from "./reducers/auth";
 
 const rootReducer = combineReducers({
-    authentication
+    auth,
 });
-
 /* eslint-disable no-underscore-dangle */
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 /* eslint-enable */
