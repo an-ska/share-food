@@ -6,11 +6,16 @@ export const authStart = () => ({
     type: actionTypes.AUTH_START
 });
 
-export const authSuccess = (accessToken, expirationDate) => ({
-    type: actionTypes.AUTH_SUCCESS,
-    accessToken,
-    expirationDate
-})
+export const authSuccess = (accessToken, expirationDate) => {
+    localStorage.setItem("accessToken", accessToken);
+    localStorage.setItem("expirationDate", expirationDate);
+
+    return {
+        type: actionTypes.AUTH_SUCCESS,
+        accessToken,
+        expirationDate
+    }
+}
 
 export const authFailure = error => ({
     type: actionTypes.AUTH_FAILURE,
@@ -19,10 +24,17 @@ export const authFailure = error => ({
 
 export const authLogout = () => {
     localStorage.removeItem("accessToken");
+    localStorage.removeItem("expirationDate");
 
     return {
         type: actionTypes.AUTH_LOGOUT
     };
+};
+
+export const checkAuthTimeout = expirationSecondsLeft => dispatch => {
+    setTimeout(() => {
+        dispatch(authLogout());
+    }, expirationSecondsLeft * 1000);
 };
 
 export const authCheckState = () => dispatch => {
@@ -57,11 +69,10 @@ export const auth = (email, password) => dispatch => {
         .then(response => {
             const { idToken: accessToken, expiresIn } = response.data;
             const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
-
-            localStorage.setItem("accessToken", accessToken)
-            localStorage.setItem("expirationDate", expirationDate)
+            const expirationSecondsLeft = (expirationDate.getTime() - new Date().getTime()) / 1000;
 
             dispatch(authSuccess(accessToken, expirationDate))
+            dispatch(checkAuthTimeout(expirationSecondsLeft))
         })
         .catch(error => {
             dispatch(authFailure(error))
