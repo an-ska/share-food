@@ -17,28 +17,53 @@ export const authFailure = error => ({
     error,
 })
 
-export const auth = (email, password) => {
-    return dispatch => {
-        dispatch(authStart())
+export const authLogout = () => {
+    localStorage.removeItem("accessToken");
 
-        const authData = {
-            email,
-            password,
-            returnSecureToken: true
+    return {
+        type: actionTypes.AUTH_LOGOUT
+    };
+};
+
+export const authCheckState = () => dispatch => {
+    const accessToken = localStorage.getItem("accessToken");
+
+    dispatch(authStart());
+
+    if (!accessToken) {
+        dispatch(authLogout());
+    } else {
+        const expirationDate = localStorage.getItem("expirationDate");
+        const isTokenExpired = new Date(expirationDate) <= new Date()
+
+        if (isTokenExpired) {
+            dispatch(authLogout());
+        } else {
+            dispatch(authSuccess(accessToken, expirationDate));
         }
-
-        axios.post(endpoints.signUp, authData)
-            .then(response => {
-                const { idToken: accessToken, expiresIn } = response.data;
-                const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
-
-                localStorage.setItem("accessToken", accessToken)
-                localStorage.setItem("expirationDate", expirationDate)
-
-                dispatch(authSuccess(accessToken, expirationDate))
-            })
-            .catch(error => {
-                dispatch(authFailure(error))
-            })
     }
+};
+
+export const auth = (email, password) => dispatch => {
+    dispatch(authStart())
+
+    const authData = {
+        email,
+        password,
+        returnSecureToken: true
+    }
+
+    axios.post(endpoints.signUp, authData)
+        .then(response => {
+            const { idToken: accessToken, expiresIn } = response.data;
+            const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
+
+            localStorage.setItem("accessToken", accessToken)
+            localStorage.setItem("expirationDate", expirationDate)
+
+            dispatch(authSuccess(accessToken, expirationDate))
+        })
+        .catch(error => {
+            dispatch(authFailure(error))
+        })
 }

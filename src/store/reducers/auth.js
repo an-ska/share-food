@@ -7,31 +7,32 @@ const initialState = {
     loading: false
 };
 
-const authStart = (state = initialState) => {
-    return {
-        ...state,
-        error: null,
-        loading: true
-    };
-};
+const authStart = (state = initialState) => ({
+    ...state,
+    error: null,
+    loading: true
+});
 
-const authSuccess = (state, action) => {
-    return {
-        ...state,
-        accessToken: action.accessToken,
-        expirationDate: action.expirationDate,
-        error: null,
-        loading: false
-    };
-};
+const authSuccess = (state, action) => ({
+    ...state,
+    accessToken: action.accessToken,
+    expirationDate: action.expirationDate,
+    error: null,
+    loading: false
+});
 
-const authFailure = (state, action) => {
-    return {
-        ...state,
-        error: action.error,
-        loading: false
-    };
-};
+const authFailure = (state, action) => ({
+    ...state,
+    error: action.error,
+    loading: false
+});
+
+const authLogout = state => ({
+    ...state,
+    accessToken: null,
+    expirationDate: null,
+    loading: false
+});
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
@@ -41,6 +42,8 @@ const reducer = (state = initialState, action) => {
         return authSuccess(state, action);
     case actionTypes.AUTH_FAILURE:
         return authFailure(state, action);
+    case actionTypes.AUTH_LOGOUT:
+        return authLogout(state);
     default:
         return state;
     }

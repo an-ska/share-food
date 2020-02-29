@@ -1,13 +1,17 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, Fragment } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import "./Auth.css";
 import FormField from "../../components/FormField/FormField";
 import Button from "../../components/Button/Button";
 import { auth } from "../../store/actions/auth";
+import { Redirect } from "react-router-dom";
+import Loader from "../../components/Loader/Loader";
 
 const Auth = () => {
     const dispatch = useDispatch();
     const authenticate = (email, password) => dispatch(auth(email, password));
+    const isLoading = useSelector(state => state.auth.loading);
+    const isLoggedIn = useSelector(state => state.auth.accessToken !== null)
 
     const [authData, setAuthData] = useState({
         authForm: {
@@ -62,18 +66,25 @@ const Auth = () => {
     };
 
     return (
-        <form onSubmit={event => handleSubmit(event)}>
-            {formFields.map(field => (
-                <FormField
-                    key={field.id}
-                    tag={field.config.tag}
-                    config={field.config.fieldConfig}
-                    value={field.value}
-                    handleChange={event => handleChange(event, field.id)}
-                />
-            ))}
-            <Button type="submit">Login</Button>
-        </form>
+        <Fragment>
+            {isLoading ? (
+                <Loader>LOADING LOADING LOADING...</Loader>
+            ) : (
+                <form onSubmit={event => handleSubmit(event)}>
+                    {formFields.map(field => (
+                        <FormField
+                            key={field.id}
+                            tag={field.config.tag}
+                            config={field.config.fieldConfig}
+                            value={field.value}
+                            handleChange={event => handleChange(event, field.id)}
+                        />
+                    ))}
+                    <Button type="submit">Login</Button>
+                </form>
+            )}
+            {isLoggedIn && <Redirect to="/offers" />}
+        </Fragment>
     );
 };
 
