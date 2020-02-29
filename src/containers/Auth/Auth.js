@@ -9,9 +9,12 @@ import Loader from "../../components/Loader/Loader";
 
 const Auth = () => {
     const dispatch = useDispatch();
-    const authenticate = (email, password) => dispatch(auth(email, password));
+    const authenticate = (email, password, isSignedUp) =>
+        dispatch(auth(email, password, isSignedUp));
     const isLoading = useSelector(state => state.auth.loading);
-    const isLoggedIn = useSelector(state => state.auth.accessToken !== null)
+    const isAuthenticated = useSelector(state => state.auth.accessToken !== null);
+    const [isSignedUp, setIsSignedUp] = useState(true);
+    const formFields = [];
 
     const [authData, setAuthData] = useState({
         authForm: {
@@ -30,17 +33,15 @@ const Auth = () => {
                     placeholder: "Password"
                 },
                 value: ""
-            },
+            }
         }
-    })
-
-    const formFields = []
+    });
 
     for (let key in authData.authForm) {
         formFields.push({
             id: key,
             config: authData.authForm[key]
-        })
+        });
     }
 
     const handleChange = (event, fieldId) => {
@@ -59,10 +60,14 @@ const Auth = () => {
     };
 
     const handleSubmit = event => {
-        const { email, password } = authData.authForm
+        const { email, password } = authData.authForm;
 
         event.preventDefault();
-        authenticate(email.value, password.value);
+        authenticate(email.value, password.value, isSignedUp);
+    };
+
+    const switchAuthMode = () => {
+        setIsSignedUp(!isSignedUp);
     };
 
     return (
@@ -80,10 +85,13 @@ const Auth = () => {
                             handleChange={event => handleChange(event, field.id)}
                         />
                     ))}
-                    <Button type="submit">Login</Button>
+                    <Button type="submit">SUBMIT</Button>
+                    <button type="submit" onClick={switchAuthMode}>
+            Go to {isSignedUp ? "sign in" : "sign up"}
+                    </button>
                 </form>
             )}
-            {isLoggedIn && <Redirect to="/offers" />}
+            {isAuthenticated && <Redirect to="/offers" />}
         </Fragment>
     );
 };

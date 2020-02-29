@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 const App = () => {
     const dispatch = useDispatch();
     const tryAutoLogin = () => dispatch(authCheckState());
-    const isLoggedIn = useSelector(state => state.auth.accessToken !== null);
+    const isAuthenticated = useSelector(state => state.auth.accessToken !== null);
 
     useEffect(() => {
         tryAutoLogin();
@@ -23,7 +23,7 @@ const App = () => {
         </Switch>
     );
 
-    if (isLoggedIn) {
+    if (isAuthenticated) {
         routes = (
             <Switch>
                 <Route path="/auth" component={Auth} />
