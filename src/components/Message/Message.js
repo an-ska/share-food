@@ -5,7 +5,9 @@ import styles from "./Message.module.css";
 const Message = ({ children }) => (
     <div className={styles.message}>{children}</div>
 );
+
 Message.propTypes = {
-    children:PropTypes.string.isRequired
-}
+    children: PropTypes.string.isRequired
+};
+
 export default Message;
