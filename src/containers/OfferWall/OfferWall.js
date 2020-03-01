@@ -1,10 +1,11 @@
-import React, { useState, useEffect, Fragment } from 'react'
-import './OfferWall.css'
-import Offer from '../../components/Offer/Offer'
-import Button from '../../components/Button/Button'
-import Loader from '../../components/Loader/Loader'
-import Message from '../../components/Message/Message'
-import { getOffers, addOffer } from '../../services/OffersService'
+import React, { useState, useEffect, Fragment } from "react";
+import { Link } from "react-router-dom";
+import "./OfferWall.css";
+import Offer from "../../components/Offer/Offer";
+import Button from "../../components/Button/Button";
+import Loader from "../../components/Loader/Loader";
+import Message from "../../components/Message/Message";
+import { getOffers } from "../../services/OffersService";
 
 function OfferWall() {
     const [offers, setOffers] = useState([]);
@@ -17,22 +18,25 @@ function OfferWall() {
 
         const fetchData = async () => {
             try {
-                await getOffers(setOffers)
+                await getOffers(setOffers);
             } catch (error) {
-                setIsError(true)
+                setIsError(true);
             }
-            setIsLoading(false)
-        }
+            setIsLoading(false);
+        };
         fetchData();
     }, []);
 
     return (
         <Fragment>
             {isError && <Message>Something went wrong...</Message>}
-            {isLoading ? <Loader>LOADING LOADING LOADING...</Loader> :
+            {isLoading ? (
+                <Loader>LOADING LOADING LOADING...</Loader>
+            ) : (
                 <Fragment>
-                    {
-                        offers.map(offer => <Offer
+                    <Link to="/add-offer">ADD OFFER</Link>
+                    {offers.map(offer => (
+                        <Offer
                             key={offer.id}
                             id={offer.id}
                             title={offer.title}
@@ -40,14 +44,14 @@ function OfferWall() {
                             soldPortions={offer.soldPortions}
                             availablePortions={offer.availablePortions}
                             portionPrice={offer.portionPrice}
-                            authorName={offer.authorName} />)
-                    }
-                    <Button handleClick={addOffer}>ADD OFFER</Button>
+                            authorName={offer.authorName}
+                        />
+                    ))}
                     <Button handleClick={() => setOffers([])}>clean</Button>
                 </Fragment>
-            }
+            )}
         </Fragment>
-    )
+    );
 }
 
 export default OfferWall;

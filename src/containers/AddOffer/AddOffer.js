@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import "./AddOffer.css";
 import FormField from "../../components/FormField/FormField";
 import Button from "../../components/Button/Button";
 import { addOffer } from "../../services/OffersService";
 
 const AddOffer = () => {
+    let history = useHistory();
     const [offerData, setOfferData] = useState({
         addOfferForm: {
             title: {
@@ -92,6 +94,7 @@ const AddOffer = () => {
         }
 
         addOffer(formData);
+        history.push("/offers")
     };
 
     return (
