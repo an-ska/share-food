@@ -1,13 +1,13 @@
 import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
-    accessToken: null,
+    accessToken: localStorage.getItem("accessToken") || null,
     expirationDate: null,
     error: null,
     loading: false
 };
 
-const authStart = (state = initialState) => ({
+const authStart = state => ({
     ...state,
     error: null,
     loading: true
@@ -49,4 +49,4 @@ const reducer = (state = initialState, action) => {
     }
 };
 
-export default reducer
+export default reducer;

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { Switch, Route, Redirect} from "react-router-dom";
 import "./App.css";
 import Auth from "./containers/Auth/Auth";
@@ -9,27 +9,31 @@ import { useDispatch, useSelector } from "react-redux";
 
 const App = () => {
     const dispatch = useDispatch();
-    const tryAutoLogin = () => dispatch(authCheckState());
-    const isAuthenticated = useSelector(state => state.auth.accessToken !== null);
+    const tryAutoLogin = useCallback(() => dispatch(authCheckState()), [dispatch]);
 
     useEffect(() => {
         tryAutoLogin();
-    }, []);
+    }, [tryAutoLogin]);
 
-    let routes = (
-        <Switch>
-            <Route path="/auth" component={Auth} />
-            <Redirect to="/auth" />
-        </Switch>
-    );
+    const isAuthenticated = useSelector(state => state.auth.accessToken !== null);
+
+    let routes;
+
+    if (!isAuthenticated) {
+        routes = (
+            <Switch>
+                <Route path="/auth" component={Auth} />
+                <Redirect to="/auth" />
+            </Switch>
+        )
+    }
 
     if (isAuthenticated) {
         routes = (
             <Switch>
-                <Route path="/auth" component={Auth} />
-                <Route path="/offers" component={OfferWall} />
                 <Route path="/add-offer" component={AddOffer} />
-                <Redirect to="/auth" />
+                <Route path="/offers" component={OfferWall} />
+                <Redirect to="/offers" />
             </Switch>
         );
     }

@@ -40,8 +40,6 @@ export const checkAuthTimeout = expirationSecondsLeft => dispatch => {
 export const authCheckState = () => dispatch => {
     const accessToken = localStorage.getItem("accessToken");
 
-    dispatch(authStart());
-
     if (!accessToken) {
         dispatch(authLogout());
     } else {
