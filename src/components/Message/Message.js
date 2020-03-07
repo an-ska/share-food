@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import styles from "./Message.module.css";
+import styles from "./Message.scss";
 
 const Message = ({ children }) => (
     <div className={styles.message}>{children}</div>

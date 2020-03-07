@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "./Offer.css";
+import "./Offer.scss";
 import Button from "../Button/Button";
 import { deleteOffer } from "../../store/actions/offers";
 import { useDispatch } from "react-redux";

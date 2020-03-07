@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import "./AddOffer.css";
+import "./AddOffer.scss";
 import FormField from "../../components/FormField/FormField";
 import Button from "../../components/Button/Button";
 import { postOffer } from "../../store/actions/offers";

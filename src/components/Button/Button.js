@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "./Button.css";
+import "./Button.scss";
 
 const Button = ({ type = "button", handleClick, children }) => (
     <button type={type} onClick={handleClick}>

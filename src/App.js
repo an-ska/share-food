@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback } from "react";
 import { Switch, Route, Redirect} from "react-router-dom";
-import "./App.css";
+import "./App.scss";
 import Auth from "./containers/Auth/Auth";
 import OfferWall from "./containers/OfferWall/OfferWall";
 import AddOffer from "./containers/AddOffer/AddOffer";

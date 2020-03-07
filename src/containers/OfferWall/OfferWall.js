@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment, useCallback } from "react";
 import { Link } from "react-router-dom";
-import "./OfferWall.css";
+import "./OfferWall.scss";
 import Offer from "../../components/Offer/Offer";
 import Loader from "../../components/Loader/Loader";
 import Message from "../../components/Message/Message";

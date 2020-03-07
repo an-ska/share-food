@@ -1,5 +1,5 @@
 import React from "react";
-import "./FormField.css";
+import "./FormField.scss";
 import PropTypes from "prop-types";
 
 const FormField = props => {

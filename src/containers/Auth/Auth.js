@@ -1,6 +1,6 @@
 import React, { useState, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import "./Auth.css";
+import "./Auth.scss";
 import FormField from "../../components/FormField/FormField";
 import Button from "../../components/Button/Button";
 import { auth } from "../../store/actions/auth";
