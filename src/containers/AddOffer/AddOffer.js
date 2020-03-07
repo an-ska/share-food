@@ -3,9 +3,14 @@ import { useHistory } from "react-router-dom";
 import "./AddOffer.css";
 import FormField from "../../components/FormField/FormField";
 import Button from "../../components/Button/Button";
-import { addOffer } from "../../services/OffersService";
+import { postOffer } from "../../store/actions/offers";
+import { useDispatch } from "react-redux";
+
 
 const AddOffer = () => {
+    const dispatch = useDispatch();
+    const onPostOffer = offer => dispatch(postOffer(offer));
+
     let history = useHistory();
     const [offerData, setOfferData] = useState({
         addOfferForm: {
@@ -93,7 +98,7 @@ const AddOffer = () => {
             formData[fieldId] = offerData.addOfferForm[fieldId].value;
         }
 
-        addOffer(formData);
+        onPostOffer(formData);
         history.push("/offers")
     };
 
