@@ -10,21 +10,15 @@ const setOffers = (state, action) => ({
     offers: action.offers
 });
 
-const removeOffers = (state, action) => {
-    const updatedOffers = state.offers.filter(offer => offer.id !== action.offer);
+const removeOffers = (state, action) => ({
+    ...state,
+    offers: state.offers.filter(offer => offer.id !== action.offer)
+});
 
-    return {
-        ...state,
-        offers: updatedOffers
-    }
-};
-
-const addOffer = (state, action) => {
-    return {
-        ...state,
-        offers: [...state.offers, action.newOffer]
-    }
-}
+const addOffer = (state, action) => ({
+    ...state,
+    offers: [...state.offers, action.offer]
+})
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {

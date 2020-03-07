@@ -1,6 +1,6 @@
 import * as actionTypes from "./actionTypes";
 import axios from "axios";
-import endpoints from "../../endpoints";
+import { signUp, signIn} from "../../endpoints";
 
 export const authStart = () => ({
     type: actionTypes.AUTH_START
@@ -63,10 +63,10 @@ export const auth = (email, password, isSignedUp) => dispatch => {
         returnSecureToken: true
     };
 
-    let url = endpoints.signUp;
+    let url = signUp;
 
     if (!isSignedUp) {
-        url = endpoints.signIn;
+        url = signIn;
     }
 
     axios

@@ -1,6 +1,6 @@
 import { config } from "./firebase";
 
-export default {
-    signUp: `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${config.apiKey}`,
-    signIn: `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${config.apiKey}`
-};
+export const signUp = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${config.apiKey}`;
+export const signIn = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${config.apiKey}`;
+
+export const database = `${config.databaseURL}`;
