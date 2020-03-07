@@ -72,26 +72,25 @@ const Auth = () => {
 
     return (
         <Fragment>
-            {isLoading ? (
-                <Loader>LOADING LOADING LOADING...</Loader>
-            ) : (
-                <form onSubmit={event => handleSubmit(event)}>
-                    {formFields.map(field => (
-                        <FormField
-                            key={field.id}
-                            tag={field.config.tag}
-                            config={field.config.fieldConfig}
-                            value={field.value}
-                            handleChange={event => handleChange(event, field.id)}
-                        />
-                    ))}
-                    <Button type="submit">SUBMIT</Button>
-                    <button type="submit" onClick={switchAuthMode}>
-            Go to {isSignedUp ? "sign in" : "sign up"}
-                    </button>
-                </form>
-            )}
-            {isAuthenticated && <Redirect to="/offers" />}
+            { isLoading
+                ? <Loader>LOADING LOADING LOADING...</Loader>
+                : (
+                    <form onSubmit={event => handleSubmit(event)}>
+                        {formFields.map(field => (
+                            <FormField
+                                key={field.id}
+                                tag={field.config.tag}
+                                config={field.config.fieldConfig}
+                                value={field.value}
+                                handleChange={event => handleChange(event, field.id)}
+                            />
+                        ))}
+                        <Button type="submit">SUBMIT</Button>
+                        <button type="submit" onClick={switchAuthMode}>Go to {isSignedUp ? "sign in" : "sign up"}</button>
+                    </form>
+                )
+            }
+            { isAuthenticated && <Redirect to="/offers" /> }
         </Fragment>
     );
 };

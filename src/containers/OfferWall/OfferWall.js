@@ -8,15 +8,13 @@ import { getOffers } from "../../store/actions/offers";
 
 import { useDispatch, useSelector } from "react-redux";
 
-
 function OfferWall() {
     const dispatch = useDispatch();
     const fetchOffers = useCallback(() => dispatch(getOffers()), [dispatch]);
-    const [isLoading, setIsLoading] = useState(true);
     const [isError, setIsError] = useState(false);
+    const isLoading = useSelector( state => state.offers.loading);
 
     useEffect(() => {
-        setIsLoading(false);
         setIsError(false);
         fetchOffers()
     }, [fetchOffers]);

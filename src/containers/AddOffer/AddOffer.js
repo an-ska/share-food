@@ -6,7 +6,6 @@ import Button from "../../components/Button/Button";
 import { postOffer } from "../../store/actions/offers";
 import { useDispatch } from "react-redux";
 
-
 const AddOffer = () => {
     const dispatch = useDispatch();
     const onPostOffer = offer => dispatch(postOffer(offer));

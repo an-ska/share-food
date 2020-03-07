@@ -2,12 +2,18 @@ import axios from "axios";
 import * as actionTypes from "./actionTypes";
 import { database as url } from "../../endpoints";
 
+export const start = () => ({
+    type: actionTypes.START
+});
+
 export const setOffers = offers => ({
     type: actionTypes.SET_OFFERS,
     offers
 });
 
 export const getOffers = () => async dispatch => {
+    dispatch(start())
+    
     try {
         const response = await axios.get(`${url}/offers.json`);
         let offers = [];
@@ -33,6 +39,8 @@ export const addOffer = (details, id) => ({
 });
 
 export const postOffer = offer => async dispatch => {
+    dispatch(start());
+
     try {
         const response = await axios.post(`${url}/offers.json`, offer);
 
@@ -48,9 +56,11 @@ export const removeOffer = offer => ({
 });
 
 export const deleteOffer = offer => async dispatch => {
-    try {
-        await axios.delete(`${url}/offers/${offer}.json`);
+    dispatch(start());
 
+    try {
+        await axios.delete(`${url}/offers/${offer}.json`)
+        
         dispatch(removeOffer(offer));
     } catch (error) {
         console.log(error);

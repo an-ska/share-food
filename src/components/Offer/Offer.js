@@ -33,9 +33,7 @@ const Offer = ({
                 <Button
                     className="offer-remove-button"
                     handleClick={() => onDeleteOffer(id)}
-                >
-            REMOVE OFFER
-                </Button>
+                >REMOVE OFFER</Button>
             </div>
         </div>
     )
