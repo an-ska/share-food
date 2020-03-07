@@ -1,5 +1,9 @@
 # ShareFood
 
+### `yarn install`
+
+Installs all dependencies.
+
 ### `yarn start`
 
 Runs the app in the development mode.<br>
