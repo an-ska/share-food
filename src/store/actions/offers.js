@@ -2,8 +2,8 @@ import axios from "axios";
 import * as actionTypes from "./actionTypes";
 import { database as url } from "../../endpoints";
 
-export const start = () => ({
-    type: actionTypes.START
+export const offersStart = () => ({
+    type: actionTypes.OFFERS_START
 });
 
 export const setOffers = offers => ({
@@ -11,9 +11,14 @@ export const setOffers = offers => ({
     offers
 });
 
+export const offersFail = error => ({
+    type: actionTypes.OFFERS_FAIL,
+    error
+})
+
 export const getOffers = () => async dispatch => {
-    dispatch(start())
-    
+    dispatch(offersStart())
+
     try {
         const response = await axios.get(`${url}/offers.json`);
         let offers = [];
@@ -29,24 +34,27 @@ export const getOffers = () => async dispatch => {
 
         dispatch(setOffers(offers));
     } catch (error) {
-        console.log(error);
+        dispatch(offersFail(error.response.status))
     }
 };
 
-export const addOffer = (details, id) => ({
+export const addOffer = (details, id, redirectPath) => ({
     type: actionTypes.ADD_OFFER,
-    offer: { ...details, id }
+    offer: { ...details, id },
+    redirectPath
 });
 
 export const postOffer = offer => async dispatch => {
-    dispatch(start());
+    dispatch(offersStart());
 
     try {
         const response = await axios.post(`${url}/offers.json`, offer);
+        const redirectPath = "/offers"
 
-        dispatch(addOffer(offer, response.data.name));
-    } catch (error) {
-        console.log(error);
+        dispatch(addOffer(offer, response.data.name, redirectPath));
+    }
+    catch (error) {
+        dispatch(offersFail(error.response.status));
     }
 };
 
@@ -56,13 +64,13 @@ export const removeOffer = offer => ({
 });
 
 export const deleteOffer = offer => async dispatch => {
-    dispatch(start());
+    dispatch(offersStart());
 
     try {
-        await axios.delete(`${url}/offers/${offer}.json`)
-        
+        await axios.delete("`${url}/offers/${offer}.json`")
+
         dispatch(removeOffer(offer));
     } catch (error) {
-        console.log(error);
+        dispatch(offersFail(error.response.status));
     }
 };

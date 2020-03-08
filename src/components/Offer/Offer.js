@@ -2,8 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./Offer.scss";
 import Button from "../Button/Button";
-import { deleteOffer } from "../../store/actions/offers";
-import { useDispatch } from "react-redux";
 
 const Offer = ({
     id,
@@ -12,10 +10,9 @@ const Offer = ({
     soldPortions,
     availablePortions,
     portionPrice,
-    authorName
+    authorName,
+    handleDelete,
 }) => {
-    const dispatch = useDispatch();
-    const onDeleteOffer = id => dispatch(deleteOffer(id));
 
     return (
         <div className="offer" id={id}>
@@ -32,7 +29,7 @@ const Offer = ({
                 </div>
                 <Button
                     className="offer-remove-button"
-                    handleClick={() => onDeleteOffer(id)}
+                    handleClick={() => handleDelete(id)}
                 >REMOVE OFFER</Button>
             </div>
         </div>
@@ -46,7 +43,8 @@ Offer.propTypes = {
     soldPortions: PropTypes.string.isRequired,
     availablePortions: PropTypes.string.isRequired,
     portionPrice: PropTypes.string.isRequired,
-    authorName: PropTypes.string.isRequired
+    authorName: PropTypes.string.isRequired,
+    handleDelete: PropTypes.func.isRequired
 };
 
 export default Offer;

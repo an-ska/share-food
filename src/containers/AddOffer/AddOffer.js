@@ -1,16 +1,20 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, Fragment } from "react";
 import "./AddOffer.scss";
 import FormField from "../../components/FormField/FormField";
 import Button from "../../components/Button/Button";
 import { postOffer } from "../../store/actions/offers";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
+import Loader from "../../components/Loader/Loader";
+import Message from "../../components/Message/Message";
 
 const AddOffer = () => {
     const dispatch = useDispatch();
     const onPostOffer = offer => dispatch(postOffer(offer));
+    const redirectPath = useSelector(state => state.offers.redirectPath)
+    const isLoading = useSelector(state => state.offers.loading)
+    const isError = useSelector(state => state.offers.error);
 
-    let history = useHistory();
     const [offerData, setOfferData] = useState({
         addOfferForm: {
             title: {
@@ -98,22 +102,31 @@ const AddOffer = () => {
         }
 
         onPostOffer(formData);
-        history.push("/offers")
     };
 
     return (
-        <form onSubmit={event => handleSubmit(event)}>
-            {formFields.map(field => (
-                <FormField
-                    key={field.id}
-                    tag={field.config.tag}
-                    config={field.config.fieldConfig}
-                    value={field.value}
-                    handleChange={event => handleChange(event, field.id)}
-                />
-            ))}
-            <Button type="submit">add offer</Button>
-        </form>
+        <Fragment>
+            {
+                isLoading
+                    ? <Loader>Loading</Loader>
+                    : (
+                        <form onSubmit={event => handleSubmit(event)}>
+                            { formFields.map(field => (
+                                <FormField
+                                    key={field.id}
+                                    tag={field.config.tag}
+                                    config={field.config.fieldConfig}
+                                    value={field.value}
+                                    handleChange={event => handleChange(event, field.id)}
+                                />
+                            )) }
+                            <Button type="submit">add offer</Button>
+                        </form>
+                    )
+            }
+            { isError && <Message>Something went wrong. Offer cannot be added. Try again later.</Message>}
+            { redirectPath && <Redirect to={redirectPath} /> }
+        </Fragment>
     );
 };
 
