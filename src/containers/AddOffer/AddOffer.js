@@ -14,6 +14,7 @@ const AddOffer = () => {
     const redirectPath = useSelector(state => state.offers.redirectPath)
     const isLoading = useSelector(state => state.offers.loading)
     const isError = useSelector(state => state.offers.error);
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
     const [offerData, setOfferData] = useState({
         addOfferForm: {
@@ -95,6 +96,8 @@ const AddOffer = () => {
     const handleSubmit = event => {
         event.preventDefault();
 
+        setIsButtonDisabled(true);
+
         const formData = {};
 
         for (let fieldId in offerData.addOfferForm) {
@@ -120,11 +123,11 @@ const AddOffer = () => {
                                     handleChange={event => handleChange(event, field.id)}
                                 />
                             )) }
-                            <Button type="submit">add offer</Button>
+                            <Button type="submit" disabled={isButtonDisabled}>{isButtonDisabled ? "Loading..." : "add offer"}</Button>
                         </form>
                     )
             }
-            { isError && <Message>Something went wrong. Offer cannot be added. Try again later.</Message>}
+            { isError && <Message>Something went wrong. Offer cannot be added. Try again later.</Message> }
             { redirectPath && <Redirect to={redirectPath} /> }
         </Fragment>
     );
