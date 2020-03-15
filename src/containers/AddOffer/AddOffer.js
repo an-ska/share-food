@@ -14,7 +14,6 @@ const AddOffer = () => {
     const redirectPath = useSelector(state => state.offers.redirectPath)
     const isLoading = useSelector(state => state.offers.loading)
     const isError = useSelector(state => state.offers.error);
-    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
     const [offerData, setOfferData] = useState({
         addOfferForm: {
@@ -96,8 +95,6 @@ const AddOffer = () => {
     const handleSubmit = event => {
         event.preventDefault();
 
-        setIsButtonDisabled(true);
-
         const formData = {};
 
         for (let fieldId in offerData.addOfferForm) {
@@ -111,7 +108,7 @@ const AddOffer = () => {
         <Fragment>
             {
                 isLoading
-                    ? <Loader>Loading</Loader>
+                    ? <Loader>LOADING LOADING LOADING...</Loader>
                     : (
                         <form onSubmit={event => handleSubmit(event)}>
                             { formFields.map(field => (
@@ -122,8 +119,8 @@ const AddOffer = () => {
                                     value={field.value}
                                     handleChange={event => handleChange(event, field.id)}
                                 />
-                            )) }
-                            <Button type="submit" disabled={isButtonDisabled}>{isButtonDisabled ? "Loading..." : "add offer"}</Button>
+                            ))}
+                            <Button type="submit">add offer</Button>
                         </form>
                     )
             }

@@ -74,8 +74,7 @@ export const auth = (email, password, isSignedUp) => dispatch => {
         .then(response => {
             const { idToken: accessToken, expiresIn } = response.data;
             const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
-            const expirationSecondsLeft =
-        (expirationDate.getTime() - new Date().getTime()) / 1000;
+            const expirationSecondsLeft = (expirationDate.getTime() - new Date().getTime()) / 1000;
 
             dispatch(authSuccess(accessToken, expirationDate));
             dispatch(checkAuthTimeout(expirationSecondsLeft));

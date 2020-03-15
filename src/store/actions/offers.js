@@ -1,6 +1,8 @@
-import axios from "axios";
+import axios from 'axios';
 import * as actionTypes from "./actionTypes";
 import { database as url } from "../../endpoints";
+
+const getAccessToken = () => `?auth=${localStorage.getItem('accessToken')}`;
 
 export const offersStart = () => ({
     type: actionTypes.OFFERS_START
@@ -20,7 +22,7 @@ export const getOffers = () => async dispatch => {
     dispatch(offersStart())
 
     try {
-        const response = await axios.get(`${url}/offers.json`);
+        const response = await axios.get(`${url}/offers.json${getAccessToken()}`);
         let offers = [];
 
         Object.keys(response.data).forEach(key => {
@@ -48,7 +50,7 @@ export const postOffer = offer => async dispatch => {
     dispatch(offersStart());
 
     try {
-        const response = await axios.post(`${url}/offers.json`, offer);
+        const response = await axios.post(`${url}/offers.json${getAccessToken()}`, offer);
         const redirectPath = "/offers"
 
         dispatch(addOffer(offer, response.data.name, redirectPath));
@@ -67,7 +69,7 @@ export const deleteOffer = offer => async dispatch => {
     dispatch(offersStart());
 
     try {
-        await axios.delete("`${url}/offers/${offer}.json`")
+        await axios.delete(`${url}/offers/${offer}.json${getAccessToken()}`)
 
         dispatch(removeOffer(offer));
     } catch (error) {
