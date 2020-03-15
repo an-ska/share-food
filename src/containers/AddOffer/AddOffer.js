@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState } from "react";
 import "./AddOffer.scss";
 import FormField from "../../components/FormField/FormField";
 import Button from "../../components/Button/Button";
@@ -105,7 +105,7 @@ const AddOffer = () => {
     };
 
     return (
-        <Fragment>
+        <>
             {
                 isLoading
                     ? <Loader>LOADING LOADING LOADING...</Loader>
@@ -126,7 +126,7 @@ const AddOffer = () => {
             }
             { isError && <Message>Something went wrong. Offer cannot be added. Try again later.</Message> }
             { redirectPath && <Redirect to={redirectPath} /> }
-        </Fragment>
+        </>
     );
 };
 

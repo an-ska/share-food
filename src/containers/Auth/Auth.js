@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./Auth.scss";
 import FormField from "../../components/FormField/FormField";
@@ -71,7 +71,7 @@ const Auth = () => {
     };
 
     return (
-        <Fragment>
+        <>
             { isLoading
                 ? <Loader>LOADING LOADING LOADING...</Loader>
                 : (
@@ -91,7 +91,7 @@ const Auth = () => {
                 )
             }
             { isAuthenticated && <Redirect to="/offers" /> }
-        </Fragment>
+        </>
     );
 };
 

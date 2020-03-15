@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment, useCallback } from "react";
+import React, { useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import "./OfferWall.scss";
 import Offer from "../../components/Offer/Offer";
@@ -30,7 +30,7 @@ const OfferWall = () => {
             return <Loader>LOADING LOADING LOADING...</Loader>
         } else {
             return (
-                <Fragment>
+                <>
                     <Link to="/add-offer">ADD OFFER</Link>
                     { offers.offers.map(offer => (
                         <Offer
@@ -45,7 +45,7 @@ const OfferWall = () => {
                             handleDelete={(id) => onDeleteOffer(id)}
                         />
                     )) }
-                </Fragment>
+                </>
             )
         }
     }
