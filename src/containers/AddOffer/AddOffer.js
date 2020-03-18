@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import Loader from "../../components/Loader/Loader";
 import Message from "../../components/Message/Message";
+import isFormFieldValid from "../../services/validationService";
 
 const AddOffer = () => {
     const dispatch = useDispatch();
@@ -14,56 +15,85 @@ const AddOffer = () => {
     const redirectPath = useSelector(state => state.offers.redirectPath)
     const isLoading = useSelector(state => state.offers.loading)
     const isError = useSelector(state => state.offers.error);
+    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
     const [offerData, setOfferData] = useState({
         addOfferForm: {
             title: {
                 tag: "input",
+                value: "",
                 fieldConfig: {
                     type: "text",
                     placeholder: "Title..."
                 },
-                value: ""
+                validation: {
+                    required: true,
+                },
+                valid: true,
             },
             description: {
                 tag: "textarea",
+                value: "",
                 fieldConfig: {
                     type: null,
                     placeholder: "Description..."
                 },
-                value: ""
+                validation: {
+                    required: true,
+                    minLength: 15,
+                },
+                valid: true
             },
             availablePortions: {
                 tag: "input",
                 fieldConfig: {
-                    type: "number",
+                    type: "text",
                     placeholder: "Available portions..."
                 },
-                value: ""
+                value: "",
+                validation: {
+                    required: true,
+                    isNumeric: true,
+                },
+                valid: true
             },
             soldPortions: {
                 tag: "input",
+                value: "0",
                 fieldConfig: {
-                    type: "number",
+                    type: "text",
                     placeholder: "Sold portions..."
                 },
-                value: "0"
+                validation: {
+                    required: true,
+                    isNumeric: true,
+                },
+                valid: true
             },
             portionPrice: {
                 tag: "input",
+                value: "",
                 fieldConfig: {
-                    type: "number",
+                    type: "text",
                     placeholder: "Price per portion..."
                 },
-                value: ""
+                validation: {
+                    required: true,
+                    isNumeric: true,
+                },
+                valid: true,
             },
             authorName: {
                 tag: "input",
+                value: "",
                 fieldConfig: {
                     type: "text",
                     placeholder: "Your name..."
                 },
-                value: ""
+                validation: {
+                    required: true,
+                },
+                valid: true
             }
         }
     });
@@ -87,6 +117,11 @@ const AddOffer = () => {
         };
 
         updatedField.value = event.target.value;
+        updatedField.valid = isFormFieldValid(
+            event.target.value,
+            offerData.addOfferForm[fieldId].validation
+        );
+
         updatedAddOfferForm[fieldId] = updatedField;
 
         setOfferData({ addOfferForm: updatedAddOfferForm });
@@ -117,10 +152,12 @@ const AddOffer = () => {
                                     tag={field.config.tag}
                                     config={field.config.fieldConfig}
                                     value={field.value}
+                                    invalid={!field.config.valid}
+                                    shouldValidate={field.config.validation}
                                     handleChange={event => handleChange(event, field.id)}
                                 />
                             ))}
-                            <Button type="submit">add offer</Button>
+                            <Button type="submit" disabled={isButtonDisabled}>add offer</Button>
                         </form>
                     )
             }

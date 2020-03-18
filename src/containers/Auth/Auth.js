@@ -28,7 +28,7 @@ const Auth = () => {
                 },
                 validation: {
                     required: true,
-                    isEmail: true
+                    isEmail: true,
                 },
                 valid: true,
             },
@@ -41,7 +41,7 @@ const Auth = () => {
                 },
                 validation: {
                     required: true,
-                    minLength: 6
+                    minLength: 6,
                 },
                 valid: true,
             }
