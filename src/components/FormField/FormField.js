@@ -5,22 +5,43 @@ import PropTypes from "prop-types";
 const FormField = props => {
     let formField = null;
 
-    const { tag, config, value, handleChange } = props;
+    const { tag, config, value, invalid, shouldValidate, handleChange } = props;
+
+    const formFieldClasses = [];
+
+    if (invalid && shouldValidate) {
+        formFieldClasses.push('invalid');
+    }
 
     switch (tag) {
     case "input":
         formField = (
-            <input {...config} value={value} onChange={handleChange} />
+            <input
+                className={formFieldClasses.join(" ")}
+                {...config}
+                value={value}
+                onChange={handleChange}
+            />
         );
         break;
     case "textarea":
         formField = (
-            <textarea {...config} onChange={handleChange} />
+            <textarea
+                className={formFieldClasses.join(" ")}
+                {...config}
+                value={value}
+                onChange={handleChange}
+            />
         );
         break;
     default:
         formField = (
-            <input {...config} value={value} onChange={handleChange} />
+            <input
+                className={formFieldClasses.join(" ")}
+                {...config}
+                value={value}
+                onChange={handleChange}
+            />
         );
     }
 
@@ -31,6 +52,8 @@ FormField.propTypes = {
     tag: PropTypes.string.isRequired,
     config: PropTypes.object.isRequired,
     value: PropTypes.string,
+    invalid: PropTypes.bool,
+    shouldValidate: PropTypes.bool,
     handleChange: PropTypes.func.isRequired
 }
 

@@ -6,6 +6,7 @@ import Button from "../../components/Button/Button";
 import { auth } from "../../store/actions/auth";
 import { Redirect } from "react-router-dom";
 import Loader from "../../components/Loader/Loader";
+import isFormFieldValid from "../../services/validationService";
 
 const Auth = () => {
     const dispatch = useDispatch();
@@ -20,19 +21,29 @@ const Auth = () => {
         authForm: {
             email: {
                 tag: "input",
+                value: "",
                 fieldConfig: {
                     type: "email",
                     placeholder: "Email"
                 },
-                value: ""
+                validation: {
+                    required: true,
+                    isEmail: true
+                },
+                valid: true,
             },
             password: {
                 tag: "input",
+                value: "",
                 fieldConfig: {
                     type: "password",
                     placeholder: "Password"
                 },
-                value: ""
+                validation: {
+                    required: true,
+                    minLength: 6
+                },
+                valid: true,
             }
         }
     });
@@ -54,6 +65,11 @@ const Auth = () => {
         };
 
         updatedField.value = event.target.value;
+        updatedField.valid = isFormFieldValid(
+            event.target.value,
+            authData.authForm[fieldId].validation
+        );
+
         updatedAuthForm[fieldId] = updatedField;
 
         setAuthData({ authForm: updatedAuthForm });
@@ -82,6 +98,8 @@ const Auth = () => {
                                 tag={field.config.tag}
                                 config={field.config.fieldConfig}
                                 value={field.value}
+                                invalid={!field.config.valid}
+                                shouldValidate={field.config.validation}
                                 handleChange={event => handleChange(event, field.id)}
                             />
                         ))}
