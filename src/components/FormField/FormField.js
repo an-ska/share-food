@@ -5,11 +5,11 @@ import PropTypes from "prop-types";
 const FormField = props => {
     let formField = null;
 
-    const { tag, config, value, invalid, shouldValidate, handleChange } = props;
+    const { tag, config, value, invalid, shouldValidate, changed, handleChange } = props;
 
     const formFieldClasses = [];
 
-    if (invalid && shouldValidate) {
+    if (invalid && shouldValidate && changed) {
         formFieldClasses.push('invalid');
     }
 
@@ -54,6 +54,7 @@ FormField.propTypes = {
     value: PropTypes.string,
     invalid: PropTypes.bool,
     shouldValidate: PropTypes.bool,
+    changed: PropTypes.bool,
     handleChange: PropTypes.func.isRequired
 }
 

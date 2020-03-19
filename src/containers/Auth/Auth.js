@@ -15,6 +15,7 @@ const Auth = () => {
     const isLoading = useSelector(state => state.auth.loading);
     const isAuthenticated = useSelector(state => state.auth.accessToken !== null);
     const [isSignedUp, setIsSignedUp] = useState(true);
+    const [isFormValid, setIsFormValid] = useState(false);
     const formFields = [];
 
     const [authData, setAuthData] = useState({
@@ -30,7 +31,8 @@ const Auth = () => {
                     required: true,
                     isEmail: true,
                 },
-                valid: true,
+                valid: false,
+                touched: false,
             },
             password: {
                 tag: "input",
@@ -43,7 +45,8 @@ const Auth = () => {
                     required: true,
                     minLength: 6,
                 },
-                valid: true,
+                valid: false,
+                touched: false,
             }
         }
     });
@@ -69,10 +72,16 @@ const Auth = () => {
             event.target.value,
             authData.authForm[fieldId].validation
         );
+        updatedField.changed = true;
 
         updatedAuthForm[fieldId] = updatedField;
 
+        const areFormFieldsValid = Object.values(updatedAuthForm).every(
+            field => field.valid === true
+        );
+
         setAuthData({ authForm: updatedAuthForm });
+        setIsFormValid(areFormFieldsValid);
     };
 
     const handleSubmit = event => {
@@ -100,10 +109,11 @@ const Auth = () => {
                                 value={field.value}
                                 invalid={!field.config.valid}
                                 shouldValidate={field.config.validation}
+                                changed={field.config.changed}
                                 handleChange={event => handleChange(event, field.id)}
                             />
                         ))}
-                        <Button type="submit">SUBMIT</Button>
+                        <Button type="submit" disabled={!isFormValid}>SUBMIT</Button>
                         <button type="submit" onClick={switchAuthMode}>Go to {isSignedUp ? "sign in" : "sign up"}</button>
                     </form>
                 )

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./AddOffer.scss";
 import FormField from "../../components/FormField/FormField";
 import Button from "../../components/Button/Button";
-import { postOffer } from "../../store/actions/offers";
+import { postOffer, setOffers } from "../../store/actions/offers";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import Loader from "../../components/Loader/Loader";
@@ -15,7 +15,7 @@ const AddOffer = () => {
     const redirectPath = useSelector(state => state.offers.redirectPath)
     const isLoading = useSelector(state => state.offers.loading)
     const isError = useSelector(state => state.offers.error);
-    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+    const [isFormValid, setIsFormValid] = useState(false);
 
     const [offerData, setOfferData] = useState({
         addOfferForm: {
@@ -29,7 +29,8 @@ const AddOffer = () => {
                 validation: {
                     required: true,
                 },
-                valid: true,
+                valid: false,
+                changed: false,
             },
             description: {
                 tag: "textarea",
@@ -42,7 +43,8 @@ const AddOffer = () => {
                     required: true,
                     minLength: 15,
                 },
-                valid: true
+                valid: false,
+                changed: false,
             },
             availablePortions: {
                 tag: "input",
@@ -55,7 +57,8 @@ const AddOffer = () => {
                     required: true,
                     isNumeric: true,
                 },
-                valid: true
+                valid: false,
+                changed: false,
             },
             soldPortions: {
                 tag: "input",
@@ -68,7 +71,8 @@ const AddOffer = () => {
                     required: true,
                     isNumeric: true,
                 },
-                valid: true
+                valid: false,
+                changed: false,
             },
             portionPrice: {
                 tag: "input",
@@ -81,7 +85,8 @@ const AddOffer = () => {
                     required: true,
                     isNumeric: true,
                 },
-                valid: true,
+                valid: false,
+                changed: false,
             },
             authorName: {
                 tag: "input",
@@ -93,7 +98,8 @@ const AddOffer = () => {
                 validation: {
                     required: true,
                 },
-                valid: true
+                valid: false,
+                changed: false,
             }
         }
     });
@@ -121,10 +127,14 @@ const AddOffer = () => {
             event.target.value,
             offerData.addOfferForm[fieldId].validation
         );
+        updatedField.changed = true;
 
         updatedAddOfferForm[fieldId] = updatedField;
 
+        const areFormFieldsValid = Object.values(updatedAddOfferForm).every(field => field.valid === true);
+
         setOfferData({ addOfferForm: updatedAddOfferForm });
+        setIsFormValid(areFormFieldsValid);
     };
 
     const handleSubmit = event => {
@@ -151,13 +161,14 @@ const AddOffer = () => {
                                     key={field.id}
                                     tag={field.config.tag}
                                     config={field.config.fieldConfig}
-                                    value={field.value}
+                                    value={field.config.value}
                                     invalid={!field.config.valid}
                                     shouldValidate={field.config.validation}
+                                    changed={field.config.changed}
                                     handleChange={event => handleChange(event, field.id)}
                                 />
                             ))}
-                            <Button type="submit" disabled={isButtonDisabled}>add offer</Button>
+                            <Button type="submit" disabled={!isFormValid}>add offer</Button>
                         </form>
                     )
             }
