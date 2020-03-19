@@ -18,49 +18,49 @@ const Auth = () => {
     const [isFormValid, setIsFormValid] = useState(false);
     const formFields = [];
 
-    const [authData, setAuthData] = useState({
-        authForm: {
-            email: {
-                tag: "input",
-                value: "",
-                fieldConfig: {
-                    type: "email",
-                    placeholder: "Email"
-                },
-                validation: {
-                    required: true,
-                    isEmail: true,
-                },
-                valid: false,
-                touched: false,
+    const initialState = {
+        email: {
+            tag: "input",
+            value: "",
+            fieldConfig: {
+                type: "email",
+                placeholder: "Email"
             },
-            password: {
-                tag: "input",
-                value: "",
-                fieldConfig: {
-                    type: "password",
-                    placeholder: "Password"
-                },
-                validation: {
-                    required: true,
-                    minLength: 6,
-                },
-                valid: false,
-                touched: false,
-            }
+            validation: {
+                required: true,
+                isEmail: true
+            },
+            valid: false,
+            touched: false
+        },
+        password: {
+            tag: "input",
+            value: "",
+            fieldConfig: {
+                type: "password",
+                placeholder: "Password"
+            },
+            validation: {
+                required: true,
+                minLength: 6
+            },
+            valid: false,
+            touched: false
         }
-    });
+    };
 
-    for (let key in authData.authForm) {
+    const [authData, setAuthData] = useState(initialState);
+
+    for (let key in authData) {
         formFields.push({
             id: key,
-            config: authData.authForm[key]
+            config: authData[key]
         });
     }
 
     const handleChange = (event, fieldId) => {
         const updatedAuthForm = {
-            ...authData.authForm
+            ...authData
         };
 
         const updatedField = {
@@ -70,7 +70,7 @@ const Auth = () => {
         updatedField.value = event.target.value;
         updatedField.valid = isFormFieldValid(
             event.target.value,
-            authData.authForm[fieldId].validation
+            authData[fieldId].validation
         );
         updatedField.changed = true;
 
@@ -80,15 +80,18 @@ const Auth = () => {
             field => field.valid === true
         );
 
-        setAuthData({ authForm: updatedAuthForm });
+        setAuthData({ ...updatedAuthForm });
         setIsFormValid(areFormFieldsValid);
     };
 
     const handleSubmit = event => {
-        const { email, password } = authData.authForm;
+        const { email, password } = authData;
 
         event.preventDefault();
         authenticate(email.value, password.value, isSignedUp);
+
+        setAuthData(initialState)
+        setIsFormValid(false);
     };
 
     const switchAuthMode = () => {
@@ -100,22 +103,24 @@ const Auth = () => {
             { isLoading
                 ? <Loader>LOADING LOADING LOADING...</Loader>
                 : (
-                    <form onSubmit={event => handleSubmit(event)}>
-                        {formFields.map(field => (
-                            <FormField
-                                key={field.id}
-                                tag={field.config.tag}
-                                config={field.config.fieldConfig}
-                                value={field.value}
-                                invalid={!field.config.valid}
-                                shouldValidate={field.config.validation}
-                                changed={field.config.changed}
-                                handleChange={event => handleChange(event, field.id)}
-                            />
-                        ))}
-                        <Button type="submit" disabled={!isFormValid}>SUBMIT</Button>
+                    <>
+                        <form onSubmit={event => handleSubmit(event)}>
+                            {formFields.map(field => (
+                                <FormField
+                                    key={field.id}
+                                    tag={field.config.tag}
+                                    config={field.config.fieldConfig}
+                                    value={field.config.value}
+                                    invalid={!field.config.valid}
+                                    shouldValidate={field.config.validation}
+                                    changed={field.config.changed}
+                                    handleChange={event => handleChange(event, field.id)}
+                                />
+                            ))}
+                            <Button type="submit" disabled={!isFormValid}>SUBMIT</Button>
+                        </form>
                         <button type="submit" onClick={switchAuthMode}>Go to {isSignedUp ? "sign in" : "sign up"}</button>
-                    </form>
+                    </>
                 )
             }
             { isAuthenticated && <Redirect to="/offers" /> }
