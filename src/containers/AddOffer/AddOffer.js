@@ -61,7 +61,7 @@ const AddOffer = () => {
         },
         soldPortions: {
             tag: "input",
-            value: "0",
+            value: "",
             fieldConfig: {
                 type: "text",
                 placeholder: "Sold portions..."

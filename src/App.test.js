@@ -1,37 +1,44 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import configureMockStore from "redux-mock-store";
+import { BrowserRouter as Router } from "react-router-dom";
+
 import App from './App';
 import Adapter from 'enzyme-adapter-react-16';
-import { mount, shallow, configure } from 'enzyme';
-import OfferWall from './containers/OfferWall/OfferWall';
-import { act } from 'react-dom/test-utils';
-
-
+import { Provider } from "react-redux";
+import thunk from "redux-thunk";
+import { mount, configure } from 'enzyme';
 configure({ adapter: new Adapter() });
 
-const wait = (amount = 0) => {
-    return new Promise(resolve => setTimeout(resolve, amount));
-}
+const middlewares = [thunk];
+const mockStore = configureMockStore(middlewares);
 
-const updateWrapper = async (wrapper, amount = 0) => {
-    await act(async () => {
-        await wait(amount);
-        wrapper.update();
+describe("App", () => {
+    let store;
+
+    beforeEach(() => {
+        store = mockStore({
+            auth: {
+                accessToken: null,
+                expirationDate: null,
+                error: null,
+                loading: false
+            }
+        });
     });
-}
 
-it('renders without crashing', async () => {
-    const div = document.createElement('div');
-    const wrapper = mount(<App />, div);
-    await updateWrapper(wrapper);
+    const mountProvider = () => mount(
+        <Provider store={store}>
+            <Router>
+                <App />
+            </Router>
+        </Provider>
+    );
 
-    ReactDOM.unmountComponentAtNode(div);
-});
+    it('renders without crashing', () => {
+        const div = document.createElement('div');
 
-it('renders offer wall', async () => {
-    const wrapper = shallow(<App />);
-    const offerWallComponent = wrapper.find(OfferWall);
-    await updateWrapper(wrapper);
-
-    expect(offerWallComponent.exists()).toBeTruthy();
-});
+        ReactDOM.render(mountProvider(), div);
+        ReactDOM.unmountComponentAtNode(div);
+    });
+})
