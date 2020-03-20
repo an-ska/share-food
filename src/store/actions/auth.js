@@ -42,16 +42,18 @@ export const authCheckState = () => dispatch => {
 
     if (!accessToken) {
         dispatch(authLogout());
-    } else {
-        const expirationDate = localStorage.getItem("expirationDate");
-        const isTokenExpired = new Date(expirationDate) <= new Date();
-
-        if (isTokenExpired) {
-            dispatch(authLogout());
-        } else {
-            dispatch(authSuccess(accessToken, expirationDate));
-        }
+        return;
     }
+
+    const expirationDate = localStorage.getItem("expirationDate");
+    const isTokenExpired = new Date(expirationDate) <= new Date();
+
+    if (isTokenExpired) {
+        dispatch(authLogout());
+        return;
+    }
+
+    dispatch(authSuccess(accessToken, expirationDate));
 };
 
 export const auth = (email, password, isSignedUp) => dispatch => {
@@ -63,11 +65,7 @@ export const auth = (email, password, isSignedUp) => dispatch => {
         returnSecureToken: true
     };
 
-    let url = signUp;
-
-    if (!isSignedUp) {
-        url = signIn;
-    }
+    const url = isSignedUp ? signUp : signIn;
 
     axios
         .post(url, authData)

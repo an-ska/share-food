@@ -3,47 +3,45 @@ import "./FormField.scss";
 import PropTypes from "prop-types";
 
 const FormField = props => {
-    let formField = null;
-
     const { tag, config, value, invalid, shouldValidate, changed, handleChange } = props;
-
     const formFieldClasses = [];
 
     if (invalid && shouldValidate && changed) {
         formFieldClasses.push('invalid');
     }
-
-    switch (tag) {
-    case "input":
-        formField = (
-            <input
-                className={formFieldClasses.join(" ")}
-                {...config}
-                value={value}
-                onChange={handleChange}
-            />
-        );
-        break;
-    case "textarea":
-        formField = (
-            <textarea
-                className={formFieldClasses.join(" ")}
-                {...config}
-                value={value}
-                onChange={handleChange}
-            />
-        );
-        break;
-    default:
-        formField = (
-            <input
-                className={formFieldClasses.join(" ")}
-                {...config}
-                value={value}
-                onChange={handleChange}
-            />
-        );
+    const mapIntoFormField = () => {
+        switch (tag) {
+        case "input":
+            return (
+                <input
+                    className={formFieldClasses.join(" ")}
+                    {...config}
+                    value={value}
+                    onChange={handleChange}
+                />
+            );
+        case "textarea":
+            return  (
+                <textarea
+                    className={formFieldClasses.join(" ")}
+                    {...config}
+                    value={value}
+                    onChange={handleChange}
+                />
+            );
+        default:
+            return (
+                <input
+                    className={formFieldClasses.join(" ")}
+                    {...config}
+                    value={value}
+                    onChange={handleChange}
+                />
+            );
+        }
     }
+
+    const formField = mapIntoFormField(props);
 
     return <div>{formField}</div>;
 };

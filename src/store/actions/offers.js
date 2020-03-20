@@ -18,21 +18,21 @@ export const offersFail = error => ({
     error
 })
 
+const createOffers = response =>
+    Object.entries(response).map(pair => {
+        return {
+            id: pair[0],
+            ...pair[1]
+        };
+    });
+
 export const getOffers = () => async dispatch => {
     dispatch(offersStart())
 
     try {
         const response = await axios.get(`${url}/offers.json${getAccessToken()}`);
-        let offers = [];
 
-        Object.keys(response.data).forEach(key => {
-            const offer = {
-                ...response.data[key],
-                id: key
-            };
-
-            offers.push(offer);
-        });
+        const offers = createOffers(response.data)
 
         dispatch(setOffers(offers));
     } catch (error) {
