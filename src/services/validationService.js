@@ -1,4 +1,4 @@
-const isFormFieldValid = (value, rules) => {
+export const isFormFieldValid = (value, rules) => {
     let isValid = true;
 
     if (!rules) {
@@ -28,4 +28,4 @@ const isFormFieldValid = (value, rules) => {
     return isValid;
 };
 
-export default isFormFieldValid;
+export const areFormFieldsValid = form => Object.values(form).every(field => field.valid === true);

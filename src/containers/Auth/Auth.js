@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { isFormFieldValid, areFormFieldsValid } from "../../services/validationService";
+import { auth } from "../../store/actions/auth";
+import { Redirect } from "react-router-dom";
 import "./Auth.scss";
 import FormField from "../../components/FormField/FormField";
 import Button from "../../components/Button/Button";
-import { auth } from "../../store/actions/auth";
-import { Redirect } from "react-router-dom";
 import Loader from "../../components/Loader/Loader";
-import isFormFieldValid from "../../services/validationService";
 
 const Auth = () => {
     const dispatch = useDispatch();
@@ -76,13 +76,14 @@ const Auth = () => {
 
         updatedAuthForm[fieldId] = updatedField;
 
-        const areFormFieldsValid = Object.values(updatedAuthForm).every(
-            field => field.valid === true
-        );
-
         setAuthData({ ...updatedAuthForm });
-        setIsFormValid(areFormFieldsValid);
+        setIsFormValid(areFormFieldsValid(updatedAuthForm));
     };
+
+    const resetForm = () => {
+        setAuthData(initialState);
+        setIsFormValid(false);
+    }
 
     const handleSubmit = event => {
         const { email, password } = authData;
@@ -90,8 +91,7 @@ const Auth = () => {
         event.preventDefault();
         authenticate(email.value, password.value, isSignedUp);
 
-        setAuthData(initialState)
-        setIsFormValid(false);
+        resetForm()
     };
 
     const switchAuthMode = () => {

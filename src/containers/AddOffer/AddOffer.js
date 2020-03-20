@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import "./AddOffer.scss";
 import FormField from "../../components/FormField/FormField";
 import Button from "../../components/Button/Button";
-import { postOffer, setOffers } from "../../store/actions/offers";
+import { postOffer } from "../../store/actions/offers";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import Loader from "../../components/Loader/Loader";
 import Message from "../../components/Message/Message";
-import isFormFieldValid from "../../services/validationService";
+import { isFormFieldValid, areFormFieldsValid } from "../../services/validationService";
 
 const AddOffer = () => {
     const dispatch = useDispatch();
@@ -17,105 +17,105 @@ const AddOffer = () => {
     const isError = useSelector(state => state.offers.error);
     const [isFormValid, setIsFormValid] = useState(false);
 
-    const [offerData, setOfferData] = useState({
-        addOfferForm: {
-            title: {
-                tag: "input",
-                value: "",
-                fieldConfig: {
-                    type: "text",
-                    placeholder: "Title..."
-                },
-                validation: {
-                    required: true,
-                },
-                valid: false,
-                changed: false,
+    const initialState = {
+        title: {
+            tag: "input",
+            value: "",
+            fieldConfig: {
+                type: "text",
+                placeholder: "Title..."
             },
-            description: {
-                tag: "textarea",
-                value: "",
-                fieldConfig: {
-                    type: null,
-                    placeholder: "Description..."
-                },
-                validation: {
-                    required: true,
-                    minLength: 15,
-                },
-                valid: false,
-                changed: false,
+            validation: {
+                required: true,
             },
-            availablePortions: {
-                tag: "input",
-                fieldConfig: {
-                    type: "text",
-                    placeholder: "Available portions..."
-                },
-                value: "",
-                validation: {
-                    required: true,
-                    isNumeric: true,
-                },
-                valid: false,
-                changed: false,
+            valid: false,
+            changed: false,
+        },
+        description: {
+            tag: "textarea",
+            value: "",
+            fieldConfig: {
+                type: null,
+                placeholder: "Description..."
             },
-            soldPortions: {
-                tag: "input",
-                value: "0",
-                fieldConfig: {
-                    type: "text",
-                    placeholder: "Sold portions..."
-                },
-                validation: {
-                    required: true,
-                    isNumeric: true,
-                },
-                valid: false,
-                changed: false,
+            validation: {
+                required: true,
+                minLength: 15,
             },
-            portionPrice: {
-                tag: "input",
-                value: "",
-                fieldConfig: {
-                    type: "text",
-                    placeholder: "Price per portion..."
-                },
-                validation: {
-                    required: true,
-                    isNumeric: true,
-                },
-                valid: false,
-                changed: false,
+            valid: false,
+            changed: false,
+        },
+        availablePortions: {
+            tag: "input",
+            fieldConfig: {
+                type: "text",
+                placeholder: "Available portions..."
             },
-            authorName: {
-                tag: "input",
-                value: "",
-                fieldConfig: {
-                    type: "text",
-                    placeholder: "Your name..."
-                },
-                validation: {
-                    required: true,
-                },
-                valid: false,
-                changed: false,
-            }
+            value: "",
+            validation: {
+                required: true,
+                isNumeric: true,
+            },
+            valid: false,
+            changed: false,
+        },
+        soldPortions: {
+            tag: "input",
+            value: "0",
+            fieldConfig: {
+                type: "text",
+                placeholder: "Sold portions..."
+            },
+            validation: {
+                required: true,
+                isNumeric: true,
+            },
+            valid: false,
+            changed: false,
+        },
+        portionPrice: {
+            tag: "input",
+            value: "",
+            fieldConfig: {
+                type: "text",
+                placeholder: "Price per portion..."
+            },
+            validation: {
+                required: true,
+                isNumeric: true,
+            },
+            valid: false,
+            changed: false,
+        },
+        authorName: {
+            tag: "input",
+            value: "",
+            fieldConfig: {
+                type: "text",
+                placeholder: "Your name..."
+            },
+            validation: {
+                required: true,
+            },
+            valid: false,
+            changed: false,
         }
-    });
+    };
+
+    const [offerData, setOfferData] = useState(initialState)
 
     const formFields = [];
 
-    for (let key in offerData.addOfferForm) {
+    for (let key in offerData) {
         formFields.push({
             id: key,
-            config: offerData.addOfferForm[key]
+            config: offerData[key]
         });
     }
 
     const handleChange = (event, fieldId) => {
         const updatedAddOfferForm = {
-            ...offerData.addOfferForm
+            ...offerData
         };
 
         const updatedField = {
@@ -125,28 +125,33 @@ const AddOffer = () => {
         updatedField.value = event.target.value;
         updatedField.valid = isFormFieldValid(
             event.target.value,
-            offerData.addOfferForm[fieldId].validation
+            offerData[fieldId].validation
         );
         updatedField.changed = true;
 
         updatedAddOfferForm[fieldId] = updatedField;
 
-        const areFormFieldsValid = Object.values(updatedAddOfferForm).every(field => field.valid === true);
-
-        setOfferData({ addOfferForm: updatedAddOfferForm });
-        setIsFormValid(areFormFieldsValid);
+        setOfferData({ ...updatedAddOfferForm });
+        setIsFormValid(areFormFieldsValid(updatedAddOfferForm));
     };
+
+    const resetForm = () => {
+        setOfferData(initialState);
+        setIsFormValid(false);
+    }
 
     const handleSubmit = event => {
         event.preventDefault();
 
         const formData = {};
 
-        for (let fieldId in offerData.addOfferForm) {
-            formData[fieldId] = offerData.addOfferForm[fieldId].value;
+        for (let fieldId in offerData) {
+            formData[fieldId] = offerData[fieldId].value;
         }
 
         onPostOffer(formData);
+
+        resetForm()
     };
 
     return (
