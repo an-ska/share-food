@@ -9,6 +9,7 @@ const FormField = props => {
     if (invalid && shouldValidate && changed) {
         formFieldClasses.push('invalid');
     }
+
     const mapIntoFormField = () => {
         switch (tag) {
         case "input":
@@ -49,10 +50,10 @@ const FormField = props => {
 FormField.propTypes = {
     tag: PropTypes.string.isRequired,
     config: PropTypes.object.isRequired,
-    value: PropTypes.string,
-    invalid: PropTypes.bool,
-    shouldValidate: PropTypes.bool,
-    changed: PropTypes.bool,
+    value: PropTypes.string.isRequired,
+    invalid: PropTypes.bool.isRequired,
+    shouldValidate: PropTypes.object.isRequired,
+    changed: PropTypes.bool.isRequired,
     handleChange: PropTypes.func.isRequired
 }
 
