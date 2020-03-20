@@ -13,6 +13,13 @@ const Offer = ({
     authorName,
     handleDelete,
 }) => {
+    const countAvailablePortions = () => {
+        if (soldPortions === 0) {
+            return `${availablePortions}/${availablePortions}`
+        }
+
+        return `${availablePortions - soldPortions}/${availablePortions}`
+    }
 
     return (
         <div className="offer" id={id}>
@@ -21,7 +28,7 @@ const Offer = ({
                 <p className="offer-description">{description}</p>
                 <div className="offer-portion">
                     <span className="offer-portion__counter">
-                        {soldPortions}/{availablePortions}
+                        {countAvailablePortions()}
                     </span>
                     <span className="offer-portion__label"> portions available</span>
                     <p className="offer-portion__price">{portionPrice} PLN/portion</p>
