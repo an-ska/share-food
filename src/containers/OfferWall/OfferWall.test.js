@@ -1,10 +1,12 @@
 import React from 'react';
-import Offer from '../../components/Offer/Offer';
 import OfferWall from './OfferWall';
+import Offer from '../../components/Offer/Offer';
+import Message from '../../components/Message/Message';
+import Loader from "../../components/Loader/Loader";
 import Adapter from 'enzyme-adapter-react-16';
 import { mount, configure } from 'enzyme';
 import { Provider } from "react-redux";
-import { BrowserRouter as Router } from "react-router-dom";
+import { Link, MemoryRouter as Router } from "react-router-dom";
 import thunk from "redux-thunk";
 import configureMockStore from "redux-mock-store";
 
@@ -88,4 +90,48 @@ describe("OfferWall", () => {
         expect(offerComponent.props().portionPrice).toBe(9);
         expect(offerComponent.props().authorName).toBe("Kuba");
     });
+
+    it('renders only Message component in case of error', () => {
+        store = mockStore({
+            offers: {
+                error: 401
+            }
+        });
+
+        const wrapper = mountProvider(store);
+
+        const messageComponent = wrapper.find(Message);
+        const loaderComponent = wrapper.find(Loader);
+        const offerComponent = wrapper.find(Offer);
+
+        expect(messageComponent).toHaveLength(1);
+        expect(loaderComponent).toHaveLength(0);
+        expect(offerComponent).toHaveLength(0);
+    });
+
+    it("renders only Message component in case of error", () => {
+        store = mockStore({
+            offers: {
+                loading: true
+            }
+        });
+
+        const wrapper = mountProvider(store);
+
+        const loaderComponent = wrapper.find(Loader);
+        const messageComponent = wrapper.find(Message);
+        const offerComponent = wrapper.find(Offer);
+
+        expect(loaderComponent).toHaveLength(1);
+        expect(messageComponent).toHaveLength(0);
+        expect(offerComponent).toHaveLength(0);
+    });
+
+    it('renders Link component for redirecting to add offer page', () => {
+        const wrapper = mountProvider(store);
+
+        const linkComponent = wrapper.find(Link);
+
+        expect(linkComponent.props().to).toBe("/add-offer");
+    })
 })
