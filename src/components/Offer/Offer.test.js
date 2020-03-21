@@ -8,6 +8,7 @@ configure({ adapter: new Adapter() });
 
 it("renders without crashing", () => {
     const div = document.createElement("div");
+
     ReactDOM.render(<Offer />, div);
     ReactDOM.unmountComponentAtNode(div);
 });
@@ -48,16 +49,19 @@ describe("available portions rendering", () => {
             );
         }
     );
-});
 
-describe("sold portions rendering", () => {
-    it.each([2, 3])(
-        'renders sold portions count from property value "%s"',
+    it.each([1, 0, 4])(
+        'renders available portions count from property value "%s"',
         soldPortions => {
-            const wrapper = shallow(<Offer soldPortions={soldPortions} />);
+            const availablePortions = 5;
+            const wrapper = shallow(
+                <Offer availablePortions={availablePortions} soldPortions={soldPortions} />
+            );
             const portionCounter = wrapper.find(".offer-portion__counter");
 
-            expect(portionCounter.text().split("/")[0]).toBe(soldPortions.toString());
+            const result = availablePortions - soldPortions;
+
+            expect(portionCounter.text().split("/")[0]).toBe(result.toString());
         }
     );
 });

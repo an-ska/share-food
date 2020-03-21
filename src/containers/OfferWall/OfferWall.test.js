@@ -12,8 +12,8 @@ import configureMockStore from "redux-mock-store";
 
 configure({ adapter: new Adapter() });
 
-const middlewares = [thunk];
-const mockStore = configureMockStore(middlewares);
+const middleware = [thunk];
+const mockStore = configureMockStore(middleware);
 
 describe("OfferWall", () => {
     let store;

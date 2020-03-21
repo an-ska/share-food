@@ -10,8 +10,8 @@ import { mount, configure } from 'enzyme';
 
 configure({ adapter: new Adapter() });
 
-const middlewares = [thunk];
-const mockStore = configureMockStore(middlewares);
+const middleware = [thunk];
+const mockStore = configureMockStore(middleware);
 
 describe("App", () => {
     let store;
