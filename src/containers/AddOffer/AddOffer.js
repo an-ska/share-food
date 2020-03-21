@@ -106,6 +106,7 @@ const AddOffer = () => {
 
     const formFields = [];
 
+    // eslint-disable-next-line no-unused-vars
     for (let key in offerData) {
         formFields.push({
             id: key,
@@ -145,6 +146,7 @@ const AddOffer = () => {
 
         const formData = {};
 
+        // eslint-disable-next-line no-unused-vars
         for (let fieldId in offerData) {
             formData[fieldId] = offerData[fieldId].value;
         }

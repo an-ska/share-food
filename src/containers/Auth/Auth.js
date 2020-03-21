@@ -31,7 +31,7 @@ const Auth = () => {
                 isEmail: true
             },
             valid: false,
-            touched: false
+            changed: false
         },
         password: {
             tag: "input",
@@ -45,12 +45,13 @@ const Auth = () => {
                 minLength: 6
             },
             valid: false,
-            touched: false
+            changed: false
         }
     };
 
     const [authData, setAuthData] = useState(initialState);
 
+    // eslint-disable-next-line no-unused-vars
     for (let key in authData) {
         formFields.push({
             id: key,
