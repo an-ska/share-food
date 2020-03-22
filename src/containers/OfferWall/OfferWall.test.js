@@ -109,7 +109,7 @@ describe("OfferWall", () => {
         expect(offerComponent).toHaveLength(0);
     });
 
-    it("renders only Message component in case of error", () => {
+    it("renders only Loader component when loading is true", () => {
         store = mockStore({
             offers: {
                 loading: true

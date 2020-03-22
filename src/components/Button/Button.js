@@ -12,7 +12,7 @@ Button.propTypes = {
     type: PropTypes.string,
     handleClick: PropTypes.func,
     disabled: PropTypes.bool,
-    children: PropTypes.string.isRequired,
+    children: PropTypes.node.isRequired,
 };
 
 export default Button;

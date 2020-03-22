@@ -120,7 +120,7 @@ const Auth = () => {
                             ))}
                             <Button type="submit" disabled={!isFormValid}>SUBMIT</Button>
                         </form>
-                        <button type="submit" onClick={switchAuthMode}>Go to {isSignedUp ? "sign in" : "sign up"}</button>
+                        <Button type="submit" handleClick={switchAuthMode}>Go to {isSignedUp ? "sign in" : "sign up"}</Button>
                     </>
                 )
             }
