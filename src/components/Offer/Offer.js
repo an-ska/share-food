@@ -12,6 +12,7 @@ const Offer = ({
     portionPrice,
     authorName,
     handleDelete,
+    handleAddToCart,
 }) => {
     const countAvailablePortions = () => {
         if (soldPortions === 0) {
@@ -38,9 +39,13 @@ const Offer = ({
                     className="offer-remove-button"
                     handleClick={() => handleDelete(id)}
                 >REMOVE OFFER</Button>
+                <Button
+                    className="offer-order-button"
+                    handleClick={() => handleAddToCart(id)}
+                >ORDER</Button>
             </div>
         </div>
-    )
+    );
 }
 
 Offer.propTypes = {
@@ -51,7 +56,8 @@ Offer.propTypes = {
     availablePortions: PropTypes.string.isRequired,
     portionPrice: PropTypes.string.isRequired,
     authorName: PropTypes.string.isRequired,
-    handleDelete: PropTypes.func.isRequired
+    handleDelete: PropTypes.func.isRequired,
+    handleAddToCart: PropTypes.func.isRequired,
 };
 
 export default Offer;
