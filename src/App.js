@@ -1,9 +1,10 @@
 import React, { useEffect, useCallback } from "react";
-import { Switch, Route, Redirect} from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import "./App.scss";
 import Auth from "./containers/Auth/Auth";
 import OfferWall from "./containers/OfferWall/OfferWall";
 import AddOffer from "./containers/AddOffer/AddOffer";
+import Header from "./components/Header/Header";
 import { authCheckState } from "./store/actions/auth";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -30,11 +31,14 @@ const App = () => {
 
     if (isAuthenticated) {
         routes = (
-            <Switch>
-                <Route path="/add-offer" component={AddOffer} />
-                <Route path="/offers" component={OfferWall} />
-                <Redirect to="/offers" />
-            </Switch>
+            <>
+                <Header />
+                <Switch>
+                    <Route path="/add-offer" component={AddOffer} />
+                    <Route path="/offers" component={OfferWall} />
+                    <Redirect to="/offers" />
+                </Switch>
+            </>
         );
     }
 
