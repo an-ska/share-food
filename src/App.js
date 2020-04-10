@@ -5,8 +5,13 @@ import Auth from "./containers/Auth/Auth";
 import OfferWall from "./containers/OfferWall/OfferWall";
 import AddOffer from "./containers/AddOffer/AddOffer";
 import Header from "./components/Header/Header";
+import Profile from "./containers/Profile/Profile";
 import { authCheckState } from "./store/actions/auth";
 import { useDispatch, useSelector } from "react-redux";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faPowerOff, faUserCircle } from "@fortawesome/free-solid-svg-icons";
+
+library.add(faPowerOff, faUserCircle);
 
 const App = () => {
     const dispatch = useDispatch();
@@ -36,6 +41,7 @@ const App = () => {
                 <Switch>
                     <Route path="/add-offer" component={AddOffer} />
                     <Route path="/offers" component={OfferWall} />
+                    <Route path="/profile" component={Profile} />
                     <Redirect to="/offers" />
                 </Switch>
             </>
