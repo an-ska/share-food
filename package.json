@@ -1,60 +1,64 @@
 {
-  "name": "share-food",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "axios": "^0.19.2",
-    "enzyme": "^3.10.0",
-    "enzyme-adapter-react-16": "^1.14.0",
-    "eslint-plugin-react": "^7.18.3",
-    "firebase": "^7.6.2",
-    "node-sass": "^4.13.1",
-    "prop-types": "^15.7.2",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "react-redux": "^7.2.0",
-    "react-router-dom": "^5.1.2",
-    "react-scripts": "3.1.1",
-    "react-test-renderer": "^16.9.0",
-    "redux": "^4.0.5",
-    "redux-mock-store": "^1.5.4",
-    "redux-thunk": "^2.3.0"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "plugins": [
-    "react"
-  ],
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "eslint:recommended",
-      "plugin:react/recommended"
-    ],
-    "env": {
-      "es6": true
+    "name": "share-food",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@fortawesome/fontawesome-svg-core": "^1.2.28",
+        "@fortawesome/free-solid-svg-icons": "^5.13.0",
+        "@fortawesome/react-fontawesome": "^0.1.9",
+        "axios": "^0.19.2",
+        "enzyme": "^3.10.0",
+        "enzyme-adapter-react-16": "^1.14.0",
+        "eslint-plugin-react": "^7.18.3",
+        "firebase": "^7.6.2",
+        "nock": "^12.0.3",
+        "node-sass": "^4.13.1",
+        "prop-types": "^15.7.2",
+        "react": "^16.9.0",
+        "react-dom": "^16.9.0",
+        "react-redux": "^7.2.0",
+        "react-router-dom": "^5.1.2",
+        "react-scripts": "3.1.1",
+        "react-test-renderer": "^16.9.0",
+        "redux": "^4.0.5",
+        "redux-mock-store": "^1.5.4",
+        "redux-thunk": "^2.3.0"
     },
-    "rules": {
-      "indent": [
-        "error",
-        4
-      ]
-    }
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
+    },
+    "plugins": [
+        "react"
     ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+    "eslintConfig": {
+        "extends": [
+            "react-app",
+            "eslint:recommended",
+            "plugin:react/recommended"
+        ],
+        "env": {
+            "es6": true
+        },
+        "rules": {
+            "indent": [
+            "error",
+            4
+            ]
+        }
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    }
 }
