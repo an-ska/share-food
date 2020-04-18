@@ -3,7 +3,7 @@ import * as actionTypes from "../actions/actionTypes";
 const initialState = {
     accessToken: localStorage.getItem("accessToken") || null,
     expirationDate: null,
-    id: null,
+    userId: null,
     error: null,
     loading: false
 };
@@ -18,7 +18,7 @@ const authSuccess = (state, action) => ({
     ...state,
     accessToken: action.accessToken,
     expirationDate: action.expirationDate,
-    id: action.id,
+    userId: action.userId,
     error: null,
     loading: false
 });
@@ -33,7 +33,7 @@ const authLogout = state => ({
     ...state,
     accessToken: null,
     expirationDate: null,
-    id: null,
+    userId: null,
     loading: false
 });
 

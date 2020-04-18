@@ -15,6 +15,8 @@ const AddOffer = () => {
     const redirectPath = useSelector(state => state.offers.redirectPath)
     const isLoading = useSelector(state => state.offers.loading)
     const isError = useSelector(state => state.offers.error);
+    const userId = useSelector(state => state.auth.userId);
+
     const [isFormValid, setIsFormValid] = useState(false);
 
     const initialState = {
@@ -144,13 +146,13 @@ const AddOffer = () => {
     const handleSubmit = event => {
         event.preventDefault();
 
-        const formData = {};
+        const formData = {userId};
 
         // eslint-disable-next-line no-unused-vars
         for (let fieldId in offerData) {
             formData[fieldId] = offerData[fieldId].value;
         }
-
+        console.log(formData)
         onPostOffer(formData);
 
         resetForm()
