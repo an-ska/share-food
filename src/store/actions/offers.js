@@ -76,3 +76,29 @@ export const deleteOffer = offer => async dispatch => {
         dispatch(offersFail(error.response.status));
     }
 };
+
+export const updateOffer = order => ({
+    type: actionTypes.UPDATE_OFFER,
+    order
+});
+
+export const postOrder = orders => dispatch => {
+    dispatch(offersStart());
+
+    orders.map(async (order) => {
+        try {
+            const response = await axios.patch(
+                `${url}/offers/${order.orderId}.json${getAccessToken()}`,
+                {
+                    id: order.orderId,
+                    orderedBy: order.orderedBy,
+                    soldPortions: order.soldPortions,
+                }
+            );
+
+            dispatch(updateOffer(response.data));
+        } catch (error) {
+            dispatch(offersFail(error.response.status));
+        }
+    });
+};

@@ -5,15 +5,17 @@ import Offer from "../../components/Offer/Offer";
 import Loader from "../../components/Loader/Loader";
 import Message from "../../components/Message/Message";
 import { getOffers } from "../../store/actions/offers";
+import { postOrder } from "../../store/actions/offers";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteOffer } from "../../store/actions/offers";
+import Button from "../../components/Button/Button";
 
 const OfferWall = () => {
     const dispatch = useDispatch();
     const fetchOffers = useCallback(() => dispatch(getOffers()), [dispatch]);
     const isLoading = useSelector(state => state.offers.loading);
     const isError = useSelector(state => state.offers.error)
-    const onDeleteOffer = id => dispatch(deleteOffer(id));
+    const userId = useSelector(state => state.auth.userId);
+    const onOrder = order => dispatch(postOrder(order));
     const [cartOffers, setCartOffers] = useState([]);
 
     useEffect(() => {
@@ -22,12 +24,23 @@ const OfferWall = () => {
 
     const offers = useSelector(state => state.offers);
 
+    const handleOrder = () => {
+        const order = cartOffers.map(offer => {
+            return {
+                orderId: offer.id,
+                orderedBy: [userId],
+                soldPortions: parseInt(offer.soldPortions) + 1
+            }
+        })
+
+        onOrder(order)
+    }
+
     const handleAddToCart = id => {
         const offerAddedToCart = offers.offers.find(offer => offer.id === id);
 
         setCartOffers([...cartOffers, offerAddedToCart])
     }
-
 
     const renderContent = () => {
         if (isError) {
@@ -40,7 +53,7 @@ const OfferWall = () => {
             return (
                 <>
                     <Link to="/add-offer">ADD OFFER</Link>
-                    {offers.offers.map(offer => (
+                    {offers.offers.map(offer =>
                         <Offer
                             key={offer.id}
                             id={offer.id}
@@ -50,19 +63,23 @@ const OfferWall = () => {
                             availablePortions={offer.availablePortions}
                             portionPrice={offer.portionPrice}
                             authorName={offer.authorName}
-                            handleDelete={id => onDeleteOffer(id)}
-                            handleAddToCart={id => handleAddToCart(id)}
-                        />
-                    ))}
+                        >
+                            <Button
+                                className="offer-order-button"
+                                handleClick={() => handleAddToCart(offer.id)}
+                            >ADD TO CART</Button>
+                        </Offer>
+                    )}
                     <aside>
-                        {cartOffers.map(offer => (
+                        {cartOffers.map(offer =>
                             <div key={offer.id}>
                                 <p>{offer.title}</p>
                                 <p>{offer.description}</p>
                                 <p>{offer.portionPrice} zł</p>
                                 <p>{offer.authorName}</p>
                             </div>
-                        ))}
+                        )}
+                        <Button handleClick={handleOrder}>ORDER</Button>
                     </aside>
                 </>
             );

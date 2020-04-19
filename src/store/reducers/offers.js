@@ -40,6 +40,12 @@ const addOffer = (state, action) => ({
     redirectPath: action.redirectPath
 });
 
+const updateOffer = (state, action) => ({
+    ...state,
+    offers: state.offers.map(offer => offer.id === action.order.id ? {...offer, soldPortions: action.order.soldPortions, orderedBy: action.order.orderedBy} : offer),
+    loading: false,
+});
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
     case actionTypes.OFFERS_START:
@@ -52,6 +58,8 @@ const reducer = (state = initialState, action) => {
         return addOffer(state, action);
     case actionTypes.REMOVE_OFFER:
         return removeOffers(state, action);
+    case actionTypes.UPDATE_OFFER:
+        return updateOffer(state, action);
     default:
         return state;
     }
