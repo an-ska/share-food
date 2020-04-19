@@ -1,6 +1,9 @@
 import React, { useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getOffers } from "../../store/actions/offers";
+import Offer from '../../components/Offer/Offer';
+import { deleteOffer } from "../../store/actions/offers";
+import Button from "../../components/Button/Button";
 import "./Profile.scss";
 
 const Profile = () => {
@@ -9,6 +12,7 @@ const Profile = () => {
     const userId = useSelector(state => state.auth.userId);
     const offers = useSelector(state => state.offers.offers);
     const userOffers = offers.filter(offer => offer.userId === userId)
+    const onDeleteOffer = id => dispatch(deleteOffer(id));
 
     useEffect(() => {
         fetchOffers();
@@ -16,9 +20,22 @@ const Profile = () => {
 
     return (
         <>
-            {
-                userOffers.map(offer => <div key={offer.id}>this is my offer: {offer.id}</div>)
-            }
+            {userOffers.map(offer =>
+                <Offer
+                    id={offer.id}
+                    key={offer.id}
+                    title={offer.title}
+                    description={offer.description}
+                    soldPortions={offer.soldPortions}
+                    availablePortions={offer.availablePortions}
+                    portionPrice={offer.portionPrice}
+                    authorName={offer.authorName}
+                ><Button
+                        className="offer-remove-button"
+                        handleClick={() => onDeleteOffer(offer.id)}
+                    >REMOVE OFFER</Button>
+                </Offer>
+            )}
             <div>PROFILE</div>
         </>
     );

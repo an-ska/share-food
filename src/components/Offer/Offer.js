@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "./Offer.scss";
-import Button from "../Button/Button";
 
 const Offer = ({
     id,
@@ -11,13 +10,10 @@ const Offer = ({
     availablePortions,
     portionPrice,
     authorName,
-    handleDelete,
-    handleAddToCart,
+    children
 }) => {
     const countAvailablePortions = () => {
-        if (soldPortions === 0) {
-            return `${availablePortions}/${availablePortions}`
-        }
+        if (soldPortions === 0) { return `${availablePortions}/${availablePortions}` }
 
         return `${availablePortions - soldPortions}/${availablePortions}`
     }
@@ -35,14 +31,7 @@ const Offer = ({
                     <p className="offer-portion__price">{portionPrice} PLN/portion</p>
                     <p className="offer-authorName">offered by {authorName}</p>
                 </div>
-                <Button
-                    className="offer-remove-button"
-                    handleClick={() => handleDelete(id)}
-                >REMOVE OFFER</Button>
-                <Button
-                    className="offer-order-button"
-                    handleClick={() => handleAddToCart(id)}
-                >ORDER</Button>
+                {children}
             </div>
         </div>
     );
@@ -56,8 +45,7 @@ Offer.propTypes = {
     availablePortions: PropTypes.string.isRequired,
     portionPrice: PropTypes.string.isRequired,
     authorName: PropTypes.string.isRequired,
-    handleDelete: PropTypes.func.isRequired,
-    handleAddToCart: PropTypes.func.isRequired,
+    children: PropTypes.object
 };
 
 export default Offer;
