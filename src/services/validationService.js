@@ -20,7 +20,7 @@ export const isFormFieldValid = (value, rules) => {
     }
 
     if (rules.isNumeric) {
-        const pattern = /^\d+$/;
+        const pattern = /^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/;
 
         isValid = pattern.test(value) && isValid;
     }
