@@ -11,7 +11,7 @@ const Profile = () => {
     const fetchOffers = useCallback(() => dispatch(getOffers()), [dispatch]);
     const userId = useSelector(state => state.auth.userId);
     const offers = useSelector(state => state.offers.offers);
-    const userOffers = offers.filter(offer => offer.userId === userId)
+    const userOffers = offers.filter(offer => offer.addedBy === userId)
     const onDeleteOffer = id => dispatch(deleteOffer(id));
 
     useEffect(() => {
