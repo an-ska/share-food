@@ -146,7 +146,7 @@ const AddOffer = () => {
     const handleSubmit = event => {
         event.preventDefault();
 
-        const formData = {userId, orderedBy: []};
+        const formData = {addedBy: userId, orderedBy: []};
 
         // eslint-disable-next-line no-unused-vars
         for (let fieldId in offerData) {

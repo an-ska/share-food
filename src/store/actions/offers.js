@@ -77,8 +77,8 @@ export const deleteOffer = offer => async dispatch => {
     }
 };
 
-export const updateOffer = order => ({
-    type: actionTypes.UPDATE_OFFER,
+export const updateOffers = order => ({
+    type: actionTypes.UPDATE_OFFERS,
     order
 });
 
@@ -96,7 +96,7 @@ export const postOrder = orders => dispatch => {
                 }
             );
 
-            dispatch(updateOffer(response.data));
+            dispatch(updateOffers(response.data));
         } catch (error) {
             dispatch(offersFail(error.response.status));
         }
