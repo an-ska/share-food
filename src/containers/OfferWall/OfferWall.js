@@ -29,11 +29,13 @@ const OfferWall = () => {
             return {
                 orderId: offer.id,
                 orderedBy: [userId],
-                soldPortions: parseInt(offer.soldPortions) + 1
+                soldPortions: `${parseInt(offer.soldPortions) + 1}`
             }
         })
 
         onOrder(order)
+
+        setCartOffers([])
     }
 
     const handleAddToCart = id => {
@@ -66,6 +68,7 @@ const OfferWall = () => {
                         >
                             <Button
                                 className="offer-order-button"
+                                disabled={offer.soldPortions === offer.availablePortions}
                                 handleClick={() => handleAddToCart(offer.id)}
                             >ADD TO CART</Button>
                         </Offer>
