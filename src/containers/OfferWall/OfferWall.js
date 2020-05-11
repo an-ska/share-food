@@ -39,9 +39,39 @@ const OfferWall = () => {
     }
 
     const handleAddToCart = id => {
-        const offerAddedToCart = offers.offers.find(offer => offer.id === id);
+        const addToCartOffer = offers.offers.find(offer => offer.id === id);
+        addToCartOffer.soldPortions = `${parseInt(addToCartOffer.soldPortions) + 1}`;
 
-        setCartOffers([...cartOffers, offerAddedToCart])
+        const offerIsAlreadyInCart = cartOffers.find((offer) => offer.id === id);
+
+        if (offerIsAlreadyInCart) {
+            const updatedCartOffers = [...cartOffers];
+            const updatedCartOffer = updatedCartOffers.find(
+                (offer) => offer.id === id
+            );
+
+            updatedCartOffer.cartQuantity++;
+
+            setCartOffers([...updatedCartOffers]);
+
+            return;
+        }
+
+        addToCartOffer.cartQuantity = 1;
+
+        setCartOffers([...cartOffers, addToCartOffer]);
+    }
+
+    const handleRemoveFromCart = id => {
+        const removeFromCartOffer = offers.offers.find(offer => offer.id === id);
+        removeFromCartOffer.soldPortions = `${
+            parseInt(removeFromCartOffer.soldPortions) - removeFromCartOffer.cartQuantity
+        }`;
+        removeFromCartOffer.cartQuantity = 0;
+
+        const updatedCartOffers = cartOffers.filter(offer => offer.id !== id)
+
+        setCartOffers([...updatedCartOffers]);
     }
 
     const renderContent = () => {
@@ -55,7 +85,7 @@ const OfferWall = () => {
             return (
                 <>
                     <Link to="/add-offer">ADD OFFER</Link>
-                    {offers.offers.map(offer =>
+                    {offers.offers.map((offer) => (
                         <Offer
                             key={offer.id}
                             id={offer.id}
@@ -68,20 +98,34 @@ const OfferWall = () => {
                         >
                             <Button
                                 className="offer-order-button"
-                                disabled={offer.soldPortions === offer.availablePortions}
+                                disabled={offer.soldPortions >= offer.availablePortions}
                                 handleClick={() => handleAddToCart(offer.id)}
-                            >ADD TO CART</Button>
+                            >
+                      ADD TO CART
+                            </Button>
                         </Offer>
-                    )}
+                    ))}
                     <aside>
-                        {cartOffers.map(offer =>
+                        {cartOffers.map((offer) => (
                             <div key={offer.id}>
                                 <p>{offer.title}</p>
                                 <p>{offer.description}</p>
                                 <p>{offer.portionPrice} zł</p>
                                 <p>{offer.authorName}</p>
+                                {offer.cartQuantity && (
+                                    <p>quantity: {offer.cartQuantity}</p>
+                                )}
+                                <Button
+                                    disabled={
+                                        offer.soldPortions === offer.availablePortions
+                                    }
+                                >
+                        +
+                                </Button>
+                                <Button>-</Button>
+                                <Button handleClick={() => handleRemoveFromCart(offer.id)}>x</Button>
                             </div>
-                        )}
+                        ))}
                         <Button handleClick={handleOrder}>ORDER</Button>
                     </aside>
                 </>
