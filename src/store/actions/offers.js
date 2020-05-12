@@ -91,7 +91,7 @@ export const postOrder = orders => dispatch => {
                 `${url}/offers/${order.orderId}.json${getAccessToken()}`,
                 {
                     id: order.orderId,
-                    orderedBy: order.orderedBy,
+                    boughtBy: order.boughtBy,
                     soldPortions: order.soldPortions,
                 }
             );

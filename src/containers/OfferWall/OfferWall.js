@@ -28,7 +28,7 @@ const OfferWall = () => {
         const order = cartOffers.map(offer => {
             return {
                 orderId: offer.id,
-                orderedBy: [...offer.orderedBy, userId],
+                boughtBy: [...offer.boughtBy, userId],
                 soldPortions: offer.soldPortions
             }
         })

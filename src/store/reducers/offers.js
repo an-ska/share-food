@@ -42,7 +42,7 @@ const addOffer = (state, action) => ({
 
 const updateOffers = (state, action) => ({
     ...state,
-    offers: state.offers.map(offer => offer.id === action.order.id ? {...offer, soldPortions: action.order.soldPortions, orderedBy: action.order.orderedBy} : offer),
+    offers: state.offers.map(offer => offer.id === action.order.id ? {...offer, soldPortions: action.order.soldPortions, boughtBy: action.order.boughtBy} : offer),
     loading: false,
 });
 
