@@ -8,6 +8,7 @@ import { getOffers } from "../../store/actions/offers";
 import { postOrder } from "../../store/actions/offers";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../../components/Button/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const OfferWall = () => {
     const dispatch = useDispatch();
@@ -137,6 +138,7 @@ const OfferWall = () => {
                                 disabled={offer.soldPortions === offer.availablePortions}
                                 handleClick={() => handleAddToCart(offer.id)}
                             >
+                                <FontAwesomeIcon icon="shopping-cart" />
                       ADD TO CART
                             </Button>
                         </Offer>
@@ -156,13 +158,19 @@ const OfferWall = () => {
                                     disabled={
                                         offer.soldPortions === offer.availablePortions
                                     }
-                                >+</Button>
+                                >
+                                    <FontAwesomeIcon icon="plus" />
+                                </Button>
                                 <Button
                                     handleClick={() => handleQuantityDecrease(offer.id)}
-                                >-</Button>
+                                >
+                                    <FontAwesomeIcon icon="minus" />
+                                </Button>
                                 <Button
                                     handleClick={() => handleRemoveFromCart(offer.id)}
-                                >x</Button>
+                                >
+                                    <FontAwesomeIcon icon="trash" />
+                                </Button>
                             </div>
                         ))}
                         <Button handleClick={handleOrder}>ORDER</Button>
