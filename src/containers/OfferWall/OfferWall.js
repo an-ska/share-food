@@ -29,7 +29,7 @@ const OfferWall = () => {
             return {
                 orderId: offer.id,
                 orderedBy: [...offer.orderedBy, userId],
-                soldPortions: `${parseInt(offer.soldPortions) + 1}`
+                soldPortions: offer.soldPortions
             }
         })
 
@@ -50,6 +50,7 @@ const OfferWall = () => {
                 (offer) => offer.id === id
             );
 
+            updatedCartOffer.soldPortions = `${parseInt(updatedCartOffer.soldPortions) + 1}`;
             updatedCartOffer.cartQuantity++;
 
             setCartOffers([...updatedCartOffers]);
@@ -73,6 +74,41 @@ const OfferWall = () => {
 
         setCartOffers([...updatedCartOffers]);
     }
+
+    const handleQuantityDecrease = id => {
+        const offer = offers.offers.find((offer) => offer.id === id);
+        offer.soldPortions = `${parseInt(offer.soldPortions) - 1}`;
+
+        const updatedCartOffers = [...cartOffers];
+        const updatedCartOffer = updatedCartOffers.find(
+            (offer) => offer.id === id
+        );
+
+        updatedCartOffer.cartQuantity--;
+
+        if (updatedCartOffer.cartQuantity === 0) {
+            const updatedCartOffers = cartOffers.filter(offer => offer.id !== id)
+
+            setCartOffers([...updatedCartOffers]);
+            return;
+        }
+
+        setCartOffers([...updatedCartOffers]);
+    }
+
+    const handleQuantityIncrease = (id) => {
+        const offer = offers.offers.find((offer) => offer.id === id);
+        offer.soldPortions = `${parseInt(offer.soldPortions) + 1}`;
+
+        const updatedCartOffers = [...cartOffers];
+        const updatedCartOffer = updatedCartOffers.find(
+            (offer) => offer.id === id
+        );
+
+        updatedCartOffer.cartQuantity++;
+
+        setCartOffers([...updatedCartOffers]);
+    };
 
     const renderContent = () => {
         if (isError) {
@@ -98,7 +134,7 @@ const OfferWall = () => {
                         >
                             <Button
                                 className="offer-order-button"
-                                disabled={offer.soldPortions >= offer.availablePortions}
+                                disabled={offer.soldPortions === offer.availablePortions}
                                 handleClick={() => handleAddToCart(offer.id)}
                             >
                       ADD TO CART
@@ -116,14 +152,17 @@ const OfferWall = () => {
                                     <p>quantity: {offer.cartQuantity}</p>
                                 )}
                                 <Button
+                                    handleClick={() => handleQuantityIncrease(offer.id)}
                                     disabled={
                                         offer.soldPortions === offer.availablePortions
                                     }
-                                >
-                        +
-                                </Button>
-                                <Button>-</Button>
-                                <Button handleClick={() => handleRemoveFromCart(offer.id)}>x</Button>
+                                >+</Button>
+                                <Button
+                                    handleClick={() => handleQuantityDecrease(offer.id)}
+                                >-</Button>
+                                <Button
+                                    handleClick={() => handleRemoveFromCart(offer.id)}
+                                >x</Button>
                             </div>
                         ))}
                         <Button handleClick={handleOrder}>ORDER</Button>

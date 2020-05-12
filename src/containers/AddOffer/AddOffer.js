@@ -146,13 +146,12 @@ const AddOffer = () => {
     const handleSubmit = event => {
         event.preventDefault();
 
-        const formData = {addedBy: userId, orderedBy: []};
+        const formData = {addedBy: userId, orderedBy: ['x']};
 
         // eslint-disable-next-line no-unused-vars
         for (let fieldId in offerData) {
             formData[fieldId] = offerData[fieldId].value;
         }
-
         onPostOffer(formData);
 
         resetForm()
