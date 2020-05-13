@@ -9,6 +9,9 @@ import { postOrder } from "../../store/actions/offers";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../../components/Button/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
+import { database as url } from "../../endpoints";
+const getAccessToken = () => `?auth=${localStorage.getItem("accessToken")}`;
 
 const OfferWall = () => {
     const dispatch = useDispatch();
@@ -18,6 +21,7 @@ const OfferWall = () => {
     const userId = useSelector(state => state.auth.userId);
     const onOrder = order => dispatch(postOrder(order));
     const [cartOffers, setCartOffers] = useState([]);
+    const [impossibleOrderMessage, setImpossibleOrderMessage] = useState(false)
 
     useEffect(() => {
         fetchOffers()
@@ -25,7 +29,7 @@ const OfferWall = () => {
 
     const offers = useSelector(state => state.offers);
 
-    const handleOrder = () => {
+    const handleOrder = async () => {
         const order = cartOffers.map(offer => {
             return {
                 orderId: offer.id,
@@ -34,14 +38,33 @@ const OfferWall = () => {
             }
         })
 
-        onOrder(order)
+        const verifiedOrder = cartOffers.map(async (offer) => {
+            try {
+                const response = await axios.get(
+                    `${url}/offers/${offer.id}.json${getAccessToken()}`
+                );
 
-        setCartOffers([])
+                return offer.cartQuantity + parseInt(response.data.soldPortions) > parseInt(response.data.availablePortions);
+            } catch (error) {
+                setImpossibleOrderMessage(true);
+            }
+        })
+
+        const impossibleOrder = await Promise.all(verifiedOrder);
+
+        if (impossibleOrder.includes(true)) {
+            setImpossibleOrderMessage(true);
+            return;
+        }
+
+        onOrder(order);
+
+        setCartOffers([]);
     }
 
     const handleAddToCart = id => {
-        const addToCartOffer = offers.offers.find(offer => offer.id === id);
-        addToCartOffer.soldPortions = `${parseInt(addToCartOffer.soldPortions) + 1}`;
+        const offer = offers.offers.find((offer) => offer.id === id);
+        offer.soldPortions = `${parseInt(offer.soldPortions) + 1}`;
 
         const offerIsAlreadyInCart = cartOffers.find((offer) => offer.id === id);
 
@@ -51,7 +74,7 @@ const OfferWall = () => {
                 (offer) => offer.id === id
             );
 
-            updatedCartOffer.soldPortions = `${parseInt(updatedCartOffer.soldPortions) + 1}`;
+            updatedCartOffer.soldPortions = offer.soldPortions;
             updatedCartOffer.cartQuantity++;
 
             setCartOffers([...updatedCartOffers]);
@@ -59,17 +82,17 @@ const OfferWall = () => {
             return;
         }
 
-        addToCartOffer.cartQuantity = 1;
+        offer.cartQuantity = 1;
 
-        setCartOffers([...cartOffers, addToCartOffer]);
+        setCartOffers([...cartOffers, offer]);
     }
 
     const handleRemoveFromCart = id => {
-        const removeFromCartOffer = offers.offers.find(offer => offer.id === id);
-        removeFromCartOffer.soldPortions = `${
-            parseInt(removeFromCartOffer.soldPortions) - removeFromCartOffer.cartQuantity
+        const offer = offers.offers.find(offer => offer.id === id);
+        offer.soldPortions = `${
+            parseInt(offer.soldPortions) - offer.cartQuantity
         }`;
-        removeFromCartOffer.cartQuantity = 0;
+        offer.cartQuantity = 0;
 
         const updatedCartOffers = cartOffers.filter(offer => offer.id !== id)
 
@@ -113,11 +136,15 @@ const OfferWall = () => {
 
     const renderContent = () => {
         if (isError) {
-            return <Message>Something went wrong. Try again later.</Message>
+            return <Message>Something went wrong. Try again later.</Message>;
+        }
+
+        if (impossibleOrderMessage) {
+            return <Message>Your order cannot be processed. Try again later.</Message>
         }
 
         if (isLoading) {
-            return <Loader>LOADING LOADING LOADING...</Loader>
+            return <Loader>LOADING LOADING LOADING...</Loader>;
         } else {
             return (
                 <>
@@ -139,7 +166,7 @@ const OfferWall = () => {
                                 handleClick={() => handleAddToCart(offer.id)}
                             >
                                 <FontAwesomeIcon icon="shopping-cart" />
-                      ADD TO CART
+                    ADD TO CART
                             </Button>
                         </Offer>
                     ))}
@@ -155,9 +182,7 @@ const OfferWall = () => {
                                 )}
                                 <Button
                                     handleClick={() => handleQuantityIncrease(offer.id)}
-                                    disabled={
-                                        offer.soldPortions === offer.availablePortions
-                                    }
+                                    disabled={offer.soldPortions === offer.availablePortions}
                                 >
                                     <FontAwesomeIcon icon="plus" />
                                 </Button>
@@ -166,9 +191,7 @@ const OfferWall = () => {
                                 >
                                     <FontAwesomeIcon icon="minus" />
                                 </Button>
-                                <Button
-                                    handleClick={() => handleRemoveFromCart(offer.id)}
-                                >
+                                <Button handleClick={() => handleRemoveFromCart(offer.id)}>
                                     <FontAwesomeIcon icon="trash" />
                                 </Button>
                             </div>
