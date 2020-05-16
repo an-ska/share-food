@@ -17,7 +17,8 @@ const OfferWall = () => {
     const dispatch = useDispatch();
     const fetchOffers = useCallback(() => dispatch(getOffers()), [dispatch]);
     const isLoading = useSelector(state => state.offers.loading);
-    const isError = useSelector(state => state.offers.error)
+    const isError = useSelector(state => state.offers.error);
+    const orderErrors = useSelector(state => state.offers.orderErrors);
     const userId = useSelector(state => state.auth.userId);
     const onOrder = order => dispatch(postOrder(order));
     const [cartOffers, setCartOffers] = useState([]);
@@ -33,6 +34,7 @@ const OfferWall = () => {
         const order = cartOffers.map(offer => {
             return {
                 orderId: offer.id,
+                title: offer.title,
                 boughtBy: [...offer.boughtBy, userId],
                 soldPortions: offer.soldPortions
             }
@@ -137,6 +139,19 @@ const OfferWall = () => {
     const renderContent = () => {
         if (isError) {
             return <Message>Something went wrong. Try again later.</Message>;
+        }
+
+        if (orderErrors.length) {
+            return (
+                <Message>
+                Try again later. The following offers cannot be ordered now:
+                    <ul>
+                        {orderErrors.map((offer) => (
+                            <li key={offer}>{offer}</li>
+                        ))}
+                    </ul>
+                </Message>
+            );
         }
 
         if (impossibleOrderMessage) {

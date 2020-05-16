@@ -4,14 +4,16 @@ import * as actionTypes from "../actions/actionTypes";
 const initialState = {
     offers: [],
     loading: false,
-    error: "",
-    redirectPath: ""
+    error: false,
+    orderErrors: [],
+    redirectPath: "",
 };
 
 const offersStart = state => ({
     ...state,
     loading: true,
     error: false,
+    orderErrors: [],
     redirectPath: ""
 });
 
@@ -25,6 +27,12 @@ const offersFail = (state, action) => ({
     ...state,
     loading: false,
     error: action.error
+});
+
+const orderFails = (state, action) => ({
+    ...state,
+    loading: false,
+    orderErrors: [...state.orderErrors, action.orderError],
 });
 
 const removeOffers = (state, action) => ({
@@ -42,7 +50,7 @@ const addOffer = (state, action) => ({
 
 const updateOffers = (state, action) => ({
     ...state,
-    offers: state.offers.map(offer => offer.id === action.order.id ? {...offer, soldPortions: action.order.soldPortions, boughtBy: action.order.boughtBy} : offer),
+    offers: state.offers.map(offer => offer.id === action.order.id ? { ...offer, soldPortions: action.order.soldPortions, boughtBy: action.order.boughtBy } : offer),
     loading: false,
 });
 
@@ -54,6 +62,8 @@ const reducer = (state = initialState, action) => {
         return setOffers(state, action);
     case actionTypes.OFFERS_FAIL:
         return offersFail(state, action);
+    case actionTypes.ORDER_FAILS:
+        return orderFails(state, action);
     case actionTypes.ADD_OFFER:
         return addOffer(state, action);
     case actionTypes.REMOVE_OFFER:

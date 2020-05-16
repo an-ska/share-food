@@ -18,6 +18,11 @@ export const offersFail = error => ({
     error
 })
 
+export const orderFails = (error) => ({
+    type: actionTypes.ORDER_FAILS,
+    orderError: error,
+});
+
 const createOffers = response =>
     Object.entries(response).map(pair => {
         return {
@@ -77,9 +82,9 @@ export const deleteOffer = offer => async dispatch => {
     }
 };
 
-export const updateOffers = order => ({
+export const updateOffers = (order) => ({
     type: actionTypes.UPDATE_OFFERS,
-    order
+    order,
 });
 
 export const postOrder = orders => dispatch => {
@@ -98,7 +103,7 @@ export const postOrder = orders => dispatch => {
 
             dispatch(updateOffers(response.data));
         } catch (error) {
-            dispatch(offersFail(error.response.status));
+            dispatch(orderFails(order.title));
         }
     });
 };
