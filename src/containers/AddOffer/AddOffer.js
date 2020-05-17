@@ -61,20 +61,6 @@ const AddOffer = () => {
             valid: false,
             changed: false,
         },
-        soldPortions: {
-            tag: "input",
-            value: "",
-            fieldConfig: {
-                type: "text",
-                placeholder: "Sold portions..."
-            },
-            validation: {
-                required: true,
-                isNumeric: true,
-            },
-            valid: false,
-            changed: false,
-        },
         portionPrice: {
             tag: "input",
             value: "",
@@ -146,7 +132,7 @@ const AddOffer = () => {
     const handleSubmit = event => {
         event.preventDefault();
 
-        const formData = {addedBy: userId, boughtBy: ['x']};
+        const formData = {soldPortions: "0", addedBy: userId, boughtBy: ['x']};
 
         // eslint-disable-next-line no-unused-vars
         for (let fieldId in offerData) {
