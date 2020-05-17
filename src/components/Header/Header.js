@@ -9,7 +9,11 @@ const Header = () => {
     return (
         <header className="header">
             <ul>
-                <li><img alt="logo" src={logo}/></li>
+                <li>
+                    <Link to="/offers">
+                        <img alt="logo" src={logo} />
+                    </Link>
+                </li>
                 <li>
                     <Link to="/profile">
                         <FontAwesomeIcon icon="user-circle" />
