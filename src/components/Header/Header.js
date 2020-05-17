@@ -4,8 +4,11 @@ import "./Header.scss";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logo from '../../assets/logo.jpeg';
+import { useLocation } from "react-router-dom";
 
 const Header = () => {
+    const { pathname } = useLocation();
+
     return (
         <header className="header">
             <ul>
@@ -14,6 +17,15 @@ const Header = () => {
                         <img alt="logo" src={logo} />
                     </Link>
                 </li>
+                {
+                    pathname !== "/offers" &&
+                    <li>
+                        <Link to="/offers">
+                            <FontAwesomeIcon icon="long-arrow-alt-left" />
+                            Go back
+                        </Link>
+                    </li>
+                }
                 <li>
                     <Link to="/profile">
                         <FontAwesomeIcon icon="user-circle" />
@@ -24,7 +36,8 @@ const Header = () => {
                 </li>
             </ul>
         </header>
-    );
+    )
 };
+
 
 export default Header;

@@ -9,9 +9,9 @@ import Profile from "./containers/Profile/Profile";
 import { authCheckState } from "./store/actions/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faPowerOff, faUserCircle, faPlus, faMinus, faShoppingCart, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faPowerOff, faUserCircle, faPlus, faMinus, faShoppingCart, faTrash, faLongArrowAltLeft } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faPowerOff, faUserCircle, faPlus, faMinus, faShoppingCart, faTrash);
+library.add(faPowerOff, faUserCircle, faPlus, faMinus, faShoppingCart, faTrash, faLongArrowAltLeft);
 
 const App = () => {
     const dispatch = useDispatch();
