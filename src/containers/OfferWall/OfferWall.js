@@ -22,7 +22,8 @@ const OfferWall = () => {
     const userId = useSelector(state => state.auth.userId);
     const onOrder = order => dispatch(postOrder(order));
     const [cartOffers, setCartOffers] = useState([]);
-    const [impossibleOrderMessage, setImpossibleOrderMessage] = useState(false)
+    const [impossibleOrderMessage, setImpossibleOrderMessage] = useState(false);
+    const [totalPrice, setTotalPrice] = useState(null)
 
     useEffect(() => {
         fetchOffers()
@@ -116,6 +117,7 @@ const OfferWall = () => {
             const updatedCartOffers = cartOffers.filter(offer => offer.id !== id)
 
             setCartOffers([...updatedCartOffers]);
+
             return;
         }
 
@@ -135,6 +137,22 @@ const OfferWall = () => {
 
         setCartOffers([...updatedCartOffers]);
     };
+
+    const orderTotalPrice = useCallback(() => {
+        const totalOrderPrice = cartOffers.reduce(function (
+            accumulator,
+            offer
+        ) {
+            return (
+                accumulator + parseInt(offer.portionPrice) * offer.cartQuantity
+            );
+        }, 0);
+        setTotalPrice(totalOrderPrice)
+    }, [cartOffers]);
+
+    useEffect(() => {
+        orderTotalPrice();
+    }, [cartOffers, orderTotalPrice]);
 
     const renderContent = () => {
         if (isError) {
@@ -190,7 +208,7 @@ const OfferWall = () => {
                             <div key={offer.id}>
                                 <p>{offer.title}</p>
                                 <p>{offer.description}</p>
-                                <p>{offer.portionPrice} zł</p>
+                                <p>{offer.portionPrice} zł / per portion</p>
                                 <p>{offer.authorName}</p>
                                 {offer.cartQuantity && (
                                     <p>quantity: {offer.cartQuantity}</p>
@@ -211,7 +229,7 @@ const OfferWall = () => {
                                 </Button>
                             </div>
                         ))}
-                        <Button handleClick={handleOrder}>ORDER</Button>
+                        <Button handleClick={handleOrder}>ORDER {totalPrice > 0 && `${totalPrice} zł`}</Button>
                     </aside>
                 </>
             );
