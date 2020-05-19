@@ -5,6 +5,7 @@ import Auth from "./containers/Auth/Auth";
 import OfferWall from "./containers/OfferWall/OfferWall";
 import AddOffer from "./containers/AddOffer/AddOffer";
 import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
 import Profile from "./containers/Profile/Profile";
 import { authCheckState } from "./store/actions/auth";
 import { useDispatch, useSelector } from "react-redux";
@@ -44,6 +45,7 @@ const App = () => {
                     <Route path="/profile" component={Profile} />
                     <Redirect to="/offers" />
                 </Switch>
+                <Footer />
             </>
         );
     }
