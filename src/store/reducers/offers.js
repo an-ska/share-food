@@ -3,10 +3,12 @@ import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
     offers: [],
+    cartOffers: [],
     loading: false,
     error: false,
     orderErrors: [],
     redirectPath: "",
+    setImpossibleOrderMessage: false,
 };
 
 const offersStart = state => ({
@@ -54,6 +56,47 @@ const updateOffers = (state, action) => ({
     loading: false,
 });
 
+const setCartOffers = (state, action) => ({
+    ...state,
+    cartOffers: [...state.cartOffers, action.cartOffers],
+});
+
+const increaseCartOffer = (state, action) => ({
+    ...state,
+    cartOffers: state.cartOffers.map(offer =>
+        offer.id === action.id
+            ? {
+                ...offer,
+                soldPortions: offer.soldPortions + 1,
+                cartQuantity: offer.cartQuantity + 1
+            }
+            : offer
+    )
+})
+
+const decreaseCartOffer = (state, action) => ({
+    ...state,
+    cartOffers: state.cartOffers.map((offer) =>
+        offer.id === action.id
+            ? {
+                ...offer,
+                soldPortions: offer.soldPortions - 1,
+                cartQuantity: offer.cartQuantity - 1,
+            }
+            : offer
+    ),
+});
+
+const removeCartOffer = (state, action) => ({
+    ...state,
+    cartOffers: state.cartOffers.filter((offer) => offer.id !== action.id),
+});
+
+const setImpossibleOrderMessage = (state, action) => ({
+    ...state,
+    impossibleOrder: action.state
+});
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
     case actionTypes.OFFERS_START:
@@ -70,6 +113,16 @@ const reducer = (state = initialState, action) => {
         return removeOffers(state, action);
     case actionTypes.UPDATE_OFFERS:
         return updateOffers(state, action);
+    case actionTypes.SET_CART_OFFERS:
+        return setCartOffers(state, action);
+    case actionTypes.INCREASE_CART_OFFER:
+        return increaseCartOffer(state, action);
+    case actionTypes.DECREASE_CART_OFFER:
+        return decreaseCartOffer(state, action);
+    case actionTypes.REMOVE_CART_OFFER:
+        return removeCartOffer(state, action);
+    case actionTypes.SET_IMPOSSIBLE_ORDER_MESSAGE:
+        return setImpossibleOrderMessage(state, action);
     default:
         return state;
     }

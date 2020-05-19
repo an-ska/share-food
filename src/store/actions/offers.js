@@ -107,3 +107,28 @@ export const postOrder = orders => dispatch => {
         }
     });
 };
+
+export const setCartOffers = (cartOffers) => ({
+    type: actionTypes.SET_CART_OFFERS,
+    cartOffers,
+});
+
+export const increaseCartOffer = (id) => ({
+    type: actionTypes.INCREASE_CART_OFFER,
+    id,
+});
+
+export const decreaseCartOffer = (id) => ({
+    type: actionTypes.DECREASE_CART_OFFER,
+    id,
+});
+
+export const removeCartOffer = (id) => ({
+    type: actionTypes.REMOVE_CART_OFFER,
+    id,
+});
+
+export const setImpossibleOrderMessage = (state) => ({
+    type: actionTypes.SET_IMPOSSIBLE_ORDER_MESSAGE,
+    state,
+})
