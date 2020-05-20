@@ -22,7 +22,7 @@ CartOffer.propTypes = {
     portionPrice: PropTypes.string.isRequired,
     authorName: PropTypes.string.isRequired,
     cartQuantity: PropTypes.number.isRequired,
-    children: PropTypes.object
+    children: PropTypes.array
 };
 
 export default CartOffer;
