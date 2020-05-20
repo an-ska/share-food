@@ -1,8 +1,8 @@
 import React, { useEffect, useCallback, useState } from "react";
 import Button from "../../components/Button/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { postOrder } from "../../store/actions/offers";
+import CartOffer from "../../components/CartOffer/CartOffer";
 import {
     setCartOffers,
     increaseCartOffer,
@@ -12,6 +12,7 @@ import {
 } from "../../store/actions/offers";
 import axios from "axios";
 import { database as url } from "../../endpoints";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const getAccessToken = () => `?auth=${localStorage.getItem("accessToken")}`;
 
 const Cart = () => {
@@ -109,16 +110,18 @@ const Cart = () => {
     return (
         <aside>
             {cartOffers.map((offer) => (
-                <div key={offer.id}>
-                    <p>{offer.title}</p>
-                    <p>{offer.description}</p>
-                    <p>{offer.portionPrice} zł / per portion</p>
-                    <p>{offer.authorName}</p>
-                    {offer.cartQuantity && <p>quantity: {offer.cartQuantity}</p>}
-                    <Button
-                        handleClick={() => handleQuantityIncrease(offer.id)}
-                        disabled={offer.soldPortions === offer.availablePortions}
-                    >
+                <CartOffer
+                    key={offer.id}
+                    id={offer.id}
+                    title={offer.title}
+                    description={offer.description}
+                    authorName={offer.authorName}
+                    portionPrice={offer.portionPrice}
+                    soldPortions={offer.soldPortions}
+                    cartQuantity={offer.cartQuantity}
+                >
+                    <Button handleClick={() => handleQuantityIncrease(offer.id)}
+                        disabled={offer.soldPortions === offer.availablePortions}>
                         <FontAwesomeIcon icon="plus" />
                     </Button>
                     <Button handleClick={() => handleQuantityDecrease(offer.id)}>
@@ -127,14 +130,13 @@ const Cart = () => {
                     <Button handleClick={() => handleRemoveFromCart(offer.id)}>
                         <FontAwesomeIcon icon="trash" />
                     </Button>
-                </div>
+                </CartOffer>
             ))}
             <Button handleClick={handleOrder}>
-        ORDER {totalPrice > 0 && `${totalPrice} zł`}
+                ORDER {totalPrice > 0 && `${totalPrice} zł`}
             </Button>
         </aside>
     );
 }
-
 
 export default Cart;
