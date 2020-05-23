@@ -113,6 +113,10 @@ export const setCartOffers = (cartOffers) => ({
     cartOffers,
 });
 
+export const clearCartOffers = () => ({
+    type: actionTypes.CLEAR_CART_OFFERS,
+});
+
 export const increaseCartOffer = (id) => ({
     type: actionTypes.INCREASE_CART_OFFER,
     id,

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { postOrder } from "../../store/actions/offers";
 import CartOffer from "../../components/CartOffer/CartOffer";
 import {
-    setCartOffers,
+    clearCartOffers,
     increaseCartOffer,
     decreaseCartOffer,
     removeCartOffer,
@@ -19,7 +19,7 @@ const Cart = () => {
     const dispatch = useDispatch();
     const [totalPrice, setTotalPrice] = useState(null);
     const userId = useSelector((state) => state.auth.userId);
-    const onSetCartOffers = (offers) => dispatch(setCartOffers(offers));
+    const onClearCartOffers = () => dispatch(clearCartOffers());
     const onIncreaseCartOffer = (id) => dispatch(increaseCartOffer(id));
     const onDecreaseCartOffer = (id) => dispatch(decreaseCartOffer(id));
     const onRemoveCartOffer = (id) => dispatch(removeCartOffer(id));
@@ -78,7 +78,7 @@ const Cart = () => {
 
                 return (
                     offer.cartQuantity + parseInt(response.data.soldPortions) >
-          parseInt(response.data.availablePortions)
+            parseInt(response.data.availablePortions)
                 );
             } catch (error) {
                 onImpossibleOrder(true);
@@ -95,7 +95,7 @@ const Cart = () => {
 
         onOrder(order);
 
-        onSetCartOffers([]);
+        onClearCartOffers();
     };
 
     const orderTotalPrice = useCallback(() => {

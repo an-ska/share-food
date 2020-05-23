@@ -61,6 +61,11 @@ const setCartOffers = (state, action) => ({
     cartOffers: [...state.cartOffers, action.cartOffers],
 });
 
+const clearCartOffers = (state) => ({
+    ...state,
+    cartOffers: [],
+});
+
 const increaseCartOffer = (state, action) => ({
     ...state,
     cartOffers: state.cartOffers.map(offer =>
@@ -115,6 +120,8 @@ const reducer = (state = initialState, action) => {
         return updateOffers(state, action);
     case actionTypes.SET_CART_OFFERS:
         return setCartOffers(state, action);
+    case actionTypes.CLEAR_CART_OFFERS:
+        return clearCartOffers(state);
     case actionTypes.INCREASE_CART_OFFER:
         return increaseCartOffer(state, action);
     case actionTypes.DECREASE_CART_OFFER:
