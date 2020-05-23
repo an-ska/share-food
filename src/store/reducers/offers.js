@@ -72,7 +72,7 @@ const increaseCartOffer = (state, action) => ({
         offer.id === action.id
             ? {
                 ...offer,
-                soldPortions: offer.soldPortions + 1,
+                soldPortions: `${parseInt(offer.soldPortions) + 1}`,
                 cartQuantity: offer.cartQuantity + 1
             }
             : offer
@@ -85,7 +85,7 @@ const decreaseCartOffer = (state, action) => ({
         offer.id === action.id
             ? {
                 ...offer,
-                soldPortions: offer.soldPortions - 1,
+                soldPortions: `${parseInt(offer.soldPortions) - 1}`,
                 cartQuantity: offer.cartQuantity - 1,
             }
             : offer

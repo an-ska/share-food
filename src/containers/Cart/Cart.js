@@ -31,19 +31,20 @@ const Cart = () => {
     const findOfferInArray = (id, array) => array.find((offer) => offer.id === id);
 
     const handleQuantityIncrease = (id) => {
+        onIncreaseCartOffer(id);
+
         const offer = findOfferInArray(id, offers);
         offer.soldPortions = `${parseInt(offer.soldPortions) + 1}`;
-
-        onIncreaseCartOffer(id)
     };
 
     const handleQuantityDecrease = (id) => {
+        onDecreaseCartOffer(id);
+
         const offer = findOfferInArray(id, offers);
         offer.soldPortions = `${parseInt(offer.soldPortions) - 1}`;
 
         const updatedCartOffer = findOfferInArray(id, cartOffers);
 
-        onDecreaseCartOffer(id);
 
         if (updatedCartOffer.cartQuantity === 1) {
             onRemoveCartOffer(id);
@@ -60,6 +61,21 @@ const Cart = () => {
         onRemoveCartOffer(id)
     };
 
+    const verifyOrder = cartOffers.map(async (offer) => {
+        try {
+            const response = await axios.get(
+                `${url}/offers/${offer.id}.json${getAccessToken()}`
+            );
+
+            return (
+                offer.cartQuantity + parseInt(response.data.soldPortions) >
+          parseInt(response.data.availablePortions)
+            );
+        } catch (error) {
+            onImpossibleOrder(true);
+        }
+    });
+
     const handleOrder = async () => {
         const order = cartOffers.map((offer) => {
             return {
@@ -70,22 +86,7 @@ const Cart = () => {
             };
         });
 
-        const verifiedOrder = cartOffers.map(async (offer) => {
-            try {
-                const response = await axios.get(
-                    `${url}/offers/${offer.id}.json${getAccessToken()}`
-                );
-
-                return (
-                    offer.cartQuantity + parseInt(response.data.soldPortions) >
-            parseInt(response.data.availablePortions)
-                );
-            } catch (error) {
-                onImpossibleOrder(true);
-            }
-        });
-
-        const impossibleOrder = await Promise.all(verifiedOrder);
+        const impossibleOrder = await Promise.all(await verifyOrder());
 
         if (impossibleOrder.includes(true)) {
             onImpossibleOrder(true);
@@ -125,6 +126,7 @@ const Cart = () => {
                 >
                     <Button handleClick={() => handleQuantityIncrease(offer.id)}
                         disabled={offer.soldPortions === offer.availablePortions}>
+                        {console.log(offer.soldPortions, offer.availablePortions)}
                         <FontAwesomeIcon icon="plus" />
                     </Button>
                     <Button handleClick={() => handleQuantityDecrease(offer.id)}>
