@@ -16,27 +16,23 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const getAccessToken = () => `?auth=${localStorage.getItem("accessToken")}`;
 
 const Cart = () => {
-    const dispatch = useDispatch();
     const [totalPrice, setTotalPrice] = useState(null);
-    const userId = useSelector((state) => state.auth.userId);
+    const dispatch = useDispatch();
     const onClearCartOffers = () => dispatch(clearCartOffers());
-    const onIncreaseCartOffer = (id) => dispatch(increaseCartOffer(id));
-    const onDecreaseCartOffer = (id) => dispatch(decreaseCartOffer(id));
-    const onRemoveCartOffer = (id) => dispatch(removeCartOffer(id));
-    const onImpossibleOrder = (state) => dispatch(setImpossibleOrderMessage(state))
-    const cartOffers = useSelector((state) => state.offers.cartOffers);
-    const onOrder = (order) => dispatch(postOrder(order));
+    const onIncreaseCartOffer = id => dispatch(increaseCartOffer(id));
+    const onDecreaseCartOffer = id => dispatch(decreaseCartOffer(id));
+    const onRemoveCartOffer = id => dispatch(removeCartOffer(id));
+    const onImpossibleOrder = state => dispatch(setImpossibleOrderMessage(state));
+    const onOrder = order => dispatch(postOrder(order));
+    const cartOffers = useSelector(state => state.offers.cartOffers);
+    const userId = useSelector((state) => state.auth.userId);
 
-    const findOfferInArray = (id, array) => array.find((offer) => offer.id === id);
+    const handleQuantityIncrease = id => { onIncreaseCartOffer(id) };
 
-    const handleQuantityIncrease = (id) => {
-        onIncreaseCartOffer(id);
-    };
-
-    const handleQuantityDecrease = (id) => {
+    const handleQuantityDecrease = id => {
         onDecreaseCartOffer(id);
 
-        const updatedCartOffer = findOfferInArray(id, cartOffers);
+        const updatedCartOffer = cartOffers.find(offer => offer.id === id);
 
         if (updatedCartOffer.cartQuantity === 1) {
             onRemoveCartOffer(id);
@@ -45,9 +41,7 @@ const Cart = () => {
         }
     };
 
-    const handleRemoveFromCart = (id) => {
-        onRemoveCartOffer(id)
-    };
+    const handleRemoveFromCart = id => { onRemoveCartOffer(id) };
 
     const isOrderPossible = () =>
         cartOffers.map(async (offer) => {
@@ -66,14 +60,11 @@ const Cart = () => {
         });
 
     const handleOrder = async () => {
-        const order = cartOffers.map((offer) => {
-            return {
-                orderId: offer.id,
-                title: offer.title,
-                boughtBy: [...offer.boughtBy, userId],
-                soldPortions: offer.soldPortions,
-            };
-        });
+        const order = cartOffers.map(offer => ({
+            orderId: offer.id,
+            boughtBy: [...offer.boughtBy, userId],
+            soldPortions: offer.soldPortions,
+        }));
 
         const possibleOrder = await Promise.all(isOrderPossible());
 
@@ -89,7 +80,7 @@ const Cart = () => {
     };
 
     const orderTotalPrice = useCallback(() => {
-        const totalOrderPrice = cartOffers.reduce(function (accumulator, offer) {
+        const totalOrderPrice = cartOffers.reduce((accumulator, offer) => {
             return accumulator + parseInt(offer.portionPrice) * offer.cartQuantity;
         }, 0);
 
@@ -102,7 +93,7 @@ const Cart = () => {
 
     return (
         <aside>
-            {cartOffers.map((offer) => (
+            {cartOffers.map(offer => (
                 <CartOffer
                     key={offer.id}
                     id={offer.id}
@@ -115,7 +106,6 @@ const Cart = () => {
                 >
                     <Button handleClick={() => handleQuantityIncrease(offer.id)}
                         disabled={offer.soldPortions === offer.availablePortions}>
-                        {console.log(offer.soldPortions, offer.availablePortions)}
                         <FontAwesomeIcon icon="plus" />
                     </Button>
                     <Button handleClick={() => handleQuantityDecrease(offer.id)}>
