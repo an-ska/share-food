@@ -24,7 +24,6 @@ const Cart = () => {
     const onDecreaseCartOffer = (id) => dispatch(decreaseCartOffer(id));
     const onRemoveCartOffer = (id) => dispatch(removeCartOffer(id));
     const onImpossibleOrder = (state) => dispatch(setImpossibleOrderMessage(state))
-    const offers = useSelector((state) => state.offers.offers);
     const cartOffers = useSelector((state) => state.offers.cartOffers);
     const onOrder = (order) => dispatch(postOrder(order));
 
@@ -32,19 +31,12 @@ const Cart = () => {
 
     const handleQuantityIncrease = (id) => {
         onIncreaseCartOffer(id);
-
-        const offer = findOfferInArray(id, offers);
-        offer.soldPortions = `${parseInt(offer.soldPortions) + 1}`;
     };
 
     const handleQuantityDecrease = (id) => {
         onDecreaseCartOffer(id);
 
-        const offer = findOfferInArray(id, offers);
-        offer.soldPortions = `${parseInt(offer.soldPortions) - 1}`;
-
         const updatedCartOffer = findOfferInArray(id, cartOffers);
-
 
         if (updatedCartOffer.cartQuantity === 1) {
             onRemoveCartOffer(id);
@@ -54,10 +46,6 @@ const Cart = () => {
     };
 
     const handleRemoveFromCart = (id) => {
-        const offer = findOfferInArray(id, offers);
-        offer.soldPortions = `${parseInt(offer.soldPortions) - offer.cartQuantity}`;
-        offer.cartQuantity = 0;
-
         onRemoveCartOffer(id)
     };
 

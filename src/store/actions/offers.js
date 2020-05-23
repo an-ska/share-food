@@ -108,9 +108,9 @@ export const postOrder = orders => dispatch => {
     });
 };
 
-export const setCartOffers = (cartOffers) => ({
+export const setCartOffers = id => ({
     type: actionTypes.SET_CART_OFFERS,
-    cartOffers,
+    id,
 });
 
 export const clearCartOffers = () => ({

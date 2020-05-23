@@ -56,10 +56,23 @@ const updateOffers = (state, action) => ({
     loading: false,
 });
 
-const setCartOffers = (state, action) => ({
-    ...state,
-    cartOffers: [...state.cartOffers, action.cartOffers],
-});
+const setCartOffers = (state, action) => {
+    const cartOffer = state.offers.find(offer => offer.id === action.id);
+    cartOffer.soldPortions = `${parseInt(cartOffer.soldPortions) + 1}`;
+    cartOffer.cartQuantity = 1;
+
+    return {
+        ...state,
+        offers: state.offers.map((offer) =>
+            offer.id === action.id
+                ? {
+                    ...cartOffer
+                }
+                : offer
+        ),
+        cartOffers: [...state.cartOffers, cartOffer],
+    }
+};
 
 const clearCartOffers = (state) => ({
     ...state,
@@ -68,19 +81,37 @@ const clearCartOffers = (state) => ({
 
 const increaseCartOffer = (state, action) => ({
     ...state,
-    cartOffers: state.cartOffers.map(offer =>
+    offers: state.offers.map((offer) =>
         offer.id === action.id
             ? {
                 ...offer,
                 soldPortions: `${parseInt(offer.soldPortions) + 1}`,
-                cartQuantity: offer.cartQuantity + 1
+                cartQuantity: offer.cartQuantity + 1,
             }
             : offer
-    )
-})
+    ),
+    cartOffers: state.cartOffers.map((offer) =>
+        offer.id === action.id
+            ? {
+                ...offer,
+                soldPortions: `${parseInt(offer.soldPortions) + 1}`,
+                cartQuantity: offer.cartQuantity + 1,
+            }
+            : offer
+    ),
+});
 
 const decreaseCartOffer = (state, action) => ({
     ...state,
+    offers: state.offers.map((offer) =>
+        offer.id === action.id
+            ? {
+                ...offer,
+                soldPortions: `${parseInt(offer.soldPortions) - 1}`,
+                cartQuantity:offer.cartQuantity - 1
+            }
+            : offer
+    ),
     cartOffers: state.cartOffers.map((offer) =>
         offer.id === action.id
             ? {
@@ -94,6 +125,15 @@ const decreaseCartOffer = (state, action) => ({
 
 const removeCartOffer = (state, action) => ({
     ...state,
+    offers: state.offers.map((offer) =>
+        offer.id === action.id
+            ? {
+                ...offer,
+                soldPortions: `${parseInt(offer.soldPortions) - offer.cartQuantity}`,
+                cartQuantity: 0
+            }
+            : offer
+    ),
     cartOffers: state.cartOffers.filter((offer) => offer.id !== action.id),
 });
 

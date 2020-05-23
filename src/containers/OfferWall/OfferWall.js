@@ -28,22 +28,15 @@ const OfferWall = () => {
     const cartOffers = useSelector((state) => state.offers.cartOffers);
 
     const handleAddToCart = id => {
-        const offer = offers.find((offer) => offer.id === id);
         const offerIsAlreadyInCart = cartOffers.find((offer) => offer.id === id);
 
         if (offerIsAlreadyInCart) {
             onIncreaseCartOffer(id)
 
-            offer.soldPortions = `${parseInt(offer.soldPortions) + 1}`;
-            offer.cartQuantity = 1;
-
             return;
         }
 
-        offer.soldPortions = `${parseInt(offer.soldPortions) + 1}`;
-        offer.cartQuantity = 1;
-
-        onSetCartOffers(offer);
+        onSetCartOffers(id);
     }
 
     const renderContent = () => {
