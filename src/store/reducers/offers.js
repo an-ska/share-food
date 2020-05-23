@@ -99,7 +99,7 @@ const removeCartOffer = (state, action) => ({
 
 const setImpossibleOrderMessage = (state, action) => ({
     ...state,
-    impossibleOrder: action.state
+    impossibleOrderMessage: action.state
 });
 
 const reducer = (state = initialState, action) => {

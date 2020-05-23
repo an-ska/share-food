@@ -61,20 +61,21 @@ const Cart = () => {
         onRemoveCartOffer(id)
     };
 
-    const verifyOrder = cartOffers.map(async (offer) => {
-        try {
-            const response = await axios.get(
-                `${url}/offers/${offer.id}.json${getAccessToken()}`
-            );
+    const isOrderPossible = () =>
+        cartOffers.map(async (offer) => {
+            try {
+                const response = await axios.get(
+                    `${url}/offers/${offer.id}.json${getAccessToken()}`
+                );
 
-            return (
-                offer.cartQuantity + parseInt(response.data.soldPortions) >
-          parseInt(response.data.availablePortions)
-            );
-        } catch (error) {
-            onImpossibleOrder(true);
-        }
-    });
+                return (
+                    offer.cartQuantity + parseInt(response.data.soldPortions) <=
+                    parseInt(response.data.availablePortions)
+                );
+            } catch (error) {
+                return false;
+            }
+        });
 
     const handleOrder = async () => {
         const order = cartOffers.map((offer) => {
@@ -86,9 +87,9 @@ const Cart = () => {
             };
         });
 
-        const impossibleOrder = await Promise.all(await verifyOrder());
+        const possibleOrder = await Promise.all(isOrderPossible());
 
-        if (impossibleOrder.includes(true)) {
+        if (possibleOrder.includes(false)) {
             onImpossibleOrder(true);
 
             return;
