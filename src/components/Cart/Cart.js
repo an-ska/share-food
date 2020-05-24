@@ -1,8 +1,8 @@
 import React, { useEffect, useCallback, useState } from "react";
-import Button from "../../components/Button/Button";
+import Button from "../Button/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { postOrder } from "../../store/actions/offers";
-import CartOffer from "../../components/CartOffer/CartOffer";
+import CartOffer from "../CartOffer/CartOffer";
 import {
     clearCartOffers,
     increaseCartOffer,

@@ -37,7 +37,7 @@ const Profile = () => {
                         className="offer-remove-button"
                         handleClick={() => onDeleteOffer(offer.id)}
                     >
-              REMOVE OFFER
+                        REMOVE OFFER
                     </Button>
                 </Offer>
             ))}

@@ -1,5 +1,5 @@
 import React from "react";
-import Logout from '../../containers/Auth/Logout/Logout';
+import Logout from '../Logout/Logout';
 import "./Header.scss";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

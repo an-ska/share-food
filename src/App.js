@@ -1,12 +1,12 @@
 import React, { useEffect, useCallback } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import "./App.scss";
-import Auth from "./containers/Auth/Auth";
-import OfferWall from "./containers/OfferWall/OfferWall";
-import AddOffer from "./containers/AddOffer/AddOffer";
+import Auth from "./views/Auth/Auth";
+import ShareFood from "./views/ShareFood/ShareFood";
+import AddOffer from "./views/AddOffer/AddOffer";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
-import Profile from "./containers/Profile/Profile";
+import Profile from "./views/Profile/Profile";
 import { authCheckState } from "./store/actions/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -41,7 +41,7 @@ const App = () => {
                 <Header />
                 <Switch>
                     <Route path="/add-offer" component={AddOffer} />
-                    <Route path="/offers" component={OfferWall} />
+                    <Route path="/offers" component={ShareFood} />
                     <Route path="/profile" component={Profile} />
                     <Redirect to="/offers" />
                 </Switch>
