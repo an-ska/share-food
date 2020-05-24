@@ -32,25 +32,6 @@
         "lint": "eslint './src/**/*.{js,jsx}'",
         "lint:fix": "eslint './src/**/*.{js,jsx}' --fix"
     },
-    "plugins": [
-        "react"
-    ],
-    "eslintConfig": {
-        "extends": [
-            "react-app",
-            "eslint:recommended",
-            "plugin:react/recommended"
-        ],
-        "env": {
-            "es6": true
-        },
-        "rules": {
-            "indent": [
-                "error",
-                2
-            ]
-        }
-    },
     "browserslist": {
         "production": [
             ">0.2%",

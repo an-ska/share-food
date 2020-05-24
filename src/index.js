@@ -7,11 +7,11 @@ import App from '../src/components/App/App';
 import * as serviceWorker from './serviceWorker';
 
 const app = (
-  <Provider store={store}>
-    <Router>
-      <App />
-    </Router>
-  </Provider>
+	<Provider store={store}>
+		<Router>
+			<App />
+		</Router>
+	</Provider>
 );
 
 ReactDOM.render(app, document.getElementById('root'));

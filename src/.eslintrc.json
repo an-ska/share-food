@@ -1,0 +1,31 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "extends": ["react-app", "prettier"],
+    "plugins": ["react", "prettier"],
+    "parserOptions": {
+        "ecmaVersion": 2018
+    },
+    "rules": {
+        "react/prop-types": 1,
+        "eqeqeq": ["error", "always"],
+        "require-await": "error",
+        "block-spacing": "error",
+        "camelcase": "error",
+        "keyword-spacing": ["error", { "before": true }],
+        "no-trailing-spaces": "error",
+        "react/boolean-prop-naming": "error",
+        "prettier/prettier": [
+            "error",
+            {
+                "trailingComma": "es5",
+                "jsxSingleQuote": true,
+                "singleQuote": true,
+                "useTabs": true,
+                "arrowParens": "avoid"
+            }
+        ]
+    }
+}
