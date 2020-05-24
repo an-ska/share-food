@@ -1,5 +1,7 @@
 import React, { useEffect, useCallback } from 'react';
 import './OfferWall.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Offer from '../Offer/Offer';
 import Loader from '../Loader/Loader';
 import {
@@ -7,9 +9,7 @@ import {
 	setCartOffers,
 	increaseCartOffer,
 } from '../../store/actions/offers';
-import { useDispatch, useSelector } from 'react-redux';
 import Button from '../Button/Button';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const OfferWall = () => {
 	const dispatch = useDispatch();

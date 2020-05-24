@@ -1,14 +1,14 @@
 import React from 'react';
-import AddOffer from './AddOffer';
-import FormField from '../../components/FormField/FormField';
-import Message from '../../components/Message/Message';
-import Loader from '../../components/Loader/Loader';
 import Adapter from 'enzyme-adapter-react-16';
 import { mount, configure } from 'enzyme';
 import { Provider } from 'react-redux';
 import { Redirect, MemoryRouter as Router } from 'react-router-dom';
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
+import Loader from '../../components/Loader/Loader';
+import Message from '../../components/Message/Message';
+import FormField from '../../components/FormField/FormField';
+import AddOffer from './AddOffer';
 
 configure({ adapter: new Adapter() });
 

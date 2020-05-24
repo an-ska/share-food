@@ -1,6 +1,8 @@
 import React, { useEffect, useCallback, useState } from 'react';
-import Button from '../Button/Button';
 import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Button from '../Button/Button';
 import { postOrder } from '../../store/actions/offers';
 import CartOffer from '../CartOffer/CartOffer';
 import {
@@ -10,9 +12,7 @@ import {
 	removeCartOffer,
 	setImpossibleOrderMessage,
 } from '../../store/actions/offers';
-import axios from 'axios';
 import { database as url } from '../../endpoints';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const getAccessToken = () => `?auth=${localStorage.getItem('accessToken')}`;
 
 const Cart = () => {

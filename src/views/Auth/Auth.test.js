@@ -1,14 +1,14 @@
 import React from 'react';
-import Loader from '../../components/Loader/Loader';
 import Adapter from 'enzyme-adapter-react-16';
-import Auth from './Auth';
-import FormField from '../../components/FormField/FormField';
-import Button from '../../components/Button/Button';
 import { mount, configure } from 'enzyme';
 import { Provider } from 'react-redux';
 import { Redirect, MemoryRouter as Router } from 'react-router-dom';
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
+import Button from '../../components/Button/Button';
+import FormField from '../../components/FormField/FormField';
+import Auth from './Auth';
+import Loader from '../../components/Loader/Loader';
 
 configure({ adapter: new Adapter() });
 

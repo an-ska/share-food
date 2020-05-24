@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import './AddOffer.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import FormField from '../../components/FormField/FormField';
 import Button from '../../components/Button/Button';
 import { postOffer } from '../../store/actions/offers';
-import { useDispatch, useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import Loader from '../../components/Loader/Loader';
 import Message from '../../components/Message/Message';
 import {

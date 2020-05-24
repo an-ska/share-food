@@ -1,10 +1,10 @@
 import React from 'react';
-import Logout from '../Logout/Logout';
 import './Header.scss';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import logo from '../../assets/logo.jpeg';
 import { useLocation } from 'react-router-dom';
+import logo from '../../assets/logo.jpeg';
+import Logout from '../Logout/Logout';
 
 const Header = () => {
 	const { pathname } = useLocation();

@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import configureMockStore from 'redux-mock-store';
 import { BrowserRouter as Router } from 'react-router-dom';
-import App from './App';
 import Adapter from 'enzyme-adapter-react-16';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { mount, configure } from 'enzyme';
+import App from './App';
 
 configure({ adapter: new Adapter() });
 

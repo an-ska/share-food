@@ -1,8 +1,8 @@
 import React from 'react';
-import Button from '../Button/Button';
 import { useDispatch } from 'react-redux';
-import { authLogout } from '../../store/actions/auth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Button from '../Button/Button';
+import { authLogout } from '../../store/actions/auth';
 
 const Logout = () => {
 	const dispatch = useDispatch();

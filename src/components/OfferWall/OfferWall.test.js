@@ -1,14 +1,14 @@
 import React from 'react';
-import OfferWall from './OfferWall';
-import Offer from '../../components/Offer/Offer';
-import Message from '../../components/Message/Message';
-import Loader from '../../components/Loader/Loader';
 import Adapter from 'enzyme-adapter-react-16';
 import { mount, configure } from 'enzyme';
 import { Provider } from 'react-redux';
 import { Link, MemoryRouter as Router } from 'react-router-dom';
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
+import Loader from '../../components/Loader/Loader';
+import Message from '../../components/Message/Message';
+import Offer from '../../components/Offer/Offer';
+import OfferWall from './OfferWall';
 
 configure({ adapter: new Adapter() });
 

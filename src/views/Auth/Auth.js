@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import {
 	isFormFieldValid,
 	areFormFieldsValid,
 } from '../../services/validationService/validationService';
 import { auth } from '../../store/actions/auth';
-import { Redirect } from 'react-router-dom';
 import './Auth.scss';
 import FormField from '../../components/FormField/FormField';
 import Button from '../../components/Button/Button';

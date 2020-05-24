@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './ShareFood.scss';
+import { useSelector } from 'react-redux';
 import OfferWall from '../../components/OfferWall/OfferWall';
 import Message from '../../components/Message/Message';
-import { useSelector } from 'react-redux';
 import Cart from '../../components/Cart/Cart';
 
 const ShareFood = () => {
