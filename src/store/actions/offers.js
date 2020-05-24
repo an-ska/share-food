@@ -76,7 +76,7 @@ export const deleteOffer = offer => async dispatch => {
 	dispatch(offersStart());
 
 	try {
-		axios.delete(`${url}/offers/${offer}.json${getAccessToken()}`);
+		await axios.delete(`${url}/offers/${offer}.json${getAccessToken()}`);
 
 		dispatch(removeOffer(offer));
 	} catch (error) {
