@@ -9,7 +9,7 @@
         "axios": "^0.19.2",
         "enzyme": "^3.10.0",
         "enzyme-adapter-react-16": "^1.14.0",
-        "eslint-plugin-react": "^7.18.3",
+        "eslint-plugin-react": "^7.20.0",
         "firebase": "^7.6.2",
         "nock": "^12.0.3",
         "node-sass": "^4.13.1",
@@ -28,7 +28,9 @@
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
-        "eject": "react-scripts eject"
+        "eject": "react-scripts eject",
+        "lint": "eslint './src/**/*.{js,jsx}'",
+        "lint:fix": "eslint './src/**/*.{js,jsx}' --fix"
     },
     "plugins": [
         "react"
@@ -44,8 +46,8 @@
         },
         "rules": {
             "indent": [
-            "error",
-            4
+                "error",
+                2
             ]
         }
     },
@@ -60,5 +62,11 @@
             "last 1 firefox version",
             "last 1 safari version"
         ]
+    },
+    "devDependencies": {
+        "eslint-config-prettier": "^6.11.0",
+        "eslint-loader": "^4.0.2",
+        "eslint-plugin-prettier": "^3.1.3",
+        "prettier": "^2.0.5"
     }
 }
