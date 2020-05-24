@@ -1,5 +1,6 @@
 
 import * as actionTypes from "../actions/actionTypes";
+import { filterOffers, increaseOffer, decreaseOffer } from "../../services/offersService/offersService";
 
 const initialState = {
     offers: [],
@@ -39,8 +40,8 @@ const orderFails = (state, action) => ({
 
 const removeOffers = (state, action) => ({
     ...state,
-    offers: state.offers.filter(offer => offer.id !== action.offer),
-    loading: false
+    offers: filterOffers(state.offers, action.id),
+    loading: false,
 });
 
 const addOffer = (state, action) => ({
@@ -52,12 +53,21 @@ const addOffer = (state, action) => ({
 
 const updateOffers = (state, action) => ({
     ...state,
-    offers: state.offers.map(offer => offer.id === action.order.id ? { ...offer, soldPortions: action.order.soldPortions, boughtBy: action.order.boughtBy } : offer),
+    offers: state.offers.map(
+        offer => offer.id === action.order.id
+            ? {
+                ...offer,
+                soldPortions: action.order.soldPortions,
+                boughtBy: action.order.boughtBy
+            }
+            : offer
+    ),
     loading: false,
 });
 
 const setCartOffers = (state, action) => {
     const cartOffer = state.offers.find(offer => offer.id === action.id);
+
     cartOffer.soldPortions = `${parseInt(cartOffer.soldPortions) + 1}`;
     cartOffer.cartQuantity = 1;
 
@@ -81,46 +91,14 @@ const clearCartOffers = (state) => ({
 
 const increaseCartOffer = (state, action) => ({
     ...state,
-    offers: state.offers.map((offer) =>
-        offer.id === action.id
-            ? {
-                ...offer,
-                soldPortions: `${parseInt(offer.soldPortions) + 1}`,
-                cartQuantity: offer.cartQuantity + 1,
-            }
-            : offer
-    ),
-    cartOffers: state.cartOffers.map((offer) =>
-        offer.id === action.id
-            ? {
-                ...offer,
-                soldPortions: `${parseInt(offer.soldPortions) + 1}`,
-                cartQuantity: offer.cartQuantity + 1,
-            }
-            : offer
-    ),
+    offers: increaseOffer(state.offers, action.id),
+    cartOffers: increaseOffer(state.cartOffers, action.id)
 });
 
 const decreaseCartOffer = (state, action) => ({
     ...state,
-    offers: state.offers.map((offer) =>
-        offer.id === action.id
-            ? {
-                ...offer,
-                soldPortions: `${parseInt(offer.soldPortions) - 1}`,
-                cartQuantity:offer.cartQuantity - 1
-            }
-            : offer
-    ),
-    cartOffers: state.cartOffers.map((offer) =>
-        offer.id === action.id
-            ? {
-                ...offer,
-                soldPortions: `${parseInt(offer.soldPortions) - 1}`,
-                cartQuantity: offer.cartQuantity - 1,
-            }
-            : offer
-    ),
+    offers: decreaseOffer(state.offers, action.id),
+    cartOffers: decreaseOffer(state.cartOffers, action.id)
 });
 
 const removeCartOffer = (state, action) => ({
@@ -134,7 +112,7 @@ const removeCartOffer = (state, action) => ({
             }
             : offer
     ),
-    cartOffers: state.cartOffers.filter((offer) => offer.id !== action.id),
+    cartOffers: filterOffers(state.cartOffers, action.id),
 });
 
 const setImpossibleOrderMessage = (state, action) => ({

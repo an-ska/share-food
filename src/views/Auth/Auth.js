@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { isFormFieldValid, areFormFieldsValid } from "../../services/validationService";
+import { isFormFieldValid, areFormFieldsValid } from "../../services/validationService/validationService";
 import { auth } from "../../store/actions/auth";
 import { Redirect } from "react-router-dom";
 import "./Auth.scss";

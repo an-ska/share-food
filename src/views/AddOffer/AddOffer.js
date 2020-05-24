@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import Loader from "../../components/Loader/Loader";
 import Message from "../../components/Message/Message";
-import { isFormFieldValid, areFormFieldsValid } from "../../services/validationService";
+import { isFormFieldValid, areFormFieldsValid } from "../../services/validationService/validationService";
 
 const AddOffer = () => {
     const dispatch = useDispatch();
