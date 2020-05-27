@@ -40,7 +40,6 @@
         "trailingComma": "es5",
         "jsxSingleQuote": true,
         "singleQuote": true,
-        // "useTabs": true,
         "arrowParens": "avoid"
       }
     ]
