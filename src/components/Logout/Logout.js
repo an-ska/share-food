@@ -5,14 +5,14 @@ import Button from '../Button/Button';
 import { authLogout } from '../../store/actions/auth';
 
 const Logout = () => {
-	const dispatch = useDispatch();
-	const onLogout = () => dispatch(authLogout());
+  const dispatch = useDispatch();
+  const onLogout = () => dispatch(authLogout());
 
-	return (
-		<Button handleClick={onLogout}>
-			<FontAwesomeIcon icon='power-off' />
-		</Button>
-	);
+  return (
+    <Button handleClick={onLogout}>
+      <FontAwesomeIcon icon='power-off' />
+    </Button>
+  );
 };
 
 export default Logout;
