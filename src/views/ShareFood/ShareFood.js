@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import './ShareFood.scss';
 import { useSelector } from 'react-redux';
+import styles from './ShareFood.module.scss';
 import OfferWall from '../../components/OfferWall/OfferWall';
 import Message from '../../components/Message/Message';
 import Cart from '../../components/Cart/Cart';
@@ -12,6 +12,10 @@ const ShareFood = () => {
   const impossibleOrderMessage = useSelector(
     state => state.offers.impossibleOrderMessage
   );
+
+  useEffect(() => {
+    document.body.className = 'body-primary';
+  }, []);
 
   const renderContent = () => {
     if (isError) {

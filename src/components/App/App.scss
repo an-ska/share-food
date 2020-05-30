@@ -1,7 +1,20 @@
+* {
+  font-family: 'Quicksand', sans-serif;
+}
+
 body {
   margin: 0;
   padding: 0;
   box-sizing: content-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: white;
+
+  &.body-primary {
+    background: white;
+  }
+
+  &.body-decor {
+    background: linear-gradient(315deg, #6b0f1a 0%, #b91372 74%);
+  }
 }

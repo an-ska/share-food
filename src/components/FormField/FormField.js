@@ -22,30 +22,21 @@ const FormField = props => {
     switch (tag) {
       case 'input':
         return (
-          <input
-            className={formFieldClasses.join(' ')}
-            {...config}
-            value={value}
-            onChange={handleChange}
-          />
+          <span className={formFieldClasses.join(' ')}>
+            <input {...config} value={value} onChange={handleChange} />
+          </span>
         );
       case 'textarea':
         return (
-          <textarea
-            className={formFieldClasses.join(' ')}
-            {...config}
-            value={value}
-            onChange={handleChange}
-          />
+          <span className={formFieldClasses.join(' ')}>
+            <textarea {...config} value={value} onChange={handleChange} />
+          </span>
         );
       default:
         return (
-          <input
-            className={formFieldClasses.join(' ')}
-            {...config}
-            value={value}
-            onChange={handleChange}
-          />
+          <span className={formFieldClasses.join(' ')}>
+            <input {...config} value={value} onChange={handleChange} />
+          </span>
         );
     }
   };

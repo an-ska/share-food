@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import {
@@ -6,7 +6,7 @@ import {
   areFormFieldsValid,
 } from '../../services/validationService/validationService';
 import { auth } from '../../store/actions/auth';
-import './Auth.scss';
+import styles from './Auth.module.scss';
 import FormField from '../../components/FormField/FormField';
 import Button from '../../components/Button/Button';
 import Loader from '../../components/Loader/Loader';
@@ -20,6 +20,10 @@ const Auth = () => {
   const [isSignedUp, setIsSignedUp] = useState(true);
   const [isFormValid, setIsFormValid] = useState(false);
   const formFields = [];
+
+  useEffect(() => {
+    document.body.className = 'body-decor';
+  }, []);
 
   const initialState = {
     email: {
@@ -103,36 +107,42 @@ const Auth = () => {
   };
 
   return (
-    <section className='login-page'>
-      <div className='login-page__background'></div>
+    <section className='login'>
       {isLoading ? (
         <Loader>LOADING LOADING LOADING...</Loader>
       ) : (
-        <div className='login-page__content'>
-
-          <div className='login-page__form'>
-            <form onSubmit={event => handleSubmit(event)}>
-              {formFields.map(field => (
-                <FormField
-                  key={field.id}
-                  tag={field.config.tag}
-                  config={field.config.fieldConfig}
-                  value={field.config.value}
-                  invalid={!field.config.valid}
-                  shouldValidate={field.config.validation}
-                  changed={field.config.changed}
-                  handleChange={event => handleChange(event, field.id)}
-                />
-              ))}
-              <Button type='submit' disabled={!isFormValid}>
-                SUBMIT
-              </Button>
-            </form>
-            <Button type='submit' handleClick={switchAuthMode}>
-              Go to {isSignedUp ? 'sign in' : 'sign up'}
-            </Button>
+        <>
+          <div className={styles.login__background}></div>
+          <div className={styles.login__content}>
+            <div className={styles.login__form}>
+              <div className={styles.box}>
+                <form onSubmit={event => handleSubmit(event)}>
+                  <h1 className={styles.title}>
+                    {isSignedUp ? 'Sign up' : 'Sign in'}
+                  </h1>
+                  {formFields.map(field => (
+                    <FormField
+                      key={field.id}
+                      tag={field.config.tag}
+                      config={field.config.fieldConfig}
+                      value={field.config.value}
+                      invalid={!field.config.valid}
+                      shouldValidate={field.config.validation}
+                      changed={field.config.changed}
+                      handleChange={event => handleChange(event, field.id)}
+                    />
+                  ))}
+                  <Button type='submit' disabled={!isFormValid}>
+                    SUBMIT
+                  </Button>
+                </form>
+                <Button type='submit' handleClick={switchAuthMode}>
+                  Go to {isSignedUp ? 'sign in' : 'sign up'}
+                </Button>
+              </div>
+            </div>
           </div>
-        </div>
+        </>
       )}
       {isAuthenticated && <Redirect to='/offers' />}
     </section>
