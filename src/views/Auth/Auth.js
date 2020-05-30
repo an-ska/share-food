@@ -103,35 +103,39 @@ const Auth = () => {
   };
 
   return (
-    <>
+    <section className='login-page'>
+      <div className='login-page__background'></div>
       {isLoading ? (
         <Loader>LOADING LOADING LOADING...</Loader>
       ) : (
-        <>
-          <form onSubmit={event => handleSubmit(event)}>
-            {formFields.map(field => (
-              <FormField
-                key={field.id}
-                tag={field.config.tag}
-                config={field.config.fieldConfig}
-                value={field.config.value}
-                invalid={!field.config.valid}
-                shouldValidate={field.config.validation}
-                changed={field.config.changed}
-                handleChange={event => handleChange(event, field.id)}
-              />
-            ))}
-            <Button type='submit' disabled={!isFormValid}>
-              SUBMIT
+        <div className='login-page__content'>
+
+          <div className='login-page__form'>
+            <form onSubmit={event => handleSubmit(event)}>
+              {formFields.map(field => (
+                <FormField
+                  key={field.id}
+                  tag={field.config.tag}
+                  config={field.config.fieldConfig}
+                  value={field.config.value}
+                  invalid={!field.config.valid}
+                  shouldValidate={field.config.validation}
+                  changed={field.config.changed}
+                  handleChange={event => handleChange(event, field.id)}
+                />
+              ))}
+              <Button type='submit' disabled={!isFormValid}>
+                SUBMIT
+              </Button>
+            </form>
+            <Button type='submit' handleClick={switchAuthMode}>
+              Go to {isSignedUp ? 'sign in' : 'sign up'}
             </Button>
-          </form>
-          <Button type='submit' handleClick={switchAuthMode}>
-            Go to {isSignedUp ? 'sign in' : 'sign up'}
-          </Button>
-        </>
+          </div>
+        </div>
       )}
       {isAuthenticated && <Redirect to='/offers' />}
-    </>
+    </section>
   );
 };
 

@@ -52,7 +52,7 @@ const FormField = props => {
 
   const formField = mapIntoFormField(props);
 
-  return <div>{formField}</div>;
+  return formField;
 };
 
 FormField.propTypes = {
