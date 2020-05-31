@@ -10,6 +10,7 @@ import styles from './Auth.module.scss';
 import FormField from '../../components/FormField/FormField';
 import Button from '../../components/Button/Button';
 import Loader from '../../components/Loader/Loader';
+import logo from '../../assets/logo.jpeg';
 
 const Auth = () => {
   const dispatch = useDispatch();
@@ -107,17 +108,21 @@ const Auth = () => {
   };
 
   return (
-    <section className='login'>
+    <section className={styles['login']}>
       {isLoading ? (
         <Loader>LOADING LOADING LOADING...</Loader>
       ) : (
         <>
-          <div className={styles.login__background}></div>
-          <div className={styles.login__content}>
-            <div className={styles.login__form}>
-              <div className={styles.box}>
-                <form onSubmit={event => handleSubmit(event)}>
-                  <h1 className={styles.title}>
+          <div className={styles['login__background']}></div>
+          <div className={styles['login__content']}>
+            <div className={styles['login__form']}>
+              <div className={styles['login__form__content']}>
+                <img alt='logo' src={logo} className={styles['logo']} />
+                <form
+                  onSubmit={event => handleSubmit(event)}
+                  className={styles['form']}
+                >
+                  <h1 className={styles['title']}>
                     {isSignedUp ? 'Sign up' : 'Sign in'}
                   </h1>
                   {formFields.map(field => (
@@ -132,12 +137,21 @@ const Auth = () => {
                       handleChange={event => handleChange(event, field.id)}
                     />
                   ))}
-                  <Button type='submit' disabled={!isFormValid}>
+                  <Button
+                    type='submit'
+                    disabled={!isFormValid}
+                    styles={styles['button']}
+                  >
                     SUBMIT
                   </Button>
                 </form>
-                <Button type='submit' handleClick={switchAuthMode}>
-                  Go to {isSignedUp ? 'sign in' : 'sign up'}
+                <p className={styles['text']}>Have not account yet?</p>
+                <Button
+                  type='submit'
+                  handleClick={switchAuthMode}
+                  styles={styles['button']}
+                >
+                  {isSignedUp ? 'Sign in' : 'Sign up'}
                 </Button>
               </div>
             </div>

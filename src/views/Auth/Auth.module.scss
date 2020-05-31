@@ -1,18 +1,14 @@
-$small: 576px;
-$medium: 768px;
-$large: 992px;
-$extraLarge: 1200px;
-
 // background-color: #63d471;
 // background-image: linear-gradient(315deg, #63d471 0%, #233329 74%);
 // background-color: #6b0f1a;
 // background: linear-gradient(315deg, #6b0f1a 0%, #b91372 74%);
 // background-color: #ff4e00;
 // background-image: linear-gradient(315deg, #ff4e00 0%, #ec9f05 74%);
+@import '../../styles/variables.scss';
 
 .login {
   &__background {
-    clip-path: circle(20% at 4% 7%);
+    clip-path: circle(25% at 24% 3%);
     height: 100%;
     width: 100%;
     position: absolute;
@@ -39,37 +35,56 @@ $extraLarge: 1200px;
     width: 80%;
     box-shadow: 0px 0px 73px #050505;
 
-    .title {
-      font-size: 35px;
-      text-align: center;
-      margin: 0 0 10px;
-    }
-
-    .box {
+    &__content {
       background: white;
-      padding: 35px;
-      margin: 20px;
+      padding: 25px;
+      margin: 0;
       border-radius: 10px;
-    }
 
-    form {
-      height: 40%;
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-    }
+      .form {
+        height: 40%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+      }
 
-    button {
-      background: linear-gradient(315deg, #fb6674 0%, #fce8f3 85%);
-      color: white;
-      border-radius: 31px;
-      padding: 16px 33px;
-      border: 0;
-      margin: 10px auto;
-      display: block;
-      font-weight: bold;
-      font-size: 25px;
-      cursor: pointer;
+      .logo {
+        display: block;
+        margin: 0 auto 25px;
+      }
+
+      .title {
+        font-size: 30px;
+        font-weight: 400;
+        text-align: center;
+        margin: 30px 0 0;
+      }
+
+      .text {
+          text-align: center;
+          font-size: 20px;
+          margin: 20px 0 0;
+      }
+
+      .button {
+        background: linear-gradient(315deg, #fb6674 0%, #fce8f3 85%);
+        color: white;
+        border-radius: 31px;
+        padding: 10px 25px;
+        border: 0;
+        margin: 10px auto;
+        display: block;
+        font-weight: bold;
+        font-size: 20px;
+        cursor: pointer;
+        transition: .3s;
+
+        &:disabled {
+          opacity: .5;
+          background: darkgray;
+          cursor: not-allowed;
+        }
+      }
     }
   }
 }
@@ -90,6 +105,20 @@ $extraLarge: 1200px;
 
     &__form {
       width: 70%;
+
+      &__content {
+        padding: 35px;
+        margin: 25px;
+
+        .title {
+          font-size: 32px;
+        }
+
+        .button {
+          padding: 12px 30px;
+          font-size: 25px;
+        }
+      }
     }
   }
 }
@@ -107,7 +136,6 @@ $extraLarge: 1200px;
 }
 
 @media (min-width: $large) {
-
   .login {
     &__background {
       clip-path: circle(67% at 30% 0%);
@@ -120,7 +148,6 @@ $extraLarge: 1200px;
 }
 
 @media (min-width: $extraLarge) {
-
   .login {
     &__background {
       clip-path: circle(74% at 20% 0%);

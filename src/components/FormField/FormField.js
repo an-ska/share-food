@@ -1,6 +1,6 @@
 import React from 'react';
-import './FormField.scss';
 import PropTypes from 'prop-types';
+import styles from './FormField.module.scss';
 
 const FormField = props => {
   const {
@@ -22,19 +22,31 @@ const FormField = props => {
     switch (tag) {
       case 'input':
         return (
-          <span className={formFieldClasses.join(' ')}>
+          <span
+            className={`${styles['input']} ${
+              styles[formFieldClasses.join(' ')]
+            }`}
+          >
             <input {...config} value={value} onChange={handleChange} />
           </span>
         );
       case 'textarea':
         return (
-          <span className={formFieldClasses.join(' ')}>
+          <span
+            className={`${styles['input']} ${
+              styles[formFieldClasses.join(' ')]
+            }`}
+          >
             <textarea {...config} value={value} onChange={handleChange} />
           </span>
         );
       default:
         return (
-          <span className={formFieldClasses.join(' ')}>
+          <span
+            className={`${styles['input']} ${
+              styles[formFieldClasses.join(' ')]
+            }`}
+          >
             <input {...config} value={value} onChange={handleChange} />
           </span>
         );
