@@ -137,20 +137,12 @@ const Auth = () => {
                       handleChange={event => handleChange(event, field.id)}
                     />
                   ))}
-                  <Button
-                    type='submit'
-                    disabled={!isFormValid}
-                    styles={styles['button']}
-                  >
+                  <Button type='submit' disabled={!isFormValid}>
                     SUBMIT
                   </Button>
                 </form>
                 <p className={styles['text']}>Have not account yet?</p>
-                <Button
-                  type='submit'
-                  handleClick={switchAuthMode}
-                  styles={styles['button']}
-                >
+                <Button type='submit' handleClick={switchAuthMode}>
                   {isSignedUp ? 'Sign in' : 'Sign up'}
                 </Button>
               </div>

@@ -1,0 +1,19 @@
+@import '../../styles/mixins.scss';
+
+.button {
+  @include gradient;
+  color: white;
+  border-radius: 31px;
+  padding: 10px 25px;
+  border: 0;
+  margin: 10px auto;
+  display: block;
+  font-weight: bold;
+  font-size: 20px;
+  cursor: pointer;
+  transition: .3s;
+
+  &:disabled {
+    @include disabledField;
+  }
+}

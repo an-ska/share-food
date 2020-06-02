@@ -1,5 +1,7 @@
+@import '../../styles/variables.scss';
+
 .input {
-  border-bottom: 1px solid #b993a8;
+  border-bottom: 1px solid $placeholderColor;
   padding: 5px;
   margin: 10px 0;
   position: relative;
@@ -7,20 +9,20 @@
   input {
     font-size: 20px;
     border: 0;
-    color: #6d415a;
-    width: 100%;
+    color: $inputColor;
+    width: 98%;
   }
 
   &.invalid {
-    border-bottom: 2px solid #d4221f;
+    border-bottom: 2px solid $errorColor;
 
     input {
-      color: #d4221f;
+      color: $errorColor;
     }
 
     &:after {
       content: "!";
-      color: #d4221f;
+      color: $errorColor;
       font-size: 30px;
       position: absolute;
       top: 0;
@@ -30,25 +32,19 @@
   }
 }
 
-
-
-
-
-
-
 *:focus {
   outline: none;
 }
 
 ::placeholder {
-  color: #b993a8;
+  color: $placeholderColor;
   opacity: 1;
 }
 
 :-ms-input-placeholder {
-  color: #b993a8;
+  color: $placeholderColor;
 }
 
 ::-ms-input-placeholder {
-  color: #b993a8;
+  color: $placeholderColor;
 }
