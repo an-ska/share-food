@@ -1,0 +1,70 @@
+@import '../../styles/variables.scss';
+
+.offer {
+  background: #fff;
+  margin: 10px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 2px 2px 0px, rgba(0, 0, 0, 0.04) 0px 1px 5px 0px;
+  border-radius: 5px;
+  display: flex;
+  border-left: 10px solid #bd1876;
+
+  &-header {
+    display: none;
+    justify-content: center;
+    padding: 20px 20px 20px 10px;
+    background: linear-gradient(360deg, #fb6674 0%, #fce8f3 85%);
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    transition: display .3s;
+
+    svg {
+      width: auto;
+      max-width: 100%;
+    }
+  }
+
+  &-body {
+    padding: 20px;
+    width: 100%;
+    position: relative;
+  }
+
+  &-title {
+    font-size: 25px;
+    margin: 0;
+    width: calc(100% - 80px);
+  }
+
+  &-description {
+    margin: 10px 0 30px;
+    font-size: 16px;
+  }
+
+  button {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+  }
+
+  &-details {
+    display: flex;
+    font-size: 14px;
+
+    &__item {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding-right: 25px;
+      text-align: center;
+    }
+  }
+
+  @media (min-width: $small) {
+    border: 0;
+
+    &-header {
+      display: flex;
+    }
+  }
+}

@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './Offer.scss';
+import styles from './Offer.module.scss';
+import Cooking from '../SVG/Cooking';
+import Cook from '../SVG/Cook';
+import Money from '../SVG/Money';
+import Quantity from '../SVG/Quantity';
 
 const Offer = ({
   id,
@@ -21,17 +25,24 @@ const Offer = ({
   };
 
   return (
-    <div className='offer' id={id}>
-      <div className='offer-body'>
-        <h2 className='offer-title'>{title}</h2>
-        <p className='offer-description'>{description}</p>
-        <div className='offer-portion'>
-          <span className='offer-portion__counter'>
-            {countAvailablePortions()}
-          </span>
-          <span className='offer-portion__label'> portions available</span>
-          <p className='offer-portion__price'>{portionPrice} PLN/portion</p>
-          <p className='offer-authorName'>offered by {authorName}</p>
+    <div className={styles['offer']} id={id}>
+      <div className={styles['offer-header']}>
+        <Cooking />
+      </div>
+      <div className={styles['offer-body']}>
+        <h2 className={styles['offer-title']}>{title}</h2>
+        <p className={styles['offer-description']}>{description}</p>
+        <div className={styles['offer-details']}>
+          <div className={styles['offer-details__item']}>
+            <Quantity />
+            {countAvailablePortions()} portions available
+          </div>
+          <div className={styles['offer-details__item']}>
+            <Money /> {portionPrice} PLN/portion
+          </div>
+          <div className={styles['offer-details__item']}>
+            <Cook /> offered by {authorName}
+          </div>
         </div>
         {children}
       </div>

@@ -10,7 +10,6 @@ import styles from './Auth.module.scss';
 import FormField from '../../components/FormField/FormField';
 import Button from '../../components/Button/Button';
 import Loader from '../../components/Loader/Loader';
-import logo from '../../assets/logo.jpeg';
 
 const Auth = () => {
   const dispatch = useDispatch();

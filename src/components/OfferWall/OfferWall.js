@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback } from 'react';
-import './OfferWall.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import styles from './OfferWall.module.scss';
 import Offer from '../Offer/Offer';
 import Loader from '../Loader/Loader';
 import {
@@ -42,7 +42,8 @@ const OfferWall = () => {
       return <Loader>LOADING LOADING LOADING...</Loader>;
     } else {
       return (
-        <>
+        <div className={styles.offers}>
+          <h1>OFFERWALL</h1>
           {offers.map(offer => (
             <Offer
               key={offer.id}
@@ -60,11 +61,10 @@ const OfferWall = () => {
                 handleClick={() => handleAddToCart(offer.id)}
               >
                 <FontAwesomeIcon icon='shopping-cart' />
-                ADD TO CART
               </Button>
             </Offer>
           ))}
-        </>
+        </div>
       );
     }
   };

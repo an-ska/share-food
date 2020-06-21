@@ -97,6 +97,7 @@ const Cart = () => {
 
   return (
     <aside>
+      <h3>CART</h3>
       {cartOffers.map(offer => (
         <CartOffer
           key={offer.id}
@@ -122,7 +123,7 @@ const Cart = () => {
           </Button>
         </CartOffer>
       ))}
-      <Button handleClick={handleOrder}>
+      <Button handleClick={handleOrder} disabled={cartOffers.length === 0}>
         ORDER {totalPrice > 0 && `${totalPrice} zł`}
       </Button>
     </aside>

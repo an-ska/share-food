@@ -1,0 +1,18 @@
+@import '../../styles/variables.scss';
+
+.sharefood {
+  width: 100%;
+  margin: 0 auto;
+
+  &-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  @media (min-width: $small) {
+    .sharefood {
+      max-width: 80%;
+    }
+  }
+}

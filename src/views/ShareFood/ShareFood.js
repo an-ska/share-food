@@ -42,11 +42,13 @@ const ShareFood = () => {
     }
 
     return (
-      <>
+      <section className={styles['sharefood']}>
         <Link to='/add-offer'>ADD OFFER</Link>
-        <OfferWall />
-        <Cart />
-      </>
+        <div className={styles['sharefood-container']}>
+          <OfferWall />
+          <Cart />
+        </div>
+      </section>
     );
   };
 
