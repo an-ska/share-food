@@ -117,34 +117,35 @@ const Auth = () => {
           <div className={styles['login__content']}>
             <div className={styles['login__form']}>
               <div className={styles['login__form__content']}>
-                <img alt='logo' src={logo} className={styles['logo']} />
-                <form
-                  onSubmit={event => handleSubmit(event)}
-                  className={styles['form']}
-                >
-                  <h1 className={styles['title']}>
-                    {isSignedUp ? 'Sign up' : 'Sign in'}
-                  </h1>
-                  {formFields.map(field => (
-                    <FormField
-                      key={field.id}
-                      tag={field.config.tag}
-                      config={field.config.fieldConfig}
-                      value={field.config.value}
-                      invalid={!field.config.valid}
-                      shouldValidate={field.config.validation}
-                      changed={field.config.changed}
-                      handleChange={event => handleChange(event, field.id)}
-                    />
-                  ))}
-                  <Button type='submit' disabled={!isFormValid}>
-                    SUBMIT
+                <div className={styles['form__wrapper']}>
+                  <form
+                    onSubmit={event => handleSubmit(event)}
+                    className={styles['form']}
+                  >
+                    <h1 className={styles['title']}>
+                      {isSignedUp ? 'Sign up' : 'Sign in'}
+                    </h1>
+                    {formFields.map(field => (
+                      <FormField
+                        key={field.id}
+                        tag={field.config.tag}
+                        config={field.config.fieldConfig}
+                        value={field.config.value}
+                        invalid={!field.config.valid}
+                        shouldValidate={field.config.validation}
+                        changed={field.config.changed}
+                        handleChange={event => handleChange(event, field.id)}
+                      />
+                    ))}
+                    <Button type='submit' disabled={!isFormValid}>
+                      SUBMIT
+                    </Button>
+                  </form>
+                  <p className={styles['text']}>Have no account yet?</p>
+                  <Button type='submit' handleClick={switchAuthMode}>
+                    {isSignedUp ? 'Sign in' : 'Sign up'}
                   </Button>
-                </form>
-                <p className={styles['text']}>Have not account yet?</p>
-                <Button type='submit' handleClick={switchAuthMode}>
-                  {isSignedUp ? 'Sign in' : 'Sign up'}
-                </Button>
+                </div>
               </div>
             </div>
           </div>

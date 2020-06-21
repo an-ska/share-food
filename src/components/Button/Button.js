@@ -2,7 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Button.module.scss';
 
-const Button = ({ type = 'button', handleClick, disabled, children }) => (
+const Button = ({
+  type = 'button',
+  handleClick,
+  disabled = false,
+  children,
+}) => (
   <button
     type={type}
     onClick={handleClick}

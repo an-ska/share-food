@@ -1,5 +1,5 @@
 * {
-  font-family: 'Quicksand', sans-serif;
+    font-family: 'Open Sans', sans-serif;
 }
 
 body {
@@ -12,6 +12,9 @@ body {
 
   &.body-primary {
     background: white;
+    max-width: 80%;
+    margin: 0 auto;
+
   }
 
   &.body-decor {
