@@ -1,0 +1,31 @@
+@import '../../styles/variables.scss';
+
+.cart {
+  width: 100%;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+
+  &__heading {
+    font-size: 24px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
+  }
+
+  &__empty {
+    align-self: center;
+  }
+
+  &__order-button {
+    width: 100%;
+
+    button {
+      width: 100%;
+    }
+  }
+
+  @media (min-width: $medium) {
+    width: 40%;
+  }
+}

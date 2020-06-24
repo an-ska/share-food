@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './ShareFood.module.scss';
 import OfferWall from '../../components/OfferWall/OfferWall';
 import Message from '../../components/Message/Message';
@@ -43,11 +44,14 @@ const ShareFood = () => {
 
     return (
       <section className={styles['sharefood']}>
-        <Link to='/add-offer'>ADD OFFER</Link>
-        <div className={styles['sharefood-container']}>
+        <Link to='/add-offer' className={styles['sharefood__link']}>
+          <FontAwesomeIcon icon='plus-circle' />
+          ADD OFFER
+        </Link>
+        <article className={styles['sharefood-container']}>
           <OfferWall />
           <Cart />
-        </div>
+        </article>
       </section>
     );
   };

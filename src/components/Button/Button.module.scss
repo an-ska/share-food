@@ -15,5 +15,13 @@
 
   &:disabled {
     @include disabledField;
+
+    &:hover {
+      background: darkgray;
+    }
+  }
+
+  &:hover {
+    background: linear-gradient(315deg, #ff1329 0%, #e8dee4 85%);
   }
 }

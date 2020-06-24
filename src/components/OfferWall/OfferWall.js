@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './OfferWall.module.scss';
 import Offer from '../Offer/Offer';
 import Loader from '../Loader/Loader';
+import Heading from '../Heading/Heading';
 import {
   getOffers,
   setCartOffers,
@@ -42,8 +43,11 @@ const OfferWall = () => {
       return <Loader>LOADING LOADING LOADING...</Loader>;
     } else {
       return (
-        <div className={styles.offers}>
-          <h1>OFFERWALL</h1>
+        <section className={styles['offers']}>
+          <Heading>
+            <h1>OFFERWALL</h1>
+          </Heading>
+
           {offers.map(offer => (
             <Offer
               key={offer.id}
@@ -64,7 +68,7 @@ const OfferWall = () => {
               </Button>
             </Offer>
           ))}
-        </div>
+        </section>
       );
     }
   };

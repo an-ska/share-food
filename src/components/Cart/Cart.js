@@ -5,6 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '../Button/Button';
 import { postOrder } from '../../store/actions/offers';
 import CartOffer from '../CartOffer/CartOffer';
+import Plate from '../SVG/Plate';
+import Heading from '../Heading/Heading';
+import styles from './Cart.module.scss';
 import {
   clearCartOffers,
   increaseCartOffer,
@@ -95,37 +98,60 @@ const Cart = () => {
     orderTotalPrice();
   }, [cartOffers, orderTotalPrice]);
 
+  const renderContent = () => {
+    if (cartOffers.length) {
+      return (
+        <>
+          {cartOffers.map(offer => (
+            <CartOffer
+              key={offer.id}
+              id={offer.id}
+              title={offer.title}
+              description={offer.description}
+              authorName={offer.authorName}
+              portionPrice={offer.portionPrice}
+              soldPortions={offer.soldPortions}
+              cartQuantity={offer.cartQuantity}
+            >
+              <Button
+                handleClick={() => handleQuantityIncrease(offer.id)}
+                disabled={offer.soldPortions === offer.availablePortions}
+              >
+                <FontAwesomeIcon icon='plus' />
+              </Button>
+              <Button handleClick={() => handleQuantityDecrease(offer.id)}>
+                <FontAwesomeIcon icon='minus' />
+              </Button>
+              <Button handleClick={() => handleRemoveFromCart(offer.id)}>
+                <FontAwesomeIcon icon='trash' />
+              </Button>
+            </CartOffer>
+          ))}
+        </>
+      );
+    } else {
+      return (
+        <span className={styles['cart__empty']}>
+          <Plate />
+        </span>
+      );
+    }
+  };
+
   return (
-    <aside>
-      <h3>CART</h3>
-      {cartOffers.map(offer => (
-        <CartOffer
-          key={offer.id}
-          id={offer.id}
-          title={offer.title}
-          description={offer.description}
-          authorName={offer.authorName}
-          portionPrice={offer.portionPrice}
-          soldPortions={offer.soldPortions}
-          cartQuantity={offer.cartQuantity}
-        >
-          <Button
-            handleClick={() => handleQuantityIncrease(offer.id)}
-            disabled={offer.soldPortions === offer.availablePortions}
-          >
-            <FontAwesomeIcon icon='plus' />
-          </Button>
-          <Button handleClick={() => handleQuantityDecrease(offer.id)}>
-            <FontAwesomeIcon icon='minus' />
-          </Button>
-          <Button handleClick={() => handleRemoveFromCart(offer.id)}>
-            <FontAwesomeIcon icon='trash' />
-          </Button>
-        </CartOffer>
-      ))}
-      <Button handleClick={handleOrder} disabled={cartOffers.length === 0}>
-        ORDER {totalPrice > 0 && `${totalPrice} zł`}
-      </Button>
+    <aside className={styles['cart']}>
+      <Heading>
+        <h2>CART</h2>
+      </Heading>
+      {renderContent()}
+      <div
+        className={styles['cart__order-button']}
+        disabled={cartOffers.length === 0}
+      >
+        <Button handleClick={handleOrder} disabled={cartOffers.length === 0}>
+          ORDER {totalPrice > 0 && `${totalPrice} zł`}
+        </Button>
+      </div>
     </aside>
   );
 };

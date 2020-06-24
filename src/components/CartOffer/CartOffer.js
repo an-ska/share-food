@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styles from './CartOffer.module.scss';
 
 const CartOffer = ({
   id,
@@ -11,13 +12,14 @@ const CartOffer = ({
   children,
 }) => {
   return (
-    <div key={id}>
-      <p>{title}</p>
+    <div key={id} className={styles['cart-offer']}>
+      <strong className={styles['cart-offer__title']}>
+        {cartQuantity && `${cartQuantity}`}x <span>{title}</span>
+      </strong>
       <p>{description}</p>
-      <p>{portionPrice} zł / per portion</p>
+      <strong>{portionPrice} zł / per portion</strong>
       <p>{authorName}</p>
-      {cartQuantity && <p>quantity: {cartQuantity}</p>}
-      {children}
+      <div className={styles['cart-offer__actions']}>{children}</div>
     </div>
   );
 };
